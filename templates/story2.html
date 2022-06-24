@@ -90,10 +90,10 @@
         </div>
 
         <div id="next1" class="mainui">
-            <a href="#" target="_self">다음</a>
+            <a href="story3.html" target="_self">다음</a>
         </div>
         <div id="next2" class="mainui">
-            <a href="#" target="_self">다음</a>
+            <a href="내정.html" target="_self">다음</a>
         </div>
     </div>
     <script>
@@ -103,7 +103,7 @@
         rtd1.textContent=n
         rollbtn.disabled=true
         if (n<=78 && n>=40){
-            next1.sytle.display='block'
+            next1.style.display='block'
             result='실패'
             rtd2.textContent=result
             sect1.innerHTML="당신은 유비를 설득하지 못했습니다." + "<br>"+
@@ -112,6 +112,7 @@
 
         }
         else if (n<=39){
+            next1.style.display='block'
             rtd2.textContent='대실패'
             result='대실패'
             sect1.innerHTML="당신은 유비를 설득하지 못했습니다." + "<br>"+
@@ -120,12 +121,14 @@
             "당신은 대실패로 처형을 당했습니다."+"<br>"+" 모든 특기들이 제거가 됩니다."+"<br>"
         }
         else if (n>=79 && n<=95){
+            next2.style.display='block'
             rtd2.textContent='성공'
             result='성공'
             sect1.innerHTML="유비는 당신의 말을 듣고,"+"<br>"+" 전쟁을 하지 않았습니다."+"<br>"+
             "아직은 때가 아니라고 판단하여"+"<br>"+"내정에 힘을 더 쏟습니다."+"<br>"
         }
         else if (n>=96){
+            next2.style.display='block'
             rtd2.textContent='대성공'
             result='대성공'
             sect1.innerHTML="유비는 당신의 말을 듣고,"+"<br>"+" 전쟁을 하지 않았습니다."+"<br>"+
