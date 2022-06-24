@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>스토리 선택형 삼국지 TCG</title>
+    <style>
+        a{
+            text-decoration: none;
+            color: white
+        }
+        a:hover {
+            color:orange;
+        }
+        #gamename {
+            color:red; font-size:50px; font-weight: bold; position:absolute;
+            z-index: 1; text-align: center; top:100px; left:340px;
+        }
+        #gameplay {
+            color:white; font-size:40px;position: absolute;
+            z-index: 1; text-align: center; top:250px; left:580px;
+        }
+        #gamedescription{
+            color:white; font-size:40px;position: absolute;
+            z-index: 1; text-align: center; top:350px; left:580px;
+        }
+        #quit{
+            color:white; font-size:40px;position: absolute;
+            z-index: 1; text-align: center; top:450px; left:630px;
+        }
+    </style>
+</head>
+<body>
+    <audio src="resources/music/rising the empire.ogg" autoplay="autoplay" loop="loop"></audio>
+    <div id="main_menu" style="position:absolute; z-index:0">
+        <img src="resources/img/background/background1.jpg" width="1280" height="720" alt>
+        <div id="gamename">
+            스토리 선택형 삼국지 TCG
+        </div>
+        <div id="gameplay" class="mainui">
+            <a href="story1.html" target="_self">게임 시작</a>
+        </div>
+        <!-- <div id="gamedescription" class="mainui">
+            <a href="game_info.html" target="_self">게임 설명</a>
+        </div> -->
+        <div id="quit" target="_self" class="mainui">
+            <a href="#">종료</a>
+        </div>
+    </div>
+    
+    <!-- <script>
+        function click_sfx(){
+        sfx1 = new Audio('resources/sfx/game_start.wav')
+        sfx1.play()
+        }
+
+    </script> -->
+</body>
+</html>

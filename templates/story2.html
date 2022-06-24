@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>스토리 선택형 삼국지 TCG</title>
+    <style>
+        a{
+            text-decoration: none;
+            color: white
+        }
+        a:hover {
+            color:orange;
+        }
+        #story1 {
+            position:absolute; z-index: 1;
+            color:white; font-size:30px;
+            top:20px; left:5px;
+        }
+        #main_menu{
+            text-align:center;
+        }
+        .mainui {
+            position:absolute; z-index: 1;
+            font-size:30px; width:100px;
+            background-color: black;
+            color: white; text-align: center;
+            padding:5px
+        }
+        #next{
+            position:absolute; z-index:1;
+            right:20px; bottom:30px;
+        }
+        #before{
+            position:absolute; z-index:1;
+            left:20px; bottom:30px;
+        }
+        #rtd{
+            border:1px solid white;
+            background-color:black;
+            width:500px; height:350px;
+            position:absolute; color:white;
+            font-size:30px; font-weight:bold;
+            bottom:50px; left:50px;
+        }
+        #rollbtn{
+            color:black;
+            font-size:30px; font-weight:bold;
+            padding:10px;
+        }
+            
+    </style>
+</head>
+<body>
+    <audio src="resources/music/서주대학살.ogg" autoplay="auto"></audio>
+    <div id="main_menu" style="position:absolute; z-index:-1;">
+        <img src="resources/img/background/background4.jpg" width="1280" height="720" alt>
+        <div id="story1">
+            유비의 전쟁을 말릴 수 있습니다.<br>
+            * 설득을 하기 위해서 주사위 100d1을 굴려 기준을 보고, 설득에 성공하거나 실패를 정합니다.<br>
+            * 대실패를 하면 처형이 됩니다. 처형을 당하면 스킬/특기 모두 사용할 수 없습니다.
+        <hr>
+        유비 지력 수치보다 낮은 플레이어는 유비를 설득 할 수 없습니다.<br>
+        - 78이하 실패/
+        - 39이하 대실패/
+        - 79이상 성공/
+        - 96이상 대성공/
+        </div>
+        <div id="rtd"><button id="rollbtn" type="button">Roll the dice!(100d/1)</button>
+        </div>
+
+        <div id="next" class="mainui">
+            <a href="#" target="_self">다음</a>
+        </div>
+    </div>
+    <script>
+        function roll(){
+        rtd.textContent=parseInt(Math.random()*100+1)
+    }
+    rollbtn=document.getElementById('rollbtn')
+    rollbtn.addEventListener('click',roll) 
+    </script>
+</body>
+</html>
