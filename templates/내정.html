@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>스토리 선택형 삼국지 TCG</title>
+    <style>
+        .button{font-size:20px;
+            padding:5px;width:100px;
+            margin:10px;
+        }
+        #menu{position:absolute;
+            top:150px; left:5px;
+        }
+    </style>
+</head>
+<body>
+    <audio src="resources/music/oriental peace.ogg" autoplay="autoplay" loop="loop"></audio>
+    <div id="main_menu" style="position:absolute; z-index:0">
+        <img src="resources/img/background/background2.jpg" width="1280" height="720" alt>
+        <div id="gold"></div>
+        <div id="food"></div>
+        <div id="army"></div>
+        <div id="menu">
+            <div>
+                <button type="button" class="button">세금징수</button>
+            </div>
+            <div>
+                <button type="button" class="button">병량징수</button>
+            </div>
+            <div>
+                <button type="button" class="button">병사모집</button>
+            </div>
+            <div>
+                <button type="button" class="button">인재모집</button>
+            </div>
+            <div>
+                <button type="button" class="button">수집</button>
+            </div>
+            <div>
+                <button type="button" class="button">시장</button>
+            </div>
+        </div>
+        <div id="turn"></div>
+    </div>
+    
+    <!-- <script>
+        function click_sfx(){
+        sfx1 = new Audio('resources/sfx/game_start.wav')
+        sfx1.play()
+        }
+
+    </script> -->
+</body>
+</html>
