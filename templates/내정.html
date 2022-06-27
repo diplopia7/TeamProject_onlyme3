@@ -9,46 +9,305 @@
             margin:10px;
         }
         #menu{position:absolute;
-            top:150px; left:5px;
+            top:200px; left:15px;
         }
+        #resources{
+            position:absolute; z-index: 1;
+            color:black; top:50px; left:20px;
+            font-size:30px; background-color:bisque;
+            padding:10px; width:1200px;
+        }
+        #next{
+            position:absolute; z-index:1;
+            right:20px; bottom:30px;display: none;
+        }
+        .mainui {
+            position:absolute; z-index: 1;
+            font-size:30px; width:100px;
+            background-color: black;
+            color: white; text-align: center;
+            padding:5px
+        }
+        a{
+            text-decoration: none;
+            color: white
+        }
+        a:hover {
+            color:orange;
+        }
+        #turn{
+            position:absolute; z-index: 1;
+            font-size:30px; background-color:bisque;
+            color:black; bottom:50px; left:30px;
+            padding:10px;
+        }
+        #btn7, #btn8{
+            display:none
+        }
+        
     </style>
 </head>
 <body>
     <audio src="resources/music/oriental peace.ogg" autoplay="autoplay" loop="loop"></audio>
     <div id="main_menu" style="position:absolute; z-index:0">
         <img src="resources/img/background/background2.jpg" width="1280" height="720" alt>
-        <div id="gold"></div>
-        <div id="food"></div>
-        <div id="army"></div>
+        <!-- 자원에 해당되는 모든 내용 저장 -->
+        <!-- 직급이 비장군 부터 인맥버튼 활성화
+        플레이어가 가지고 있는 내정특기 적용 -->
+        <div id="resources">
+            금 : <span id="gold"> </span>/
+            병량 : <span id="food"> </span>/
+            병사 : <span id="army"> </span>/
+            부장 : <span id="officer"> </span>/
+            직급 : <span id="general"> </span><br>
+            아이템 : <span id="item"> </span>
+           
+        </div>
         <div id="menu">
             <div>
-                <button type="button" class="button">세금징수</button>
+                <button id="btn1" type="button" class="button">세금징수</button>
             </div>
             <div>
-                <button type="button" class="button">병량징수</button>
+                <button id="btn2" type="button" class="button">병량징수</button>
             </div>
             <div>
-                <button type="button" class="button">병사모집</button>
+                <button id="btn3" type="button" class="button">병사모집</button>
             </div>
             <div>
-                <button type="button" class="button">인재모집</button>
+                <button id="btn4" type="button" class="button">인재모집</button>
             </div>
             <div>
-                <button type="button" class="button">수집</button>
+                <button id="btn5" type="button" class="button">수집</button>
             </div>
             <div>
-                <button type="button" class="button">시장</button>
+                <button id="btn6" type="button" class="button">시장</button>
+                <button id="btn7" type="button" class="button">돈->병량</button>
+                <button id="btn8" type="button" class="button">병량->돈</button>
             </div>
         </div>
-        <div id="turn"></div>
+        <div id="turn">
+            <span id="turnNumber"></span> 턴
+        </div>
+        <div id="next" class="mainui">
+            <a href="story3.html" target="_self">다음</a>
+        </div>     
     </div>
     
-    <!-- <script>
-        function click_sfx(){
-        sfx1 = new Audio('resources/sfx/game_start.wav')
-        sfx1.play()
+    <script>
+        let init_gold=1000
+        let init_food=100000
+        let init_army=10000
+        let init_turn=1
+        let init_officer=0
+        let init_item='없음'
+        let turn=1
+        let init_general='부장'
+
+        function tax(){
+            init_gold+=100
+            init_turn+=1
+            gold.textContent=init_gold
+            turnNumber.textContent=init_turn
+            if (init_turn>12){
+                btn1.disabled=true
+                btn2.disabled=true
+                btn3.disabled=true
+                btn4.disabled=true
+                btn5.disabled=true
+                btn6.disabled=true
+                btn7.disabled=true
+                btn8.disabled=true
+                next.style.display='block'
+            }            
+        }
+        function provisions(){
+            init_food+=10000
+            init_turn+=1
+            food.textContent=init_food
+            turnNumber.textContent=init_turn
+            if (init_turn>12){
+                btn1.disabled=true
+                btn2.disabled=true
+                btn3.disabled=true
+                btn4.disabled=true
+                btn5.disabled=true
+                btn6.disabled=true
+                btn7.disabled=true
+                btn8.disabled=true
+                next.style.display='block'
+            }            
+        }
+        function call(){
+            init_army+=1000
+            init_turn+=1
+            army.textContent=init_army
+            turnNumber.textContent=init_turn
+            if (init_turn>12){
+                btn1.disabled=true
+                btn2.disabled=true
+                btn3.disabled=true
+                btn4.disabled=true
+                btn5.disabled=true
+                btn6.disabled=true
+                btn7.disabled=true
+                btn8.disabled=true
+                next.style.display='block'
+            }            
+        }
+        function get_officer(){
+            init_officer+=1
+            init_turn+=1
+            officer.textContent=init_officer
+            turnNumber.textContent=init_turn
+            if (init_turn>12){
+                btn1.disabled=true
+                btn2.disabled=true
+                btn3.disabled=true
+                btn4.disabled=true
+                btn5.disabled=true
+                btn6.disabled=true
+                btn7.disabled=true
+                btn8.disabled=true
+                next.style.display='block'
+            }            
+        }
+        function shuffle(array){
+            array.sort(()=>Math.random()-0.5)
+        }
+        function get_item(){
+            itemlist=['무기','갑옷','말','책서','장신구']
+            statlist=['통솔','무력','지력','정치']
+            shuffle(itemlist)
+            shuffle(statlist)
+            stat=parseInt(Math.random()*10+1);
+            if(init_item=='없음'){
+                init_item=itemlist[0]+' ('+statlist[0]+'+'+stat+')'+' '
+            }
+            else if(init_item!='없음'){
+                init_item+=itemlist[0]+' ('+statlist[0]+'+'+stat+')'+' '
+            }
+            init_gold-=200
+            init_turn+=1
+            turn+=1
+            turnNumber.textContent=init_turn
+            item.textContent=init_item 
+            gold.textContent=init_gold
+            if (turn>5){
+                btn5.disabled=true
+            }
+            if (init_turn>12){
+                btn1.disabled=true
+                btn2.disabled=true
+                btn3.disabled=true
+                btn4.disabled=true
+                btn5.disabled=true
+                btn6.disabled=true
+                btn7.disabled=true
+                btn8.disabled=true
+                next.style.display='block'
+            }
+            if(init_gold<=0){
+                btn5.disalbed=true
+            }      
         }
 
-    </script> -->
+        function showmarket(){
+            btn7.style.display='inline-block'
+            btn8.style.display='inline-block'
+        }
+
+        function moneytofood(){
+            init_gold-=100
+            init_food+=5000
+            init_turn+=1
+            turnNumber.textContent=init_turn
+            gold.textContent=init_gold
+            food.textContent=init_food
+            if(init_gold<=0){
+                btn7.disabled=true
+            }
+            else if(init_food>0){
+                btn8.disabled=false
+            }
+            if (init_turn>12){
+                btn1.disabled=true
+                btn2.disabled=true
+                btn3.disabled=true
+                btn4.disabled=true
+                btn5.disabled=true
+                btn6.disabled=true
+                btn7.disabled=true
+                btn8.disabled=true
+                next.style.display='block'
+            }
+            
+        }
+        function foodtomoney(){
+            init_gold+=100
+            init_food-=5000
+            init_turn+=1
+            turnNumber.textContent=init_turn
+            gold.textContent=init_gold
+            food.textContent=init_food
+            if(init_food<=0){
+                btn8.disabled=true
+            }
+            else if(init_gold>0){
+                btn7.disabled=false
+            }
+            if (init_turn>12){
+                btn1.disabled=true
+                btn2.disabled=true
+                btn3.disabled=true
+                btn4.disabled=true
+                btn5.disabled=true
+                btn6.disabled=true
+                btn7.disabled=true
+                btn8.disabled=true
+                next.style.display='block'
+            }
+                           
+        }
+
+        if (init_general=='부장'){
+                btn4.disabled=true
+            }
+        else if (init_general!='부장'){
+            btn4.disabled=false
+        }
+        
+
+        gold=document.getElementById("gold")
+        gold.textContent=init_gold
+        food=document.getElementById("food")
+        food.textContent=init_food
+        army=document.getElementById("army")
+        army.textContent=init_army
+        turnNumber=document.getElementById("turnNumber")
+        turnNumber.textContent=init_turn
+        officer=document.getElementById("officer")
+        officer.textContent=init_officer
+        item=document.getElementById("item")
+        item.textContent=init_item
+        general=document.getElementById("general")
+        general.textContent=init_general
+
+        btn1=document.getElementById("btn1")
+        btn1.addEventListener("click",tax)
+        btn2=document.getElementById("btn2")
+        btn2.addEventListener("click",provisions)
+        btn3=document.getElementById("btn3")
+        btn3.addEventListener("click",call)
+        btn4=document.getElementById("btn4")
+        btn4.addEventListener("click",get_officer)
+        btn5=document.getElementById("btn5")
+        btn5.addEventListener("click",get_item)
+        btn6=document.getElementById("btn6")
+        btn6.addEventListener("click",showmarket)
+        btn7=document.getElementById("btn7")
+        btn7.addEventListener("click",moneytofood)
+        btn8=document.getElementById("btn8")
+        btn8.addEventListener("click",foodtomoney)
+    </script>
 </body>
 </html>
