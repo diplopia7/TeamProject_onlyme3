@@ -143,7 +143,7 @@
 <body>
     <!-- <audio src="resources/music/battle action.ogg" autoplay="autoplay" loop="loop"></audio> -->
     <div id="main_menu" style="position:absolute; z-index:0">
-        <img src="resources\img\background\background3.jpg" width="1500" height="840" alt>
+        <img src="/static/resources/img/background/background3.jpg" width="1500" height="840" alt>
         <div id="cardfield1">
             <div id="field1" class="cardfield"></div>
             <div id="field2" class="cardfield"></div>
@@ -165,12 +165,16 @@
             <div id="field16" class="cardfield"></div>
         </div>
         <div id="playerstatus">
-            <div style="margin-top:10px; margin-left:10px">플레이어</div><br>
-            <div style="margin-left:10px">체력 : <span id="playerhp"></span></div>
+            <div style="margin-top:10px; margin-left:10px">플레이어</div>
+            <div style="margin-left:10px">체력 : <span id="playerhp"></span> 전술 : <span id="player전술"></span></div>
+            <div style="margin-left:10px">통솔 : <span id="player통솔"></span> 지력: <span id="player지력"></span></div>
+            <div style="margin-left:10px">무력 : <span id="player무력"></span> 정치: <span id="player정치"></span></div>
         </div>
         <div id="enemystatus">
-            <div style="margin-top:10px; margin-left:10px">적군</div><br>
-            <div style="margin-left:10px">체력 : <span id="enemyhp"></span></div>
+            <div style="margin-top:10px; margin-left:10px">적군</div>
+            <div style="margin-left:10px">체력 : <span id="enemyhp"></span> 전술 : <span id="enemy전술"></span></div>
+            <div style="margin-left:10px">통솔 : <span id="enemy통솔"></span> 지력: <span id="enemy지력"></span></div>
+            <div style="margin-left:10px">무력 : <span id="enemy무력"></span> 정치: <span id="enemy정치"></span></div>
         </div>
         <div id="menu">
             <button id="endturn" type="button" class="button">턴 종료</button><br>
@@ -210,67 +214,47 @@
         endturn.disabled=true
         skill.disabled=true
 
-        let Acardlist=['resources/img/card/resize/2_of_clubs.png','resources/img/card/resize/2_of_diamonds.png','resources/img/card/resize/2_of_hearts.png',
-        'resources/img/card/resize/2_of_spades.png','resources/img/card/resize/3_of_clubs.png','resources/img/card/resize/3_of_diamonds.png',
-        'resources/img/card/resize/3_of_hearts.png','resources/img/card/resize/3_of_spades.png','resources/img/card/resize/4_of_clubs.png',
-        'resources/img/card/resize/4_of_diamonds.png','resources/img/card/resize/4_of_hearts.png','resources/img/card/resize/4_of_spades.png',
-        'resources/img/card/resize/5_of_clubs.png','resources/img/card/resize/5_of_diamonds.png','resources/img/card/resize/5_of_hearts.png',
-        'resources/img/card/resize/5_of_spades.png','resources/img/card/resize/6_of_clubs.png','resources/img/card/resize/6_of_diamonds.png',
-        'resources/img/card/resize/6_of_hearts.png','resources/img/card/resize/6_of_spades.png','resources/img/card/resize/7_of_clubs.png',
-        'resources/img/card/resize/7_of_diamonds.png','resources/img/card/resize/7_of_hearts.png','resources/img/card/resize/7_of_spades.png',
-        'resources/img/card/resize/8_of_clubs.png','resources/img/card/resize/8_of_diamonds.png','resources/img/card/resize/8_of_hearts.png',
-        'resources/img/card/resize/8_of_spades.png','resources/img/card/resize/9_of_clubs.png','resources/img/card/resize/9_of_diamonds.png',
-        'resources/img/card/resize/9_of_hearts.png','resources/img/card/resize/9_of_spades.png','resources/img/card/resize/10_of_clubs.png',
-        'resources/img/card/resize/10_of_diamonds.png','resources/img/card/resize/10_of_hearts.png','resources/img/card/resize/10_of_spades.png',
-        'resources/img/card/resize/ace_of_clubs.png','resources/img/card/resize/ace_of_diamonds.png','resources/img/card/resize/ace_of_hearts.png',
-        'resources/img/card/resize/ace_of_spades.png','resources/img/card/resize/jack_of_clubs2.png','resources/img/card/resize/jack_of_diamonds2.png',
-        'resources/img/card/resize/jack_of_hearts2.png','resources/img/card/resize/jack_of_spades2.png','resources/img/card/resize/king_of_clubs2.png',
-        'resources/img/card/resize/king_of_diamonds2.png','resources/img/card/resize/king_of_hearts2.png','resources/img/card/resize/king_of_spades2.png',
-        'resources/img/card/resize/queen_of_clubs2.png','resources/img/card/resize/queen_of_diamonds2.png','resources/img/card/resize/queen_of_hearts2.png',
-        'resources/img/card/resize/queen_of_spades2.png','resources/img/card/resize/black_joker.png','resources/img/card/resize/red_joker.png']
+        let Acardlist=['/static/resources/img/card/resize/2_of_clubs.png','/static/resources/img/card/resize/2_of_diamonds.png','/static/resources/img/card/resize/2_of_hearts.png',
+        '/static/resources/img/card/resize/2_of_spades.png','/static/resources/img/card/resize/3_of_clubs.png','/static/resources/img/card/resize/3_of_diamonds.png',
+        '/static/resources/img/card/resize/3_of_hearts.png','/static/resources/img/card/resize/3_of_spades.png','/static/resources/img/card/resize/4_of_clubs.png',
+        '/static/resources/img/card/resize/4_of_diamonds.png','/static/resources/img/card/resize/4_of_hearts.png','/static/resources/img/card/resize/4_of_spades.png',
+        '/static/resources/img/card/resize/5_of_clubs.png','/static/resources/img/card/resize/5_of_diamonds.png','/static/resources/img/card/resize/5_of_hearts.png',
+        '/static/resources/img/card/resize/5_of_spades.png','/static/resources/img/card/resize/6_of_clubs.png','/static/resources/img/card/resize/6_of_diamonds.png',
+        '/static/resources/img/card/resize/6_of_hearts.png','/static/resources/img/card/resize/6_of_spades.png','/static/resources/img/card/resize/7_of_clubs.png',
+        '/static/resources/img/card/resize/7_of_diamonds.png','/static/resources/img/card/resize/7_of_hearts.png','/static/resources/img/card/resize/7_of_spades.png',
+        '/static/resources/img/card/resize/8_of_clubs.png','/static/resources/img/card/resize/8_of_diamonds.png','/static/resources/img/card/resize/8_of_hearts.png',
+        '/static/resources/img/card/resize/8_of_spades.png','/static/resources/img/card/resize/9_of_clubs.png','/static/resources/img/card/resize/9_of_diamonds.png',
+        '/static/resources/img/card/resize/9_of_hearts.png','/static/resources/img/card/resize/9_of_spades.png','/static/resources/img/card/resize/10_of_clubs.png',
+        '/static/resources/img/card/resize/10_of_diamonds.png','/static/resources/img/card/resize/10_of_hearts.png','/static/resources/img/card/resize/10_of_spades.png',
+        '/static/resources/img/card/resize/ace_of_clubs.png','/static/resources/img/card/resize/ace_of_diamonds.png','/static/resources/img/card/resize/ace_of_hearts.png',
+        '/static/resources/img/card/resize/ace_of_spades.png','/static/resources/img/card/resize/jack_of_clubs2.png','/static/resources/img/card/resize/jack_of_diamonds2.png',
+        '/static/resources/img/card/resize/jack_of_hearts2.png','/static/resources/img/card/resize/jack_of_spades2.png','/static/resources/img/card/resize/king_of_clubs2.png',
+        '/static/resources/img/card/resize/king_of_diamonds2.png','/static/resources/img/card/resize/king_of_hearts2.png','/static/resources/img/card/resize/king_of_spades2.png',
+        '/static/resources/img/card/resize/queen_of_clubs2.png','/static/resources/img/card/resize/queen_of_diamonds2.png','/static/resources/img/card/resize/queen_of_hearts2.png',
+        '/static/resources/img/card/resize/queen_of_spades2.png','/static/resources/img/card/resize/black_joker.png','/static/resources/img/card/resize/red_joker.png']
 
-        let Dcardlist=['resources/img/card/rotate/2_of_clubs.png','resources/img/card/rotate/2_of_diamonds.png','resources/img/card/rotate/2_of_hearts.png',
-        'resources/img/card/rotate/2_of_spades.png','resources/img/card/rotate/3_of_clubs.png','resources/img/card/rotate/3_of_diamonds.png',
-        'resources/img/card/rotate/3_of_hearts.png','resources/img/card/rotate/3_of_spades.png','resources/img/card/rotate/4_of_clubs.png',
-        'resources/img/card/rotate/4_of_diamonds.png','resources/img/card/rotate/4_of_hearts.png','resources/img/card/rotate/4_of_spades.png',
-        'resources/img/card/rotate/5_of_clubs.png','resources/img/card/rotate/5_of_diamonds.png','resources/img/card/rotate/5_of_hearts.png',
-        'resources/img/card/rotate/5_of_spades.png','resources/img/card/rotate/6_of_clubs.png','resources/img/card/rotate/6_of_diamonds.png',
-        'resources/img/card/rotate/6_of_hearts.png','resources/img/card/rotate/6_of_spades.png','resources/img/card/rotate/7_of_clubs.png',
-        'resources/img/card/rotate/7_of_diamonds.png','resources/img/card/rotate/7_of_hearts.png','resources/img/card/rotate/7_of_spades.png',
-        'resources/img/card/rotate/8_of_clubs.png','resources/img/card/rotate/8_of_diamonds.png','resources/img/card/rotate/8_of_hearts.png',
-        'resources/img/card/rotate/8_of_spades.png','resources/img/card/rotate/9_of_clubs.png','resources/img/card/rotate/9_of_diamonds.png',
-        'resources/img/card/rotate/9_of_hearts.png','resources/img/card/rotate/9_of_spades.png','resources/img/card/rotate/10_of_clubs.png',
-        'resources/img/card/rotate/10_of_diamonds.png','resources/img/card/rotate/10_of_hearts.png','resources/img/card/rotate/10_of_spades.png',
-        'resources/img/card/rotate/ace_of_clubs.png','resources/img/card/rotate/ace_of_diamonds.png','resources/img/card/rotate/ace_of_hearts.png',
-        'resources/img/card/rotate/ace_of_spades.png','resources/img/card/rotate/jack_of_clubs2.png','resources/img/card/rotate/jack_of_diamonds2.png',
-        'resources/img/card/rotate/jack_of_hearts2.png','resources/img/card/rotate/jack_of_spades2.png','resources/img/card/rotate/king_of_clubs2.png',
-        'resources/img/card/rotate/king_of_diamonds2.png','resources/img/card/rotate/king_of_hearts2.png','resources/img/card/rotate/king_of_spades2.png',
-        'resources/img/card/rotate/queen_of_clubs2.png','resources/img/card/rotate/queen_of_diamonds2.png','resources/img/card/rotate/queen_of_hearts2.png',
-        'resources/img/card/rotate/queen_of_spades2.png','resources/img/card/rotate/black_joker.png','resources/img/card/rotate/red_joker.png']
+        let Acardback='/static/resources/img/card/resize/back.png'
+        
 
-        let Acardback='resources/img/card/resize/back.png'
-
-        let Dcardback='resources/img/card/rotate/back.png'
-
-        let classification={'마법카드':['resources/img/card/resize/jack_of_clubs2.png','resources/img/card/resize/jack_of_diamonds2.png',
-                            'resources/img/card/resize/jack_of_hearts2.png','resources/img/card/resize/jack_of_spades2.png','resources/img/card/resize/king_of_clubs2.png',
-                            'resources/img/card/resize/king_of_diamonds2.png','resources/img/card/resize/king_of_hearts2.png','resources/img/card/resize/king_of_spades2.png',
-                            'resources/img/card/resize/queen_of_clubs2.png','resources/img/card/resize/queen_of_diamonds2.png','resources/img/card/resize/queen_of_hearts2.png',
-                            'resources/img/card/resize/queen_of_spades2.png',],
-                            '일반카드':['resources/img/card/rotate/2_of_clubs.png','resources/img/card/rotate/2_of_diamonds.png','resources/img/card/rotate/2_of_hearts.png',
-                            'resources/img/card/rotate/2_of_spades.png','resources/img/card/rotate/3_of_clubs.png','resources/img/card/rotate/3_of_diamonds.png',
-                            'resources/img/card/rotate/3_of_hearts.png','resources/img/card/rotate/3_of_spades.png','resources/img/card/rotate/4_of_clubs.png',
-                            'resources/img/card/rotate/4_of_diamonds.png','resources/img/card/rotate/4_of_hearts.png','resources/img/card/rotate/4_of_spades.png',
-                            'resources/img/card/rotate/5_of_clubs.png','resources/img/card/rotate/5_of_diamonds.png','resources/img/card/rotate/5_of_hearts.png',
-                            'resources/img/card/rotate/5_of_spades.png','resources/img/card/rotate/6_of_clubs.png','resources/img/card/rotate/6_of_diamonds.png',
-                            'resources/img/card/rotate/6_of_hearts.png','resources/img/card/rotate/6_of_spades.png','resources/img/card/rotate/7_of_clubs.png',
-                            'resources/img/card/rotate/7_of_diamonds.png','resources/img/card/rotate/7_of_hearts.png','resources/img/card/rotate/7_of_spades.png',
-                            'resources/img/card/rotate/8_of_clubs.png','resources/img/card/rotate/8_of_diamonds.png','resources/img/card/rotate/8_of_hearts.png',
-                            'resources/img/card/rotate/8_of_spades.png','resources/img/card/rotate/9_of_clubs.png','resources/img/card/rotate/9_of_diamonds.png',
-                            'resources/img/card/rotate/9_of_hearts.png','resources/img/card/rotate/9_of_spades.png','resources/img/card/rotate/10_of_clubs.png',
-                            'resources/img/card/rotate/10_of_diamonds.png','resources/img/card/rotate/10_of_hearts.png','resources/img/card/rotate/10_of_spades.png',
-                            'resources/img/card/rotate/ace_of_clubs.png','resources/img/card/rotate/ace_of_diamonds.png','resources/img/card/rotate/ace_of_hearts.png',
-                            'resources/img/card/rotate/ace_of_spades.png','resources/img/card/rotate/black_joker.png','resources/img/card/rotate/red_joker.png']}
+        let classification={'마법카드':['/static/resources/img/card/resize/jack_of_clubs2.png','/static/resources/img/card/resize/jack_of_diamonds2.png',
+                            '/static/resources/img/card/resize/jack_of_hearts2.png','/static/resources/img/card/resize/jack_of_spades2.png','/static/resources/img/card/resize/king_of_clubs2.png',
+                            '/static/resources/img/card/resize/king_of_diamonds2.png','/static/resources/img/card/resize/king_of_hearts2.png','/static/resources/img/card/resize/king_of_spades2.png',
+                            '/static/resources/img/card/resize/queen_of_clubs2.png','/static/resources/img/card/resize/queen_of_diamonds2.png','/static/resources/img/card/resize/queen_of_hearts2.png',
+                            '/static/resources/img/card/resize/queen_of_spades2.png',],
+                            '일반카드':['/static/resources/img/card/resize/2_of_clubs.png','/static/resources/img/card/resize/2_of_diamonds.png','/static/resources/img/card/resize/2_of_hearts.png',
+                            '/static/resources/img/card/resize/2_of_spades.png','/static/resources/img/card/resize/3_of_clubs.png','/static/resources/img/card/resize/3_of_diamonds.png',
+                            '/static/resources/img/card/resize/3_of_hearts.png','/static/resources/img/card/resize/3_of_spades.png','/static/resources/img/card/resize/4_of_clubs.png',
+                            '/static/resources/img/card/resize/4_of_diamonds.png','/static/resources/img/card/resize/4_of_hearts.png','/static/resources/img/card/resize/4_of_spades.png',
+                            '/static/resources/img/card/resize/5_of_clubs.png','/static/resources/img/card/resize/5_of_diamonds.png','/static/resources/img/card/resize/5_of_hearts.png',
+                            '/static/resources/img/card/resize/5_of_spades.png','/static/resources/img/card/resize/6_of_clubs.png','/static/resources/img/card/resize/6_of_diamonds.png',
+                            '/static/resources/img/card/resize/6_of_hearts.png','/static/resources/img/card/resize/6_of_spades.png','/static/resources/img/card/resize/7_of_clubs.png',
+                            '/static/resources/img/card/resize/7_of_diamonds.png','/static/resources/img/card/resize/7_of_hearts.png','/static/resources/img/card/resize/7_of_spades.png',
+                            '/static/resources/img/card/resize/8_of_clubs.png','/static/resources/img/card/resize/8_of_diamonds.png','/static/resources/img/card/resize/8_of_hearts.png',
+                            '/static/resources/img/card/resize/8_of_spades.png','/static/resources/img/card/resize/9_of_clubs.png','/static/resources/img/card/resize/9_of_diamonds.png',
+                            '/static/resources/img/card/resize/9_of_hearts.png','/static/resources/img/card/resize/9_of_spades.png','/static/resources/img/card/resize/10_of_clubs.png',
+                            '/static/resources/img/card/resize/10_of_diamonds.png','/static/resources/img/card/resize/10_of_hearts.png','/static/resources/img/card/resize/10_of_spades.png',
+                            '/static/resources/img/card/resize/ace_of_clubs.png','/static/resources/img/card/resize/ace_of_diamonds.png','/static/resources/img/card/resize/ace_of_hearts.png',
+                            '/static/resources/img/card/resize/ace_of_spades.png','/static/resources/img/card/resize/black_joker.png','/static/resources/img/card/resize/red_joker.png']}
         
         function shuffle(array){
             array.sort(()=>Math.random()-0.5)
@@ -286,6 +270,8 @@
         shuffle(Acardlist)
         playerimg1 = document.createElement('img')
         playerimg1.src=Acardlist[0]
+        sl1=playerimg1.src.slice(21)
+
         playerimg11 = document.createElement('img')
         playerimg11.src=Acardlist[0]
         playerimg11.style.transform='rotate(90deg)'
@@ -295,6 +281,8 @@
         Acardlist.shift()
         playerimg2 = document.createElement('img')
         playerimg2.src=Acardlist[0]
+        sl2=playerimg2.src.slice(21)
+
         playerimg22 = document.createElement('img')
         playerimg22.src=Acardlist[0]
         playerimg22.style.transform='rotate(90deg)'
@@ -323,7 +311,8 @@
         backimg1 = document.createElement('img')
         backimg1.src=Acardback
         backimg2 = document.createElement('img')
-        backimg2.src=Dcardback
+        backimg2.src=Acardback
+        backimg2.style.transform='rotate(90deg)'
 
         playercard=document.getElementById('playercard')
         playercard.appendChild(playerimg1)
@@ -340,50 +329,179 @@
         draw= document.getElementById('draw')
         draw.addEventListener("click",drawcard)
 
-        function cardset1(){
+        function cardset1(player1,player11,sl){
+            {#playercard.removeChild(player1)#}
             cardbtn.style.display='block'
-            attackbtn.appendChild(playerimg1)
-            defencebtn.appendChild(playerimg11)
-        }
-        
-        function cardset2(){
-            cardbtn.style.display='none'
-            cardbtn2.style.display='block'
-            frontbtn.appendChild(playerimg1)
-            backbtn.appendChild(backimg1)
-        }
-        function cardset2_1(){
-            cardbtn.style.display='none'
-            cardbtn2.style.display='block'
-            frontbtn.appendChild(playerimg11)
-            backbtn.appendChild(backimg2)
-        }
-        function cardset3(){
-            cardbtn.style.display='none'
-            cardbtn2.style.display='none'
-            normallocation.style.display='block'
-            // if(plyaerimg1 in Object.keys)
-        }
-        function cardset3_1(){
-            cardbtn.style.display='none'
-            cardbtn2.style.display='none'
-            magiclocation.style.display='block'
+            if(classification['일반카드'].includes(sl)==true){
+                attackbtn.appendChild(player1)
+                defencebtn.appendChild(player11)
+
+                attackbtn.addEventListener("click",()=>{
+                    cardbtn.style.display='none'
+                    cardbtn2.style.display='block'
+                    attackbtn.removeChild(player1)
+                    defencebtn.removeChild(player11)
+
+                    frontbtn.appendChild(player1)
+                    backbtn.appendChild(backimg1)
+
+                    frontbtn.addEventListener('click',()=>{
+                        cardbtn.style.display='none'
+                        cardbtn2.style.display='none'
+                        normallocation.style.display='block'
+                        frontbtn.removeChild(player1)
+                        backbtn.removeChild(backimg1)
+
+                        loc1.addEventListener('click',()=>{
+                            field8.appendChild(player1)
+                            normallocation.style.display='none'
+                            loc1.disabled=true
+                        })
+                        loc2.addEventListener('click',()=>{
+                            field9.appendChild(player1)
+                            normallocation.style.display='none'
+                            loc2.disabled=true
+                        })
+                        loc3.addEventListener('click',()=>{
+                            field10.appendChild(player1)
+                            normallocation.style.display='none'
+                            loc3.disabled=true
+                        })
+                        loc4.addEventListener('click',()=>{
+                            field11.appendChild(player1)
+                            normallocation.style.display='none'
+                            loc4.disabled=true
+                        })
+                    })
+
+                    backbtn.addEventListener('click',()=>{
+                        cardbtn.style.display='none'
+                        cardbtn2.style.display='none'
+                        normallocation.style.display='block'
+                        frontbtn.removeChild(player1)
+                        backbtn.removeChild(backimg1)
+
+                        loc1.addEventListener('click',()=>{
+                            field8.appendChild(backimg1)
+                            normallocation.style.display='none'
+                            loc1.disabled=true
+                        })
+                        loc2.addEventListener('click',()=>{
+                            field9.appendChild(backimg1)
+                            normallocation.style.display='none'
+                            loc2.disabled=true
+                        })
+                        loc3.addEventListener('click',()=>{
+                            field10.appendChild(backimg1)
+                            normallocation.style.display='none'
+                            loc3.disabled=true
+                        })
+                        loc4.addEventListener('click',()=>{
+                            field11.appendChild(backimg1)
+                            normallocation.style.display='none'
+                            loc4.disabled=true
+                        })
+                    })
+
+                })
+                defencebtn.addEventListener('click',()=>{
+                    cardbtn.style.display='none'
+                    cardbtn2.style.display='block'
+                    attackbtn.removeChild(player1)
+                    defencebtn.removeChild(player11)
+
+                    frontbtn.appendChild(player11)
+                    backbtn.appendChild(backimg2)
+
+                    frontbtn.addEventListener('click',()=>{
+                        cardbtn.style.display='none'
+                        cardbtn2.style.display='none'
+                        normallocation.style.display='block'
+                        frontbtn.removeChild(player11)
+                        backbtn.removeChild(backimg2)
+                        loc1.addEventListener('click',()=>{
+                            field8.appendChild(player11)
+                            normallocation.style.display='none'
+                            loc1.disabled=true
+                        })
+                        loc2.addEventListener('click',()=>{
+                            field9.appendChild(player11)
+                            normallocation.style.display='none'
+                            loc2.disabled=true
+                        })
+                        loc3.addEventListener('click',()=>{
+                            field10.appendChild(player11)
+                            normallocation.style.display='none'
+                            loc3.disabled=true
+                        })
+                        loc4.addEventListener('click',()=>{
+                            field11.appendChild(player11)
+                            normallocation.style.display='none'
+                            loc4.disabled=true
+                        })
+                    })
+                    backbtn.addEventListener('click',()=>{
+                        cardbtn.style.display='none'
+                        cardbtn2.style.display='none'
+                        normallocation.style.display='block'
+                        frontbtn.removeChild(player11)
+                        backbtn.removeChild(backimg2)
+                        loc1.addEventListener('click',()=>{
+                            field8.appendChild(backimg2)
+                            normallocation.style.display='none'
+                            loc1.disabled=true
+                        })
+                        loc2.addEventListener('click',()=>{
+                            field9.appendChild(backimg2)
+                            normallocation.style.display='none'
+                            loc2.disabled=true
+                        })
+                        loc3.addEventListener('click',()=>{
+                            field10.appendChild(backimg2)
+                            normallocation.style.display='none'
+                            loc3.disabled=true
+                        })
+                        loc4.addEventListener('click',()=>{
+                            field11.appendChild(backimg2)
+                            normallocation.style.display='none'
+                            loc4.disabled=true
+                        })
+                    })
+                })
+            }
+            else if(classification['마법카드'].includes(sl)==true){
+                attackbtn.appendChild(player1)
+                defencebtn.style.display='none'
+                attackbtn.addEventListener('click',()=>{
+                    cardbtn.style.display='none'
+                    cardbtn.style.display='none'
+                    magiclocation.style.display='block'
+                    attackbtn.removeChild(player1)
+                    loc5.addEventListener('click',()=>{
+                        field12.appendChild(player1)
+                        magiclocation.style.display='none'
+                    })
+                    loc6.addEventListener('click',()=>{
+                        field13.appendChild(player1)
+                        magiclocation.style.display='none'
+                    })
+                    loc7.addEventListener('click',()=>{
+                        field14.appendChild(player1)
+                        magiclocation.style.display='none'
+                    })
+                })
+            }
         }
 
-        function position1(){
-            cardbtn.style.display='none'
-            cardbtn2.style.display='none'
-            normallocation.style.display='none'
-            field8.appendChild(playerimg1)
-        }
 
-        attackbtn.addEventListener("click",cardset2)
-        defencebtn.addEventListener("click",cardset2_1)
-        frontbtn.addEventListener("click",cardset3)
-        backbtn.addEventListener("click",cardset3)
-        playerimg1.addEventListener('click',cardset1)
-        
-        loc1.addEventListener('click',position1)
+
+
+        playerimg1.addEventListener('click',()=>{
+            cardset1(playerimg1,playerimg11,sl1)}
+            ,{once:true})
+        playerimg2.addEventListener('click',()=>{
+            cardset1(playerimg2,playerimg22,sl2)}
+            ,{once:true})
 
     </script>
 </body>

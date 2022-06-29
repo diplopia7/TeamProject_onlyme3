@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/static/css/bs5/bootstrap.min.css">
+  <style>
+    form div {
+      margin-top: 5px;
+    }
+    form label {
+      display: inline-block;
+      width: 100px;
+    }
+  </style>
+</head>
+<body>
+<!-- Button trigger modal -->
+<div class="position-absolute top-50 start-50 translate-middle">
+  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  결제하기
+  </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><img src="/static/img/danal.png" width="80px" height="30px"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex justify-content-between">
+          <p>결제금액</p>
+          <p>1,000,000</p>
+        </div>
+        <div class="d-flex justify-content-between">
+          <p>상품명</p>
+          <p>테스트 아이템</p>
+        </div>
+        <hr>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input rd" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+          <label class="form-check-label" for="inlineRadio1">10,000원</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input rd" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+          <label class="form-check-label" for="inlineRadio2">20,000원</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input rd" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+          <label class="form-check-label" for="inlineRadio3">30,000원</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input rd" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option4">
+          <label class="form-check-label" for="inlineRadio4">50,000원</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input rd" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="option5">
+          <label class="form-check-label" for="inlineRadio5">100,000원</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input rd" type="radio" name="inlineRadioOptions" id="inlineRadio6" value="option6">
+          <label class="form-check-label" for="inlineRadio6">1,000,000원</label>
+        </div>
+        <form name="phone_frm" id="phone_frm" method="post">
+            <div class="d-flex justify-content-between">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+                <label class="btn btn-outline-danger col-4" for="btnradio1">SKT</label>
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                <label class="btn btn-outline-danger col-4 mx-1" for="btnradio2">KT</label>
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                <label class="btn btn-outline-danger col-4" for="btnradio3">LG</label>
+            </div>
+          <div>
+            <label>이 름</label>
+            <input type="text" id="name">
+          </div>
+          <di>
+            <label>전화번호</label>
+            <input type="tel" id="phone">
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+            <label class="btn btn-outline-danger col-1" for="btnradio4">남</label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off">
+            <label class="btn btn-outline-danger col-1" for="btnradio5">여</label>
+          </di>
+          <div>
+            <label>주민번호</label>
+            <input type="text" id="rnum" size="6">-<input type="password" id="rnum2" size="7">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="payokbtn" class="btn btn-danger btn-lg w-100" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+          결제
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2"><img src="/static/img/danal.png" width="80px" height="30px"></h5>
+      </div>
+      <div class="modal-body">
+        <p>결제가 완료되었습니다 !!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-lg w-100" data-bs-dismiss="modal" onclick="location.href='/payok'">
+            완료
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    const payokbtn = document.querySelector('#payokbtn')
+    payokbtn.addEventListener('click', () => {
+        const name = document.phone_frm.name;
+        const phone = document.phone_frm.phone;
+        const rnum = document.phone_frm.rnum;
+        const rnum2 = document.phone_frm.rnum2;
+
+        if (rd.checked == true) {
+            name.value == 'aaa';
+        }
+    });
+</script>
+<script src="/static/js/bs5/bootstrap.bundle.min.js"></script>
+</body>
+</html>

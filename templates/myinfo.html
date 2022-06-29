@@ -1,0 +1,33 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}member/myinfo{% endblock %}
+
+{% block style %}
+
+table { /*border: 1px solid red;*/
+   margin: 120px auto }
+
+th, td { padding: 10px }
+
+th { text-align: right }
+{% endblock %}
+
+{% block content %}
+
+    {% if not request.session.userid %}
+        <script>
+            alert('회원전용 페이지입니다.');
+            location.href='/login';
+        </script>
+    {% endif %}
+
+    <h2>회원정보</h2>
+        <table>
+            <tr><th>아이디</th><td>{{ member.userid }}</td></tr>
+            <tr><th>이름</th><td>{{ member.name }}</td></tr>
+            <tr><th>이메일</th><td>{{ member.email }}</td></tr>
+            <tr><th>가입일</th><td>{{ member.regdate }}</td></tr>
+        </table>
+{% endblock %}
+
+{% block jscript %}{% endblock %}
