@@ -1,49 +1,59 @@
 from django.contrib.auth.hashers import make_password, check_password
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 
 # Create your views here.
 from member.models import Member
 
 # 회원가입 처리 함수
 def join(request):
-    returnPage ='join.html'
+    returnPage = 'join.html'
 
     if request.method == 'GET':
         return render(request, returnPage)
 
     elif request.method == 'POST':
-        # 폼으로 전송된 데이터들을 dict형태로 저장
         form = request.POST.dict()
-        # print(form, form['userid']) # 전송된 데이터 확인
+        error1 = ''
+        error2 = ''
+        error3 = ''
+        error4 = ''
+        error5 = ''
+        duplicate=''
 
-        # 유효성 검사 1/2
-        error = ''      # 검사 결과
-        if not (form['userid'] and form['passwd'] and form['repasswd'] \
-            and form['name'] and form['email']):
-            error = '입력값이 누락되었습니다.'
-        elif form['passwd'] != form['repasswd']:
-            error = '비밀번호가 일치하지 않습니다!'
+        try:
+            member = Member.objects.get(userid=form['userid'])
+        except Member.DoesNotExist:
+            member = None
+        if member is not None:
+            duplicate = '이미 사용하고 있는 아이디 입니다.'
         else:
-            # 입력한 회원정보를 Member 객체에 담음
-            member = Member(
-                userid=form['userid'],
-                passwd=make_password(form['passwd']),
-                name=form['name'],
-                email=form['email']
-            )
-            # Member객체에 담은 회원정보를 member테이블에 저장
-            member.save()
+            duplicate = '사용할 수 있는 아이디 입니다.'
 
-            # 회원가입 성공시 joinok.html을 띄움
-            returnPage = 'member/joinok.html'
-        # 유효성 검사를 실패하는 경우
-        # 오류내용을 join.html에 표시하기 위해 dict 변수에 저장
-        # 또한, 이미 입력했던 회원정보를 다시 join.html에 표시하기 위해
-        # form이라는 dict 변수 생성
-        context = {'form':form, 'error':error}
+            if not form['userid']:
+                error1='아이디를 입력하세요'
+            elif not form['passwd']:
+                error2='비밀번호를 입력하세요'
+            elif not form['name']:
+                error3='이름을 입력하세요'
+            elif not form['email']:
+                error4 = '이메일 주소를 입력하세요'
+            elif form['passwd'] != form['repasswd']:
+                error5 = '비밀번호가 일치하지 않습니다!'
+            else:
+                member = Member(
+                    userid=form['userid'],
+                    passwd=make_password(form['passwd']),
+                    name=form['name'],
+                    email=form['email']
+                )
+                member.save()
+                returnPage = 'joinok.html'
 
-        return render(request, 'join.html')
 
+        context = {'form': form, 'error1': error1,'error2':error2,'error3':error3,'error4':error4,'error5':error5,
+                   'duplicate':duplicate}
+
+        return render(request, returnPage, context)
 
 # 로그인 처리 함수
 def login(request):
@@ -58,7 +68,7 @@ def login(request):
         # 유효성 검사 1/2
         error = ''
         if not (form['userid'] and form['passwd']):
-            error = '아이디나 비밀번호가 입력되지 않았다.'
+            error = '아이디나 비밀번호가 입력되지 않았습니다.'
         else:
             # 입력한 아이디로 회원정보가 테이블에 있는지 여부 확인
             try:
@@ -98,9 +108,8 @@ def myinfo(request):
 
 # 로그아웃 처리 함수
 def logout(request):
-    # 만약 세션변수 userid가 존재하면 세션변수 삭제
     if request.session.get('userid'):
         del(request.session['userid'])
 
-    # 로그아웃 후 index로 이동
     return redirect('/')
+

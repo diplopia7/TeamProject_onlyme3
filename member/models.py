@@ -8,10 +8,11 @@ from django.db import models
 # Member 테이블의 구조와 유사하게 member 모델 정리 - Model
 class Member(models.Model):
     id=models.AutoField(primary_key=True)
+    userid = models.CharField(max_length=18)
     passwd=models.CharField(max_length=18)
-    userid=models.CharField(max_length=18)
     name=models.CharField(max_length=5)
     email=models.CharField(max_length=100)
+    cash=models.IntegerField(default=0)
     regdate=models.DateTimeField(default=datetime.now)
 
     class Meta:

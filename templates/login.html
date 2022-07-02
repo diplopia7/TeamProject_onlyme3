@@ -1,9 +1,9 @@
-{% extends 'layout/base.html' %}
+{% extends 'project.html' %}
 
-{% block title %}member/login{% endblock %}
+{% block title %}login{% endblock %}
 
 {% block style %}
-
+<style>
 /* 로그인 폼 배치하기 */
 form { /*border: 1px solid red;*/ width: 350px;
     margin: 150px auto }
@@ -13,6 +13,11 @@ form div { margin-top: 10px; }
 form label { display: inline-block;
     width: 120px; text-align: right;
     font-weight: bold }
+h2 {margin-left: 55px}
+#wrapper a {font-weight: bold; text-decoration: none;
+        color: black}
+#wrapper a:hover{color:orangered}
+</style>
 {% endblock %}
 
 {% block content %}

@@ -32,3 +32,7 @@ def 내정(request):
 
 def 전투(request):
     return render(request, '전투.html')
+
+
+def how_to_fight(request):
+    return render(request,'how_to_fight.html')

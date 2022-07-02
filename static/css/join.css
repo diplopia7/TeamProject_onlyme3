@@ -1,0 +1,7 @@
+form { /*border: 1px solid red;*/ width: 350px; margin: 150px auto}
+
+form div { margin-top: 10px }
+
+form label { display:inline-block; width: 120px; text-align: right; font-weight:bold}
+
+form button:first-child { margin-left: 125px }

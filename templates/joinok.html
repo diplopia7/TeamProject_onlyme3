@@ -1,0 +1,40 @@
+{% extends 'project.html' %}
+{% block title %}member/join{% endblock %}
+
+{% block style %}
+    <style>
+        form { width: 350px; margin: 150px auto}
+
+        form div { margin-top: 10px }
+
+        form label { display:inline-block; width: 120px; text-align: right; font-weight:bold}
+
+        form button:first-child { margin-left: 125px }
+
+        h2 {margin-left: 55px}
+
+        .error{position:relative; left:150px; color:red; font-weight: bold}
+    </style>
+{% endblock %}
+
+{% block content %}
+{% if request.session.userid %}
+    <script>location.href='/';</script>
+{% endif %}
+
+<h2>회원가입</h2>
+<form name="joinfrm" method="post" id="joinfrm">
+    {# django built-in template filter #}
+    <div style="color: red">{{ error|addslashes }}</div>
+
+    {% csrf_token %} {# 동일 출처origin 확인용 쿠키 생성 #}
+    <div>
+        <h3>회원가입 완료!</h3>
+    </div>
+</form>
+{% endblock %}
+
+{% block jscript %}
+
+{% endblock %}
+

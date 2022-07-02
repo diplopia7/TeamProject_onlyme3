@@ -1,31 +1,27 @@
-{% extends 'layout/base.html' %}
+{% extends 'project.html' %}
 
-{% block title %}member/myinfo{% endblock %}
+{% block title %}myinfo{% endblock %}
 
 {% block style %}
+<style>
+    table { /*border: 1px solid red;*/
+       margin: 120px auto }
 
-table { /*border: 1px solid red;*/
-   margin: 120px auto }
+    th, td { padding: 10px }
 
-th, td { padding: 10px }
+    th { text-align: right }
 
-th { text-align: right }
+    h2 {margin-left: 55px}
+</style>
 {% endblock %}
 
 {% block content %}
-
-    {% if not request.session.userid %}
-        <script>
-            alert('회원전용 페이지입니다.');
-            location.href='/login';
-        </script>
-    {% endif %}
-
     <h2>회원정보</h2>
         <table>
             <tr><th>아이디</th><td>{{ member.userid }}</td></tr>
             <tr><th>이름</th><td>{{ member.name }}</td></tr>
             <tr><th>이메일</th><td>{{ member.email }}</td></tr>
+            <tr><th>캐시</th><td>{{ member.cash }} 원</td></tr>
             <tr><th>가입일</th><td>{{ member.regdate }}</td></tr>
         </table>
 {% endblock %}

@@ -1,58 +1,52 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>스토리 선택형 삼국지 TCG</title>
+{% extends 'project.html' %}
+{% block style %}
     <style>
-        a{
-            text-decoration: none;
-            color: white
-        }
-        a:hover {
-            color:orange;
-        }
+        #wrapper a {font-weight: bold; text-decoration: none;
+                    color: black}
+        #wrapper a:hover{color:orangered}
         #gamename {
             color:red; font-size:50px; font-weight: bold; position:absolute;
-            z-index: 1; text-align: center; top:100px; left:340px;
+            z-index: 1; text-align: center; top:150px; left:605px;
+            text-shadow: 1px 0 black, 0 1px black, 1px 0 black, 0 1px black;
         }
         #gameplay {
             color:white; font-size:40px;position: absolute;
-            z-index: 1; text-align: center; top:250px; left:580px;
+            z-index: 1; text-align: center; top:380px; left:700px;
         }
-        #gamedescription{
-            color:white; font-size:40px;position: absolute;
-            z-index: 1; text-align: center; top:350px; left:580px;
+        #gameplay a{
+            color:white; text-decoration: none;
+            text-shadow: 2px 0 black, 0 2px black, 2px 0 black, 0 2px black;
         }
+        #gameplay a:hover{color:orange}
         #quit{
             color:white; font-size:40px;position: absolute;
-            z-index: 1; text-align: center; top:450px; left:630px;
+            z-index: 1; text-align: center; top:550px; left:750px;
+        }
+        #quit a{
+            color:white; text-decoration: none;
+            text-shadow: 2px 0 black, 0 2px black, 2px 0 black, 0 2px black;
+        }
+        #quit a:hover{
+            color:orange
+        }
+        #main_menu{
+            position: relative; left:200px;
         }
     </style>
-</head>
-<body>
-    <audio src="/static/resources/music/rising the empire.ogg" autoplay="autoplay" loop="loop"></audio>
-    <div id="main_menu" style="position:absolute; z-index:0">
-        <img src="/static/resources/img/background/background1.jpg" width="1280" height="720" alt>
-        <div id="gamename">
-            스토리 선택형 삼국지 TCG
-        </div>
-        <div id="gameplay" class="mainui">
-            <a href="/story1" target="_self">게임 시작</a>
-        </div>
-        <!-- <div id="gamedescription" class="mainui">
-            <a href="game_info.html" target="_self">게임 설명</a>
-        </div> -->
-        <div id="quit" target="_self" class="mainui">
-            <a href="/">종료</a>
-        </div>
+{% endblock %}
+{% block content %}
+{#<audio src="/static/resources/music/rising the empire.ogg" autoplay="autoplay" loop="loop"></audio>#}
+<div id="main_menu">
+    <img src="/static/resources/img/background/background1.jpg" width="1500" height="840" alt>
+    <div id="gamename">
+        삼국지 TCG<br>
+        - 촉한의 부흥 -
     </div>
-    
-    <!-- <script>
-        function click_sfx(){
-        sfx1 = new Audio('resources/sfx/game_start.wav')
-        sfx1.play()
-        }
-
-    </script> -->
-</body>
-</html>
+    <div id="gameplay" class="mainui">
+        <a href="/story1">게임 시작</a>
+    </div>
+    <div id="quit" class="mainui">
+        <a href="/">종료</a>
+    </div>
+</div>
+{% endblock %}

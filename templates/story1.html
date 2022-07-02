@@ -1,19 +1,12 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>스토리 선택형 삼국지 TCG</title>
+{% extends 'project.html' %}
+{% block style %}
     <style>
-        a{
-            text-decoration: none;
-            color: white
-        }
-        a:hover {
-            color:orange;
-        }
+        #wrapper a {font-weight: bold; text-decoration: none;
+                    color: black}
+        #wrapper a:hover{color:orangered}
         #story1 {
-            position:absolute; z-index: 1; top:-40px;
-            left:-40px;
+            position:absolute; top:0;
+            left:80px;
         }
         .mainui {
             position:absolute; z-index: 1;
@@ -26,27 +19,37 @@
             position:absolute; z-index:1;
             right:20px; bottom:30px;
         }
+        #next a{
+            text-decoration: none;
+            color: white
+        }
+        #next a:hover {
+            color:orange;
+        }
         #before{
             position:absolute; z-index:1;
             left:20px; bottom:30px;
         }
-            
+        #before a{color:white; text-decoration: none}
+        #before a:hover{color:orange}
+        #main_menu{
+            position: relative; left:200px;
+        }
     </style>
-</head>
-<body>
-    <audio src="/static/resources/music/서주대학살.ogg" autoplay="auto"></audio>
+{% endblock %}
+{% block content %}
+{#    <audio src="/static/resources/music/서주대학살.ogg" autoplay="auto"></audio>#}
     <audio src="/static/resources/sfx/game_start.wav" autoplay="autoplay"></audio>
     <div id="main_menu" style="position:absolute; z-index:-1;">
-        <img src="/static/resources/img/background/background4.jpg" width="1280" height="720" alt>
+        <img src="/static/resources/img/background/background4.jpg" width="1500" height="840" alt>
         <div id="story1">
             <img src="/static/resources/img/story/story1.png">
         </div>
         <div id="next" class="mainui">
-            <a href="/character" target="_self">다음</a>
+            <a href="/character">다음</a>
         </div>
         <div id="before" class="mainui">
-            <a href="/main_menu" target="_self">이전</a>
+            <a href="/main_menu">이전</a>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}

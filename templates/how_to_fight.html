@@ -1,0 +1,188 @@
+{% extends 'project.html' %}
+{% block title %}개임소개{% endblock %}
+{% block style %}
+    <style>
+       #infonav {
+            position: relative; top:-20px;
+            display: flex; list-style: none;
+            padding:15px;
+            font-size: 20px;
+            background: #868080;
+        }
+        #infonav li{
+            margin-left: 15px;
+            margin-right:15px; padding:15px;
+            font-size: 25px; font-weight: bold;
+            color:black;
+        }
+        #info{
+            margin-left: 25px;
+        }
+        #infonav a{
+            text-decoration: none;
+            color:black
+        }
+        #infonav a:hover{color: orangered}
+        p{
+            font-size: 25px;
+            line-height: 40px;
+        }
+        #remote{
+            border: 1px solid black;
+            width: 200px;
+            position: sticky; z-index: 1;
+            left:2500px; bottom:360px;
+            font-size: large; line-height: 30px;
+            background: #adb5bd;
+            text-align: center;
+        }
+        #remote li{
+            list-style: none;
+            margin-left: -30px;
+        }
+        #remote a{
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: bold;
+            color:black;
+        }
+        #remote a:hover{color:orangered}
+        #wrapper a {font-weight: bold; text-decoration: none;
+                    color: black}
+        #wrapper a:hover{color:orangered}
+
+    </style>
+{% endblock %}
+{% block content %}
+<ul id="infonav">
+    <li><a href="/game_info">게임설명</a></li>
+    <li><a href="/how_to_fight">전투방법</a></li>
+</ul>
+<div id="info">
+<div id="stat">
+    <h2>카드 배치</h2>
+    <p>
+        카드는 최대 7장 배치가 가능합니다.<br>
+        전투카드 최대 4장 배치 가능<br>
+        마법카드 최대 3장 배치 가능<br>
+        전투카드는 앞, 뒤 또는 가로, 세로로 배치 할 수 있습니다.<br><br>
+        1. 아래와 같이 전투카드가 앞, 세로로 배치가 되어있다면, 공격이 가능합니다.<br>
+        플레이어의 카드 공격력이 적의 카드 공격력보다 낮다면 카드가 파괴되고, 플레이어의 체력은 차이 피해를 입습니다.<br>
+        <img src="/static/resources/img/card/resize/2_of_clubs.png"><br>
+        2. 아래와 같이 전투카드가 앞, 가로로 배치가 되어있다면, 방어가 가능합니다.<br>
+        적의 카드 공격력이 플레이어 카드 방어력보다 높은 경우, 카드는 파괴 되지만, 플레이어의 체력에는 어떠한 피해도 입힐 수 없습니다.<br>
+        <img src="/static/resources/img/card/rotate/2_of_clubs.png.png"><br>
+        3. 아래와 같이 전투카드가 뒤, 가로로 배치가 되어 있는 경우, 바로 공격을 할 수 없습니다.<br>
+        전투카드가 뒷면의 경우, 시너지 효과가 발동하지 않습니다.<br>
+        공격을 하기 위해선 자신의 전투 턴에서 카드를 다시 앞으로 표시한 후 공격을 할 수 있습니다.<br>
+        적이 공격을 한다면, 자동적으로 카드가 앞면 표시가 됩니다.<br>
+        <img src="/static/resources/img/card/resize/back.png"><br>
+        4. 아래와 같이 전투카드가 앞, 가로로 배치가 되어 있는 경우, 방어를 할 수 있습니다.<br>
+        전투카드가 뒷면의 경우, 시너지 효과가 발동하지 않습니다.<br>
+        적이 공격을 한다면, 자동적으로 카드가 앞면 표시가 됩니다.<br>
+        <img src="/static/resources/img/card/rotate/back.png"><br>
+        5. 마법카드는 앞면, 세로로만 배치 가능합니다.<br>
+
+    </p>
+</div>
+    <hr>
+<div id="trait1">
+    <h2>카드 설명</h2>
+    <p>
+    Jack, Queen, King카드는 마법카드, 그 외 나머지 카드들은 전투 카드입니다.<br>
+    </p>
+</div>
+    <hr>
+<div id="trait2">
+    <h2>카드 효과</h2>
+    <p>
+    1. 2~10 카드들은 해당하는 숫자에 따라 공격력과 방어력을 가집니다.<br><br>
+        2. <img src="/static/resources/img/card/resize/black_joker.png"> Black Joker<br>
+        클로버와 스페이드의 최대 공격력 보다 이상의 공격력을 가집니다.<br>
+        이 카드는 방어표시로 놓을 수 없습니다.<br>
+        흑백 카드들만 파괴 할 수 있습니다.<br>
+        모든 컬러 카드들에게 파괴 될 수 있습니다.<br><br>
+        3. <img src="/static/resources/img/card/resize/red_joker.png"> Color Joker<br>
+        하트와 다이아의 최대 공격력 보다 이상의 공격력을 가집니다.<br>
+        이 카드는 방어표시로 놓을 수 없습니다.<br>
+        컬러 카드들만 파괴 할 수 있습니다.<br>
+        모든 흑백 카드들에게 파괴 될 수 있습니다.<br><br>
+        4. 하트, 다이아, 클로버 Ace<br>
+        공격력과 방어력이 1입니다.<br>
+        공격표시일 때, 적 카드에게 공격을 받아도 플레이어에게는 데미지가 없습니다.<br><br>
+        5. <img src="/static/resources/img/card/resize/ace_of_spades.png"> Spades Ace<br>
+        공격력과 방어력이 11입니다.<br>
+        모든 디버프에 면역을 가집니다.<br>
+        공격표시일 때, 적 카드에게 공격을 받아도 플레이어에게는 데미지가 없습니다.<br><br>
+        6. <img src="/static/resources/img/card/resize/jack_of_clubs2.png"> Jack<br>
+        Jack이 필드에 있으면 플레이어의 배치된 카드들의 공격력/방어력이 2배가 됩니다.<br><br>
+        7. <img src="/static/resources/img/card/resize/queen_of_clubs2.png"> Queen<br>
+        Queen이 필드에 있으면 적의 배치된 카드들의 공격력/방어력이 0.5배가 됩니다.<br><br>
+        8. <img src="/static/resources/img/card/resize/king_of_clubs2.png"> King<br>
+        King이 필드에 있으면 플레이어의 배치된 카드들의 공격력/방어력이 2배가 되고,<br>
+        적의 배치된 카드들의 공격력/방어력이 0.5배가 됩니다.<br>
+    </p>
+</div>
+    <hr>
+<div id="skill">
+    <h2>카드 연계 효과</h2>
+    <p>
+    1. 필드 위에 같은 숫자가 2개가 있는 경우 : 두 카드의 공격력과 방어력이 2배가 됩니다.<br>
+    2. 필드 위에 같은 숫자가 3개가 있는 경우 : 세 카드의 공격력과 방어력이 3배가 됩니다.<br>
+    3. 필드 위에 같은 숫자가 4개가 있는 경우 : 네 카드의 공격력과 방어력이 공격력의 제곱과 방어력의 제곱이 됩니다.<br>
+        ex)2카드가 4개 있는 경우 : 4개의 카드 공격력과 방어력은 2^2=4, 2카드가 3개 있는 경우보다 공격력과 방어력이 낮아짐<br>
+        ex)8카드가 4개 있는 경우 : 4개의 카드 공격력과 방어력은 8^2=64, 8카드가 3개 있는 경우보다 공격력과 방어력이 높아짐<br>
+    4. 3장 이상의 차례 배열 : 각 카드의 공격력과 방어력을 더해 적용합니다.<br>
+        ex)2,3,4카드가 있는 경우 : 3개의 카드 공격력과 방어력은 2+3+4=9가 됩니다.<br>
+    5. 필드 위에 같은 문양이 2개가 있는 경우 : 적의 전투 카드 하나의 공격력과 방어력이 0.5배가 됩니다.<br>
+    6. 필드 위에 같은 문양이 3개가 있는 경우 : 적의 전투 카드 중 하나를 묘지로 보낼 수 있습니다.<br>
+    7. 필드 위에 같은 문양이 4개가 있는 경우 : 적의 모든 전투 카드를 묘지로 보낼 수 있습니다.<br>
+    8. 전투카드가 모두 블랙인 경우 : 적의 카드(전투카드 및 마법카드) 1장을 묘지로 보낼 수 있습니다.<br>
+    9. 전투카드가 모두 컬러인 경우 : 적의 카드(전투카드 및 마법카드) 모두 묘지로 보낼 수 있습니다.<br>
+    10. 전투카드4장과 필드3장이 모두 세팅된 경우 <br>자신의 필드위에 카드들을 모두 묘지로 보내어, 적의 스페이드 A를 가져오거나,<br>
+        자신의 덱에 스페이드A가 있다면, 패로 가져옵니다.<br>
+    </p>
+</div>
+    <hr>
+<div id="army">
+    <h2>카드 상성</h2>
+    <p>하트>다이아<br>
+    스페이드>클로버<br>
+    그 외엔 상성이 없습니다.<br>
+    상성이 적용되는 경우, 우위 전투카드는 공격력과 방어력이 +1이 됩니다.<br>
+    ex) 하트2 카드가 다이아2카드를 공격하는 경우, 하트 2 카드의 공격력이 3이 되면서, 다이아 2카드를 파괴하고, 적에게 1피해를 줍니다.</p>
+</div>
+    <hr>
+<div id="politics">
+    <h2>무덤 효과</h2>
+    <p>
+        무덤 효과를 쓴 카드는 제외됩니다.
+    1. 무덤에 연속해서 같은 숫자/문양/컬러2장이 쌓인 경우 : 적의 전투 카드 한 장의 공격력과 방어력이 0.5배가 됩니다.<br>
+        2. 무덤에 연속해서 같은 숫자/문양/컬러3장이 쌓인 경우 : 적의 덱에서 한 장을 제외 합니다.<br>
+        3. 무덤에 연속해서 같은 숫자/문양/컬러4장이 쌓인 경우 : 적의 카드(전투카드 및 마법카드) 1장을 묘지로 보내고, 적의 덱에서 한 장을 제외 합니다.<br>
+    </p>
+</div>
+    <hr>
+<div id="fight">
+    <h2>전투관련</h2>
+    <p>
+    1. 첫턴이 끝나기 전엔 적장과 플레이어 모두 전술 스킬을 사용할 수 없습니다.<br>
+    2. 퇴각시 금을 200소모합니다.<br>
+    3. 병과는 매번 전투 전에 선택합니다.<br>
+    4. 전투 시 1. 스킬, 2. 전투카드 효과 3. 마법카드 효과 순으로 적용합니다.<br>
+    5. 적장은 적장이 가지고 있는 전투스킬에 모든 디버프 효과를 무시하고 적용합니다<br>
+    </p>
+</div>
+</div>
+<div id="remote">
+<ul>
+    <li><a href="#stat">카드 배치</a></li>
+    <li><a href="#trait1">카드 설명</a></li>
+    <li><a href="#trait2">카드 효과</a></li>
+    <li><a href="#skill">카드 연계 효과</a></li>
+    <li><a href="#army">카드 상성</a></li>
+    <li><a href="#politics">무덤 효과</a></li>
+    <li><a href="#fight">전투 관련</a></li>
+</ul>
+</div>
+{% endblock %}

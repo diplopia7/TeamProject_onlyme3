@@ -1,26 +1,30 @@
-header {height: 80px}
+header {height: auto;}
 header h1 {margin: 0; float: left}
 header img {width: 120px; padding: 7px}
-header a {font-weight: bold}
-a:link {color: black; text-decoration:none}
-a:visited{color: black; text-decoration:underline}
-a:hover {color: orangered; text-decoration:none}
-a:active {color: orangered; text-decoration:none }
+/*header a {font-weight: bold}*/
+/*#wrapper a:link {color: black; text-decoration:none}*/
+/*!*#wrapper a:visited{color: black; text-decoration:underline}*!*/
+/*#wrapper a:hover {color: orangered; text-decoration:none}*/
+/*#wrapper a:active {color: orangered; text-decoration:none }*/
 
 #qmenu {list-style: none; padding: 0;
-        float: right; margin-right: 15px}
+        float: right; margin-right: 15px;}
+        /*border: 1px solid black}*/
 #qmenu li { display: inline-block}
 
 #qmenu li:after { content: ' |'}
-#qmenu li:last-child:after { content: '' }
+#qmenu li:last-child:after { content: ' ' }
 
-header div {float: left; margin-top: 75px}
+/*#qmenu a:visited{color:black}*/
 
-nav {background: silver; padding: 5px 15px; clear: both; margin-top: -5px}
-    {width: 250px; border: 3px solid gray}
-nav select {width: 150px; border: 3px solid gray ; text-decoration: underline}
-nav button {width: 100px; background: gray; border: none; padding: 5px; color: white;
-            border-radius: 5px}
+/*header div {float: left; margin-top: 75px}*/
+
+nav {background: silver; padding: 5px 15px; clear: both;}
+
 #mmenu {padding:3px;}
+/*#mmenu a{color:black}*/
 #mmenu li { font-size: 30px; text-align: center; display: inline-block;
-            margin-left: 40px }
+            margin-left: 40px;}
+#wrapper {height:auto}
+#main {min-height:840px}
+footer{height: auto;text-align: center; padding-bottom: 10px;}
