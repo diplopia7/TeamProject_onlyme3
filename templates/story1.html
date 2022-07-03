@@ -4,47 +4,44 @@
         #wrapper a {font-weight: bold; text-decoration: none;
                     color: black}
         #wrapper a:hover{color:orangered}
+
+        #main_menu{
+            position: relative; left:200px;
+            width:1500px;
+            height:840px;
+        }
         #story1 {
             position:absolute; top:0;
             left:80px;
         }
         .mainui {
-            position:absolute; z-index: 1;
             font-size:30px; width:100px;
             background-color: black;
             color: white; text-align: center;
             padding:5px
         }
         #next{
-            position:absolute; z-index:1;
-            right:20px; bottom:30px;
-        }
-        #next a{
-            text-decoration: none;
-            color: white
-        }
-        #next a:hover {
-            color:orange;
-        }
+            position:absolute; z-index:10;
+            right:20px; bottom:30px;}
+        #next a{color:white; text-decoration: none}
+        #next a:hover{color:orange}
         #before{
-            position:absolute; z-index:1;
-            left:20px; bottom:30px;
-        }
+            position:absolute; z-index:10;
+            left:20px; bottom:30px;}
         #before a{color:white; text-decoration: none}
         #before a:hover{color:orange}
-        #main_menu{
-            position: relative; left:200px;
-        }
+
     </style>
 {% endblock %}
 {% block content %}
-{#    <audio src="/static/resources/music/서주대학살.ogg" autoplay="auto"></audio>#}
+    <audio src="/static/resources/music/서주대학살.ogg" autoplay="auto"></audio>
     <audio src="/static/resources/sfx/game_start.wav" autoplay="autoplay"></audio>
-    <div id="main_menu" style="position:absolute; z-index:-1;">
+    <div id="main_menu">
         <img src="/static/resources/img/background/background4.jpg" width="1500" height="840" alt>
         <div id="story1">
             <img src="/static/resources/img/story/story1.png">
         </div>
+
         <div id="next" class="mainui">
             <a href="/character">다음</a>
         </div>

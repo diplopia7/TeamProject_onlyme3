@@ -1,15 +1,17 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>스토리 선택형 삼국지 TCG</title>
+{% extends 'project.html' %}
+{% block style %}
     <style>
-        a{
-            text-decoration: none;
-            color: white
-        }
-        a:hover {
-            color:orange;
+        #wrapper a {font-weight: bold; text-decoration: none;
+                    color: black}
+        #wrapper a:hover{color:orangered}
+
+        #main_menu{
+            position: relative; left:200px;
+            width:1500px;
+            height:840px;
+            background-color: black;
+            color: white;
+            font-size: 30px;
         }
         .mainui {
             position:absolute; z-index: 1;
@@ -22,18 +24,13 @@
             position:absolute; z-index:1;
             right:20px; bottom:30px;display: none;
         }
-        #main_menu{
-            width:1280px; height:720px;
-            border:1px solid black;
-            background-color: black;
-            color: white;
-            z-index:1; font-size: 30px;
-        }
+        #next a{color:white; text-decoration: none}
+        #next a:hover{color:orange}
+
         #stat{
             position:absolute; left:50px; top:20px;
             border:1px solid white; padding:20px;
             text-align: center;
-
         }
         button{
             padding:10px; font-size: 20px; margin-top:15px;
@@ -57,48 +54,46 @@
             position:absolute; z-index:1;
             right:20px;
         }
-
-        
-            
     </style>
-</head>
-<body>
-    <div id="main_menu" style="position:absolute; z-index:-1;">
+{% endblock %}
+
+{% block content %}
+    <div id="main_menu">
         <!-- stat, 내정특기, 전투특기, 전술에 해당 하는 내용 모두 저장 -->
+        <form id="chrfrm" name="chrfrm" method="post">
         <div id="stat">
-            <form>
             <div>통솔
-                <span id="통솔"></span>
+                <span id="통솔">{{ command }}</span>
+{#                <input type="hidden" name="통솔" value="{{  }}">#}
             </div>
             <div>무력
-                <span id="무력"></span>
+                <span id="무력">{{ power }}</span>
             </div>
             <div>지력
-                <span id="지력"></span>
+                <span id="지력">{{ inteli }}</span>
             </div>
             <div>정치 
-                <span id="정치"></span>
+                <span id="정치">{{ politics }}</span>
             </div>
             <div>
-                <button id="statbtn" type="button">장수 스탯 정하기</button>
+                <button id="statbtn" type="submit">장수 스탯 정하기</button>
             </div>
-            </form>
         </div>
-        
+        {{ request.session.politics }}
         <div id="내정특기">
-            <div id="trait1"></div>            
+            <div id="trait1">{{ innertrait }}</div>
             <div>
                 <button id="btn2" type="button">내정특기</button>
             </div>
         </div>
         <div id="전투특기">
-            <div id="trait2"></div>            
+            <div id="trait2">{{ fighttrait }}</div>
             <div>
                 <button id="btn3" type="button">전투특기</button>
             </div>
         </div>
         <div id="전술">
-            <div id="trait3"></div>            
+            <div id="trait3">{{ skill }}</div>
             <div>
                 <button id="btn4" type="button">전술</button>
             </div>
@@ -106,11 +101,30 @@
         <div id="장수" class="img1"></div>
         <div id="next" class="mainui">
             <a href="/story2" target="_self">다음</a>
-        </div>        
+        </div>
+        </form>
     </div>
-
+{#<script>#}
+{#    statbtn=document.querySelector('#statbtn')#}
+{#    statbtn.addEventListener('submit',()=>{#}
+{#        e.preventDefault()#}
+{#    })#}
+{#</script>#}
+{#<script>#}
+{#function noEvent(event){#}
+{#    if(event.keyCode==116){#}
+{#        alert('새로고침을 할 수 없습니다.')#}
+{#        event.keyCode=2#}
+{#        return false#}
+{#    } else if(event.ctrlKey#}
+{#        &&(event.keyCode == 78 || event.keyCode == 82)){#}
+{#        return false#}
+{#    }#}
+{#}#}
+{#document.onkeydown=noEvent#}
+{#</script>#}
     <script>
-        function stat(){
+        function stat(event){
             l=[]
             통솔.textContent=parseInt(Math.random()*100+1)
             무력.textContent=parseInt(Math.random()*100+1)
@@ -121,73 +135,74 @@
                 &&btn3.disabled==true && btn4.disabled==true) {
                 next.style.display='block'
             }
+            event.preventDefault()
         }
         통솔=document.getElementById('통솔')
         무력=document.getElementById('무력')
         지력=document.getElementById('지력')
         정치=document.getElementById('정치')
-        통솔.textContent=0
-        무력.textContent=0
-        지력.textContent=0
-        정치.textContent=0
+
         statbtn=document.getElementById('statbtn')
-        statbtn.addEventListener('click',stat)                  
+        statbtn.addEventListener('click',stat)
     </script>
+{#    <script>#}
+{#        function shuffle(array){#}
+{#            array.sort(()=>Math.random()-0.5)#}
+{#        }#}
+{##}
+{#        function 내정(){#}
+{#            trait = ['상재','경작','연병','수집','인맥','변설']#}
+{#            shuffle(trait)#}
+{#            btn2.disabled=true#}
+{#            trait1.textContent=trait[0]#}
+{#            if (statbtn.disabled==true && btn2.disabled==true#}
+{#                &&btn3.disabled==true && btn4.disabled==true) {#}
+{#                next.style.display='block'#}
+{#            }#}
+{#        }#}
+{#        trait1=document.getElementById('trait1')#}
+{#        trait1.textContent='없음'#}
+{#        btn2=document.getElementById('btn2')#}
+{#        btn2.addEventListener('click',내정)                #}
+{#    </script>#}
+{#    <script>#}
+{#        function 전투(){#}
+{#            trait = ['호걸','귀모','군사','냉정']#}
+{#            shuffle(trait)#}
+{#            btn3.disabled=true#}
+{#            trait2.textContent=trait[0]#}
+{#            if (statbtn.disabled==true && btn2.disabled==true#}
+{#                &&btn3.disabled==true && btn4.disabled==true) {#}
+{#                next.style.display='block'#}
+{#            }#}
+{#        }#}
+{#        trait2=document.getElementById('trait2')#}
+{#        trait2.textContent='없음'#}
+{#        btn3=document.getElementById('btn3')#}
+{#        btn3.addEventListener('click',전투)                  #}
+{#    </script>#}
+{#    <script>#}
+{#        function 전술(){#}
+{#            trait = ['공격강화','방어강화','색적','속공','복병','복병신속',#}
+{#            '노당익장','맹공','공방일체','강용','철벽','강습','만인적','운체풍신',#}
+{#            '위무지강','방호','의용병','팔진도','용의지혜','대타격','화계','신화계','인중여포']#}
+{#            shuffle(trait)#}
+{#            btn4.disabled=true#}
+{#            trait3.textContent=trait[0]#}
+{#            if (statbtn.disabled==true && btn2.disabled==true#}
+{#                &&btn3.disabled==true && btn4.disabled==true) {#}
+{#                next.style.display='block'#}
+{#            }#}
+{#        }#}
+{#        trait3=document.getElementById('trait3')#}
+{#        trait3.textContent='없음'#}
+{#        btn4=document.getElementById('btn4')#}
+{#        btn4.addEventListener('click',전술)                  #}
+{#    </script>#}
     <script>
         function shuffle(array){
-            array.sort(()=>Math.random()-0.5)
+          array.sort(()=>Math.random()-0.5)
         }
-
-        function 내정(){
-            trait = ['상재','경작','연병','수집','인맥','변설']
-            shuffle(trait)
-            btn2.disabled=true
-            trait1.textContent=trait[0]
-            if (statbtn.disabled==true && btn2.disabled==true
-                &&btn3.disabled==true && btn4.disabled==true) {
-                next.style.display='block'
-            }
-        }
-        trait1=document.getElementById('trait1')
-        trait1.textContent='없음'
-        btn2=document.getElementById('btn2')
-        btn2.addEventListener('click',내정)                
-    </script>
-    <script>
-        function 전투(){
-            trait = ['호걸','귀모','군사','냉정']
-            shuffle(trait)
-            btn3.disabled=true
-            trait2.textContent=trait[0]
-            if (statbtn.disabled==true && btn2.disabled==true
-                &&btn3.disabled==true && btn4.disabled==true) {
-                next.style.display='block'
-            }
-        }
-        trait2=document.getElementById('trait2')
-        trait2.textContent='없음'
-        btn3=document.getElementById('btn3')
-        btn3.addEventListener('click',전투)                  
-    </script>
-    <script>
-        function 전술(){
-            trait = ['공격강화','방어강화','색적','속공','복병','복병신속',
-            '노당익장','맹공','공방일체','강용','철벽','강습','만인적','운체풍신',
-            '위무지강','방호','의용병','팔진도','용의지혜','대타격','화계','신화계','인중여포']
-            shuffle(trait)
-            btn4.disabled=true
-            trait3.textContent=trait[0]
-            if (statbtn.disabled==true && btn2.disabled==true
-                &&btn3.disabled==true && btn4.disabled==true) {
-                next.style.display='block'
-            }
-        }
-        trait3=document.getElementById('trait3')
-        trait3.textContent='없음'
-        btn4=document.getElementById('btn4')
-        btn4.addEventListener('click',전술)                  
-    </script>
-    <script>
         illust=['/static/resources/img/character/가후-1.png','/static/resources/img/character/강유-1.png','/static/resources/img/character/곽가-1.png','/static/resources/img/character/관우-1.png',
         '/static/resources/img/character/노숙-1.png','/static/resources/img/character/대교-1.png','/static/resources/img/character/등애.png','/static/resources/img/character/문앙-1.png',
         '/static/resources/img/character/법정-1.png','/static/resources/img/character/사마의-1.png']
@@ -197,6 +212,4 @@
         src=document.getElementById('장수')
         src.appendChild(img)
     </script>
-    
-</body>
-</html>
+{% endblock %}

@@ -11,7 +11,28 @@ def main_menu(request):
 
 
 def character(request):
-    return render(request, 'character.html')
+    global context
+    returnPage = 'character.html'
+
+    if request.method == 'GET':
+        command=0
+        power=0
+        inteli=0
+        politics=0
+        innertrait='없음'
+        fighttrait='없음'
+        skill='없음'
+
+    elif request.method == 'POST':
+        form = request.POST.dict()
+        request.session['command']=form['통솔']
+        request.session['power']=form['무력']
+        request.session['inteli']=form['지력']
+        request.session['politics']=form['정치']
+
+    context={'command':command,'power':power,'inteli':inteli,'politics':politics,'innertrait':innertrait,'fighttrait':fighttrait,'skill':skill}
+
+    return render(request, returnPage,context)
 
 
 def story1(request):

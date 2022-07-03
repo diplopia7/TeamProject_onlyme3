@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>스토리 선택형 삼국지 TCG</title>
+    <style>
+        a{
+            text-decoration: none;
+            color: brown;
+        }
+        a:hover {
+            color:red;
+        }
+        #gamename {
+            color:rgb(46, 11, 129); font-size:30px; font-weight: bold; position:absolute;
+            z-index: 1; text-align: center; top:80px; left:65px;
+        }
+        #gameplay {
+            font-size:100px;position: absolute;
+            z-index: 1; text-align: center; bottom:150px; left:450px;
+        }
+        #gamedescription{
+            color:white; font-size:40px;position: absolute;
+            z-index: 1; text-align: center; top:350px; left:580px;
+        }
+        #quit{
+            color:white; font-size:40px;position: absolute;
+            z-index: 1; text-align: center; top:450px; left:630px;
+        }
+    </style>
+</head>
+<body>
+    <audio src="resources/music/rising the empire.ogg" autoplay="autoplay" loop="loop"></audio>
+    <div id="main_menu" style="position:absolute; z-index:0">
+        <img src="resources\img\background\background3.jpg" width="1280" height="720" alt>
+        <div id="gamename">
+            드디어 전쟁이 시작되었습니다.<br>
+            하지만 여몽과 육손의 계책으로 연달아 유비는 패배를 했습니다.<br>
+            이 이릉 전투는 촉한 군이 다시 반격을 할 수 있는 마지막 기회 이거나<br>
+            별 소득없이 전장을 물러나야 할 수 도 있는 전투입니다.<br>
+            유방과 항우의 마지막 전투처럼 여러분은 이 전쟁을 역전의 승리로 만들 수 있을까요?
+            <hr>
+        </div>
+
+        <div id="gameplay" class="mainui">
+            <a href="전투.html" target="_self">전투 시작</a>
+        </div>
+      
+    </div>
+</body>
+</html>

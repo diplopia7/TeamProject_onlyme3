@@ -31,11 +31,19 @@
         }
         #main_menu{
             position: relative; left:200px;
+            width:1500px;
+            height:840px;
         }
     </style>
 {% endblock %}
 {% block content %}
-{#<audio src="/static/resources/music/rising the empire.ogg" autoplay="autoplay" loop="loop"></audio>#}
+    {% if not request.session.userid %}
+    <script>
+        alert('로그인 후 이용 가능합니다.')
+        location.href='/'
+    </script>
+    {% endif %}
+<audio src="/static/resources/music/rising the empire.ogg" autoplay="autoplay" loop="loop"></audio>
 <div id="main_menu">
     <img src="/static/resources/img/background/background1.jpg" width="1500" height="840" alt>
     <div id="gamename">
@@ -49,4 +57,5 @@
         <a href="/">종료</a>
     </div>
 </div>
+
 {% endblock %}

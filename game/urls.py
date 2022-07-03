@@ -6,6 +6,7 @@ urlpatterns = [
     path('game_info/', views.game_info, name='game_info'),
     path('how_to_fight/', views.how_to_fight, name='how_to_fight'),
     path('main_menu/', views.main_menu, name='main_menu'),
+    # path('main_menu1/', views.main_menu, name='main_menu'),
     path('character/', views.character, name='character'),
     path('story1/', views.story1, name='story1'),
     path('story2/', views.story2, name='story2'),

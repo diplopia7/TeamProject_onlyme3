@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>스토리 선택형 삼국지 TCG</title>
+    <style>
+        a{
+            text-decoration: none;
+            color: white
+        }
+        a:hover {
+            color:orange;
+        }
+        #story1 {
+            position:absolute; z-index: 1;
+            color:white; font-size:30px;
+            top:20px; left:5px;
+        }
+        #main_menu{
+            text-align:center;
+        }
+        .mainui {
+            position:absolute; z-index: 1;
+            font-size:30px; width:100px;
+            background-color: black;
+            color: white; text-align: center;
+            padding:5px
+        }
+        #next1{
+            position:absolute; z-index:1;
+            right:20px; bottom:30px;
+            display:none;
+        }
+        #next2{
+            position:absolute; z-index:1;
+            right:20px; bottom:30px;
+            display:none;
+        }
+        #before{
+            position:absolute; z-index:1;
+            left:20px; bottom:30px;
+        }
+        #rtd{
+            border:1px solid white;
+            background-color:black;
+            width:500px; height:350px;
+            position:absolute; color:white;
+            font-size:30px; font-weight:bold;
+            bottom:80px; left:50px;
+        }
+        .rtd{
+            margin-top:20px; font-size: 50px;
+
+        }
+        #rollbtn{
+            color:black;
+            font-size:30px; font-weight:bold;
+            padding:10px; margin-top:20px;
+        }
+        #sect1{            
+            width:600px; height:350px;
+            position:absolute; color:white;
+            font-size:30px; right:50px; bottom:80px;            
+        }
+            
+    </style>
+</head>
+<body>
+    <audio src="resources/music/서주대학살.ogg" autoplay="auto"></audio>
+    <div id="main_menu" style="position:absolute; z-index:-1;">
+        <img src="resources/img/background/background4.jpg" width="1280" height="720" alt>
+        <!-- 대실패시 전투특기, 전술, 내정특기 모두 삭제 -->
+        <!-- 대성공시 모든 능력치(통솔,무력,지력,정치)+5, 직급 도독으로 -->              
+        <div id="story1">
+            유비의 전쟁을 말릴 수 있습니다.<br>
+            * 설득을 하기 위해서 주사위 100d1을 굴려 기준을 보고, 설득에 성공하거나 실패를 정합니다.<br>
+            * 대실패를 하면 처형이 됩니다. 처형을 당하면 스킬/특기 모두 사용할 수 없습니다.
+        <hr>
+        유비 지력 수치보다 낮은 플레이어는 유비를 설득 할 수 없습니다.<br>
+        - 78이하 실패/
+        - 39이하 대실패/
+        - 79이상 성공/
+        - 96이상 대성공/
+        </div>
+        <div id="rtd">            
+            <button id="rollbtn" type="button">Roll the dice!(100d/1)</button><br>
+            <div id="rtd1" class="rtd"></div>
+            <div id="rtd2" class="rtd"></div>
+        </div>
+        <div id="sect1">
+
+        </div>
+
+        <div id="next1" class="mainui">
+            <a href="story3.html" target="_self">다음</a>
+        </div>
+        <div id="next2" class="mainui">
+            <a href="내정.html" target="_self">다음</a>
+        </div>
+    </div>
+    <script>
+        let result=''
+        function roll(){
+        n=parseInt(Math.random()*100+1)
+        rtd1.textContent=n
+        rollbtn.disabled=true
+        if (n<=78 && n>=40){
+            next1.style.display='block'
+            result='실패'
+            rtd2.textContent=result
+            sect1.innerHTML="당신은 유비를 설득하지 못했습니다." + "<br>"+
+            "전쟁은 발발하였고,"+"<br>"+" 오나라와의 전투를 준비해야 합니다."+"<br>"+
+            "전쟁의 목표는 오나라 점령"+"<br>"+ "혹은 손권 처형입니다."+"<br>"          
+            
+        }
+        else if (n<=39){
+            next1.style.display='block'
+            rtd2.textContent='대실패'
+            result='대실패'
+            sect1.innerHTML="당신은 유비를 설득하지 못했습니다." + "<br>"+
+            "전쟁은 발발하였고,"+"<br>"+" 오나라와의 전투를 준비해야 합니다."+"<br>"+
+            "전쟁의 목표는 오나라 점령"+"<br>"+ "혹은 손권 처형입니다."+"<br>"+
+            "당신은 대실패로 처형을 당했습니다."+"<br>"+" 모든 특기들이 제거가 됩니다."+"<br>"
+        }
+        else if (n>=79 && n<=95){
+            next2.style.display='block'
+            rtd2.textContent='성공'
+            result='성공'
+            sect1.innerHTML="유비는 당신의 말을 듣고,"+"<br>"+" 전쟁을 하지 않았습니다."+"<br>"+
+            "아직은 때가 아니라고 판단하여"+"<br>"+"내정에 힘을 더 쏟습니다."+"<br>"
+        }
+        else if (n>=96){
+            next2.style.display='block'
+            rtd2.textContent='대성공'
+            result='대성공'
+            sect1.innerHTML="유비는 당신의 말을 듣고,"+"<br>"+" 전쟁을 하지 않았습니다."+"<br>"+
+            "아직은 때가 아니라고 판단하여"+"<br>"+"내정에 힘을 더 쏟습니다."+"<br>"+
+            "당신은 도독으로 바로 승진합니다."+"<br>"+
+            "당신의 모든 능력치가 5씩 증가합니다." +"<br>"
+        }
+    }               
+        rollbtn=document.getElementById('rollbtn')
+        rollbtn.addEventListener('click',roll) 
+        </script>
+</body>
+</html>

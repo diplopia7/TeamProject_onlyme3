@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>스토리 선택형 삼국지 TCG</title>
+    <style>
+        a{
+            text-decoration: none;
+            color: brown;
+        }
+        a:hover {
+            color:red;
+        }
+        #gamename {
+            color:rgb(46, 11, 129); font-size:30px; font-weight: bold; position:absolute;
+            z-index: 1; text-align: center; top:80px; left:65px;
+        }
+        #gameplay {
+            font-size:100px;position: absolute;
+            z-index: 1; text-align: center; bottom:150px; left:450px;
+        }
+        #gamedescription{
+            color:white; font-size:40px;position: absolute;
+            z-index: 1; text-align: center; top:350px; left:580px;
+        }
+        #quit{
+            color:white; font-size:40px;position: absolute;
+            z-index: 1; text-align: center; top:450px; left:630px;
+        }
+        .cardfield {
+            border: 3px solid rgb(68, 67, 67);
+            width:80px; height:116px;
+        }
+        #field1{
+            position: absolute; z-index:1;
+            left:300px; top:200px;
+        }
+        #field2{
+            position: absolute; z-index:1;
+            left:500px; top:200px;
+        }
+        #field3{
+            position: absolute; z-index:1;
+            left:700px; top:200px;
+        }
+        #field4{
+            position: absolute; z-index:1;
+            left:900px; top:200px;
+        }
+        #field5{
+            position: absolute; z-index:1;
+            left:400px; top:50px;
+        }
+        #field6{
+            position: absolute; z-index:1;
+            left:600px; top:50px;
+        }
+        #field7{
+            position: absolute; z-index:1;
+            left:800px; top:50px;
+        }
+        #field8{
+            position: absolute; z-index:1;
+            left:300px; top:380px;
+        }
+        #field9{
+            position: absolute; z-index:1;
+            left:500px; top:380px;
+        }
+        #field10{
+            position: absolute; z-index:1;
+            left:700px; top:380px;
+        }
+        #field11{
+            position: absolute; z-index:1;
+            left:900px; top:380px;
+        }
+        #field12{
+            position: absolute; z-index:1;
+            left:400px; top:530px;
+        }
+        #field13{
+            position: absolute; z-index:1;
+            left:600px; top:530px;
+        }
+        #field14{
+            position: absolute; z-index:1;
+            left:800px; top:530px;
+        }
+        #field15{
+            position: absolute; z-index:1;
+            left:150px; top:200px;
+        }
+        #field16{
+            position: absolute; z-index:1;
+            left:1060px; top:380px;
+        }
+        #playerstatus{
+            border: 3px solid black;
+            width:350px; height:200px;
+            position:absolute;z-index: 1;
+            bottom:5px;font-size: 30px;
+            background-color:rgb(86, 94, 19);
+            color:white;
+        }
+        #enemystatus{
+            border: 3px solid black;
+            width:350px; height:200px;
+            position:absolute;z-index: 1;
+            right:0px; top:0px;
+            font-size: 30px;
+            background-color:rgb(86, 94, 19);
+            color:white
+        }
+        #menu{
+            /* border: 1px solid black; */
+            position:absolute;
+            z-index:1; right:50px; bottom:250px;
+        }
+        .button{
+            font-size:20px;padding:5px; margin:5px;
+            width:100px;
+        }
+        #playercard{
+            position: absolute; z-index:1;
+            /* border: 1px solid black; */
+            bottom:15px; left:500px;
+        }
+        #enemycard{
+            position: absolute; z-index:1;
+            top:15px; left:5px;
+        }
+        #cardbtn, #cardbtn2, #normallocation, #magiclocation{
+            position: absolute; z-index:1;
+            border: 1px solid black;
+            left:500px; top:350px;
+            background-color:darkgrey;
+            display:none;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- <audio src="resources/music/battle action.ogg" autoplay="autoplay" loop="loop"></audio> -->
+    <div id="main_menu" style="position:absolute; z-index:0">
+        <img src="resources\img\background\background3.jpg" width="1500" height="840" alt>
+        <div id="cardfield1">
+            <div id="field1" class="cardfield"></div>
+            <div id="field2" class="cardfield"></div>
+            <div id="field3" class="cardfield"></div>
+            <div id="field4" class="cardfield"></div>
+            <div id="field5" class="cardfield"></div>
+            <div id="field6" class="cardfield"></div>
+            <div id="field7" class="cardfield"></div>
+            <div id="field15" class="cardfield"></div>
+        </div>
+        <div id="cardfield2">
+            <div id="field8" class="cardfield"></div>
+            <div id="field9" class="cardfield"></div>
+            <div id="field10" class="cardfield"></div>
+            <div id="field11" class="cardfield"></div>
+            <div id="field12" class="cardfield"></div>
+            <div id="field13" class="cardfield"></div>
+            <div id="field14" class="cardfield"></div>
+            <div id="field16" class="cardfield"></div>
+        </div>
+        <div id="playerstatus">
+            <div style="margin-top:10px; margin-left:10px">플레이어</div>
+            <div style="margin-left:10px">체력 : <span id="playerhp"></span> 전술 : <span id="player전술"></span></div>
+            <div style="margin-left:10px">통솔 : <span id="player통솔"></span> 지력: <span id="player지력"></span></div>
+            <div style="margin-left:10px">무력 : <span id="player무력"></span> 정치: <span id="player정치"></span></div>
+        </div>
+        <div id="enemystatus">
+            <div style="margin-top:10px; margin-left:10px">적군</div>
+            <div style="margin-left:10px">체력 : <span id="enemyhp"></span> 전술 : <span id="enemy전술"></span></div>
+            <div style="margin-left:10px">통솔 : <span id="enemy통솔"></span> 지력: <span id="enemy지력"></span></div>
+            <div style="margin-left:10px">무력 : <span id="enemy무력"></span> 정치: <span id="enemy정치"></span></div>
+        </div>
+        <div id="menu">
+            <button id="endturn" type="button" class="button">턴 종료</button><br>
+            <button id="draw" type="button" class="button">드로우</button><br>
+            <button id="grave" type="button" class="button">무덤효과</button><br>
+            <button id="fight" type="button" class="button">전투</button><br>
+            <button id="skill" type="button" class="button">전술스킬</button><br>
+        </div>
+        <div id="playercard"></div>
+        <div id="enemycard"></div>
+        <div id="cardbtn">
+            <button id="attackbtn" type="button" class="button">공격</button>
+            <button id="defencebtn" type="button" class="button">방어</button>
+        </div>
+        <div id="cardbtn2">
+            <button id="frontbtn" type="button" class="button">앞면</button>
+            <button id="backbtn" type="button" class="button">뒷면</button>
+        </div>
+        <div id="normallocation">
+            <button id="loc1" type="button" class="button">1</button>
+            <button id="loc2" type="button" class="button">2</button>
+            <button id="loc3" type="button" class="button">3</button>
+            <button id="loc4" type="button" class="button">4</button>
+        </div>
+        <div id="magiclocation">
+            <button id="loc5" type="button" class="button">1</button>
+            <button id="loc6" type="button" class="button">2</button>
+            <button id="loc7" type="button" class="button">3</button>
+        </div>
+    </div>
+    <script>
+        let hp1=100
+        let hp2=100
+        playerhp.textContent=hp1
+        enemyhp.textContent=hp2
+
+        endturn.disabled=true
+        skill.disabled=true
+
+        let Acardlist=['resources/img/card/resize/2_of_clubs.png','resources/img/card/resize/2_of_diamonds.png','resources/img/card/resize/2_of_hearts.png',
+        'resources/img/card/resize/2_of_spades.png','resources/img/card/resize/3_of_clubs.png','resources/img/card/resize/3_of_diamonds.png',
+        'resources/img/card/resize/3_of_hearts.png','resources/img/card/resize/3_of_spades.png','resources/img/card/resize/4_of_clubs.png',
+        'resources/img/card/resize/4_of_diamonds.png','resources/img/card/resize/4_of_hearts.png','resources/img/card/resize/4_of_spades.png',
+        'resources/img/card/resize/5_of_clubs.png','resources/img/card/resize/5_of_diamonds.png','resources/img/card/resize/5_of_hearts.png',
+        'resources/img/card/resize/5_of_spades.png','resources/img/card/resize/6_of_clubs.png','resources/img/card/resize/6_of_diamonds.png',
+        'resources/img/card/resize/6_of_hearts.png','resources/img/card/resize/6_of_spades.png','resources/img/card/resize/7_of_clubs.png',
+        'resources/img/card/resize/7_of_diamonds.png','resources/img/card/resize/7_of_hearts.png','resources/img/card/resize/7_of_spades.png',
+        'resources/img/card/resize/8_of_clubs.png','resources/img/card/resize/8_of_diamonds.png','resources/img/card/resize/8_of_hearts.png',
+        'resources/img/card/resize/8_of_spades.png','resources/img/card/resize/9_of_clubs.png','resources/img/card/resize/9_of_diamonds.png',
+        'resources/img/card/resize/9_of_hearts.png','resources/img/card/resize/9_of_spades.png','resources/img/card/resize/10_of_clubs.png',
+        'resources/img/card/resize/10_of_diamonds.png','resources/img/card/resize/10_of_hearts.png','resources/img/card/resize/10_of_spades.png',
+        'resources/img/card/resize/ace_of_clubs.png','resources/img/card/resize/ace_of_diamonds.png','resources/img/card/resize/ace_of_hearts.png',
+        'resources/img/card/resize/ace_of_spades.png','resources/img/card/resize/jack_of_clubs2.png','resources/img/card/resize/jack_of_diamonds2.png',
+        'resources/img/card/resize/jack_of_hearts2.png','resources/img/card/resize/jack_of_spades2.png','resources/img/card/resize/king_of_clubs2.png',
+        'resources/img/card/resize/king_of_diamonds2.png','resources/img/card/resize/king_of_hearts2.png','resources/img/card/resize/king_of_spades2.png',
+        'resources/img/card/resize/queen_of_clubs2.png','resources/img/card/resize/queen_of_diamonds2.png','resources/img/card/resize/queen_of_hearts2.png',
+        'resources/img/card/resize/queen_of_spades2.png','resources/img/card/resize/black_joker.png','resources/img/card/resize/red_joker.png']
+
+        let Acardback='resources/img/card/resize/back.png'
+
+
+        let classification={'마법카드':['resources/img/card/resize/jack_of_clubs2.png','resources/img/card/resize/jack_of_diamonds2.png',
+                            'resources/img/card/resize/jack_of_hearts2.png','resources/img/card/resize/jack_of_spades2.png','resources/img/card/resize/king_of_clubs2.png',
+                            'resources/img/card/resize/king_of_diamonds2.png','resources/img/card/resize/king_of_hearts2.png','resources/img/card/resize/king_of_spades2.png',
+                            'resources/img/card/resize/queen_of_clubs2.png','resources/img/card/resize/queen_of_diamonds2.png','resources/img/card/resize/queen_of_hearts2.png',
+                            'resources/img/card/resize/queen_of_spades2.png',],
+                            '일반카드':['resources/img/card/resize/2_of_clubs.png','resources/img/card/resize/2_of_diamonds.png','resources/img/card/resize/2_of_hearts.png',
+                            'resources/img/card/resize/2_of_spades.png','resources/img/card/resize/3_of_clubs.png','resources/img/card/resize/3_of_diamonds.png',
+                            'resources/img/card/resize/3_of_hearts.png','resources/img/card/resize/3_of_spades.png','resources/img/card/resize/4_of_clubs.png',
+                            'resources/img/card/resize/4_of_diamonds.png','resources/img/card/resize/4_of_hearts.png','resources/img/card/resize/4_of_spades.png',
+                            'resources/img/card/resize/5_of_clubs.png','resources/img/card/resize/5_of_diamonds.png','resources/img/card/resize/5_of_hearts.png',
+                            'resources/img/card/resize/5_of_spades.png','resources/img/card/resize/6_of_clubs.png','resources/img/card/resize/6_of_diamonds.png',
+                            'resources/img/card/resize/6_of_hearts.png','resources/img/card/resize/6_of_spades.png','resources/img/card/resize/7_of_clubs.png',
+                            'resources/img/card/resize/7_of_diamonds.png','resources/img/card/resize/7_of_hearts.png','resources/img/card/resize/7_of_spades.png',
+                            'resources/img/card/resize/8_of_clubs.png','resources/img/card/resize/8_of_diamonds.png','resources/img/card/resize/8_of_hearts.png',
+                            'resources/img/card/resize/8_of_spades.png','resources/img/card/resize/9_of_clubs.png','resources/img/card/resize/9_of_diamonds.png',
+                            'resources/img/card/resize/9_of_hearts.png','resources/img/card/resize/9_of_spades.png','resources/img/card/resize/10_of_clubs.png',
+                            'resources/img/card/resize/10_of_diamonds.png','resources/img/card/resize/10_of_hearts.png','resources/img/card/resize/10_of_spades.png',
+                            'resources/img/card/resize/ace_of_clubs.png','resources/img/card/resize/ace_of_diamonds.png','resources/img/card/resize/ace_of_hearts.png',
+                            'resources/img/card/resize/ace_of_spades.png','resources/img/card/resize/black_joker.png','resources/img/card/resize/red_joker.png']}
+        
+        function shuffle(array){
+            array.sort(()=>Math.random()-0.5)
+        }
+
+        function drawcard(){
+            drawimg1 = document.createElement('img')
+            drawimg1.src=Acardlist[0]
+            Acardlist.shift()
+            playercard.appendChild(drawimg1)
+        }
+
+        shuffle(Acardlist)
+        playerimg1 = document.createElement('img')
+        playerimg1.src=Acardlist[0]
+        sl1=playerimg1.src.slice(22)
+        playerimg11 = document.createElement('img')
+        playerimg11.src=Acardlist[0]
+        playerimg11.style.transform='rotate(90deg)'
+        Acardlist.shift()
+        enemyimg1 = document.createElement('img')
+        enemyimg1.src=Acardlist[0]
+        Acardlist.shift()
+        playerimg2 = document.createElement('img')
+        playerimg2.src=Acardlist[0]
+        playerimg22 = document.createElement('img')
+        playerimg22.src=Acardlist[0]
+        playerimg22.style.transform='rotate(90deg)'
+        Acardlist.shift()
+        enemyimg2 = document.createElement('img')
+        enemyimg2.src=Acardlist[0]
+        Acardlist.shift()
+        playerimg3 = document.createElement('img')
+        playerimg3.src=Acardlist[0]
+        playerimg33 = document.createElement('img')
+        playerimg33.src=Acardlist[0]
+        playerimg33.style.transform='rotate(90deg)'
+        Acardlist.shift()
+        enemyimg3 = document.createElement('img')
+        enemyimg3.src=Acardlist[0]
+        Acardlist.shift()
+        playerimg4 = document.createElement('img')
+        playerimg4.src=Acardlist[0]
+        playerimg44 = document.createElement('img')
+        playerimg44.src=Acardlist[0]
+        playerimg44.style.transform='rotate(90deg)'
+        Acardlist.shift()
+        enemyimg4 = document.createElement('img')
+        enemyimg4.src=Acardlist[0]
+        Acardlist.shift()
+        backimg1 = document.createElement('img')
+        backimg1.src=Acardback
+        backimg2 = document.createElement('img')
+        backimg2.src=Acardback
+        backimg2.style.transform='rotate(90deg)'
+
+        playercard=document.getElementById('playercard')
+        playercard.appendChild(playerimg1)
+        // playercard.appendChild(playerimg11)
+        playercard.appendChild(playerimg2)
+        playercard.appendChild(playerimg3)
+        playercard.appendChild(playerimg4)
+        enemycard=document.getElementById('enemycard')
+        enemycard.appendChild(enemyimg1)
+        enemycard.appendChild(enemyimg2)
+        enemycard.appendChild(enemyimg3)
+        enemycard.appendChild(enemyimg4)
+
+        draw= document.getElementById('draw')
+        draw.addEventListener("click",drawcard)
+
+        function cardset1(player1,player11){
+            cardbtn.style.display='block'
+            if(classification['일반카드'].includes(sl1)==true){
+                attackbtn.appendChild(player1)
+                defencebtn.appendChild(player11)
+
+                attackbtn.addEventListener("click",()=>{
+                    cardbtn.style.display='none'
+                    cardbtn2.style.display='block'
+                    attackbtn.removeChild(player1)
+                    defencebtn.removeChild(player11)
+
+                    frontbtn.appendChild(player1)
+                    backbtn.appendChild(backimg1)
+
+                    frontbtn.addEventListener('click',()=>{
+                        cardbtn.style.display='none'
+                        cardbtn2.style.display='none'
+                        normallocation.style.display='block'
+                        frontbtn.removeChild(player1)
+
+                        loc1.addEventListener('click',()=>{                            
+                            field8.appendChild(player1)
+                            normallocation.style.display='none'
+                            loc1.disabled=true
+                        })
+                        loc2.addEventListener('click',()=>{
+                            field9.appendChild(player1)
+                            normallocation.style.display='none'
+                        })
+                        loc3.addEventListener('click',()=>{
+                            field10.appendChild(player1)
+                            normallocation.style.display='none'
+                        })
+                        loc4.addEventListener('click',()=>{
+                            field11.appendChild(player1)
+                            normallocation.style.display='none'
+                        })
+                    }) 
+
+                    backbtn.addEventListener('click',()=>{
+                        cardbtn.style.display='none'
+                        cardbtn2.style.display='none'
+                        normallocation.style.display='block'
+                        backbtn.removeChild(backimg1)
+
+                        loc1.addEventListener('click',()=>{
+                            field8.appendChild(backimg1)
+                            normallocation.style.display='none'
+                        })
+                        loc2.addEventListener('click',()=>{
+                            field9.appendChild(backimg1)
+                            normallocation.style.display='none'
+                        })
+                        loc3.addEventListener('click',()=>{
+                            field10.appendChild(backimg1)
+                            normallocation.style.display='none'
+                        })
+                        loc4.addEventListener('click',()=>{
+                            field11.appendChild(backimg1)
+                            normallocation.style.display='none'
+                        })
+                    }) 
+
+                })
+                defencebtn.addEventListener('click',()=>{
+                    cardbtn.style.display='none'
+                    cardbtn2.style.display='block'
+                    defencebtn.removeChild(player11)
+
+                    frontbtn.appendChild(player11)
+                    backbtn.appendChild(backimg2)
+
+                    frontbtn.addEventListener('click',()=>{
+                        cardbtn.style.display='none'
+                        cardbtn2.style.display='none'
+                        normallocation.style.display='block'
+                        loc1.addEventListener('click',()=>{
+                            field8.appendChild(player11)
+                            normallocation.style.display='none'
+                        })
+                        loc2.addEventListener('click',()=>{
+                            field9.appendChild(player11)
+                            normallocation.style.display='none'
+                        })
+                        loc3.addEventListener('click',()=>{
+                            field10.appendChild(player11)
+                            normallocation.style.display='none'
+                        })
+                        loc4.addEventListener('click',()=>{
+                            field11.appendChild(player11)
+                            normallocation.style.display='none'
+                        })
+                    })
+                    backbtn.addEventListener('click',()=>{
+                        cardbtn.style.display='none'
+                        cardbtn2.style.display='none'
+                        normallocation.style.display='block'
+                        loc1.addEventListener('click',()=>{
+                            field8.appendChild(backimg2)
+                            normallocation.style.display='none'
+                        })
+                        loc2.addEventListener('click',()=>{
+                            field9.appendChild(backimg2)
+                            normallocation.style.display='none'
+                        })
+                        loc3.addEventListener('click',()=>{
+                            field10.appendChild(backimg2)
+                            normallocation.style.display='none'
+                        })
+                        loc4.addEventListener('click',()=>{
+                            field11.appendChild(backimg2)
+                            normallocation.style.display='none'
+                        })
+                    }) 
+                })
+            }
+            else if(classification['마법카드'].includes(sl1)==true){
+                attackbtn.appendChild(player1)
+                defencebtn.style.display='none'
+                attackbtn.addEventListener('click',()=>{
+                    cardbtn.style.display='none'
+                    magiclocation.style.display='block'
+                    loc5.addEventListener('click',()=>{
+                        field12.appendChild(player1)
+                        magiclocation.style.display='none'
+                    })
+                    loc6.addEventListener('click',()=>{
+                        field13.appendChild(player1)
+                        magiclocation.style.display='none'
+                    })
+                    loc7.addEventListener('click',()=>{
+                        field14.appendChild(player1)
+                        magiclocation.style.display='none'                        
+                    })                    
+                })
+            }
+        }
+            
+
+        playerimg1.addEventListener('click',()=>{cardset1(playerimg1,playerimg11)},{once:true})
+        playerimg2.addEventListener('click',()=>{cardset1(playerimg2,playerimg22)},{once:true})
+        // playerimg2.addEventListener('click',()=>{
+        //     cardset1(playerimg2,playerimg22),{once:true}
+        // })
+        
+
+    </script>
+</body>
+</html>

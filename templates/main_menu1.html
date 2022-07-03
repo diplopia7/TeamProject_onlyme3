@@ -1,0 +1,19 @@
+{% extends 'project.html' %}
+{% block style %}
+    <style>
+        #wrapper a {font-weight: bold; text-decoration: none;
+                    color: black}
+        #wrapper a:hover{color:orangered}
+        </style>
+{% endblock %}
+{% block content %}
+    {% if not request.session.userid %}
+    <script>
+        alert('로그인 후 이용 가능합니다.')
+        location.href='/'
+    </script>
+    {% endif %}
+<div id="main_menu">
+    <iframe src="other/main_menu.html" width="1500px" height="840px"></iframe>
+</div>
+{% endblock %}
