@@ -1,173 +1,257 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>스토리 선택형 삼국지 TCG</title>
+{% extends 'layout/base.html' %}
+
+{% block title %}스토리 선택형 삼국지 TCG{% endblock %}
+{% load static %}
+{% block style %}
     <style>
-        #wrapper { display:flex;}
-        #wrapper a {font-weight: bold; text-decoration: none;
-        color: white; font-size: 20px; }
-        #wrapper a:hover{color:orangered}
-        header {background-image:url('/static/img/background.jpg'); height:140px }
-
-
-        a:link {color: black; text-decoration:none}
-        a:visited{color: black; text-decoration:underline}
-        a:hover {color: orangered; text-decoration:none}
-        a:active {color: orangered; text-decoration:none }
-
-        #logo {width: 500px; height:100px; float:left; margin-top:20px }
-        #gamestart { list-style:none; margin-left:330px; }
-        #gamestart img { width:200px; height: 100px;   }
-        #qmenu { word-spacing:20px; display:flex; float:right; margin-left:590px}
-
-        nav { width: 100%; background: silver; padding: 5px 15px; clear: both; display:inline-block}
-
-        nav ul { word-spacing:500px;  font-weight:bold; text-align: center; list-style: none; font-size: 25px; padding:3px;
-                margin-right:50px; }
-        nav li {  display: flex; align-items: center; flex-wrap: wrap; text-align: center}
-        nav a{ font-size:45px}
-
-        a{
+        a {
             text-decoration: none;
             color: brown;
         }
+
         a:hover {
-            color:red;
+            color: red;
         }
+
         #gamename {
-            color:rgb(46, 11, 129); font-size:30px; font-weight: bold; position:absolute;
-            z-index: 1; text-align: center; top:80px; left:65px;
+            color: rgb(46, 11, 129);
+            font-size: 30px;
+            font-weight: bold;
+            position: absolute;
+            z-index: 1;
+            text-align: center;
+            top: 80px;
+            left: 65px;
         }
+
         #gameplay {
-            font-size:100px;position: absolute;
-            z-index: 1; text-align: center; bottom:150px; left:450px;
+            font-size: 100px;
+            position: absolute;
+            z-index: 1;
+            text-align: center;
+            bottom: 150px;
+            left: 450px;
         }
-        #gamedescription{
-            color:white; font-size:40px;position: absolute;
-            z-index: 1; text-align: center; top:350px; left:580px;
+
+        #gamedescription {
+            color: white;
+            font-size: 40px;
+            position: absolute;
+            z-index: 1;
+            text-align: center;
+            top: 350px;
+            left: 580px;
         }
-        #quit{
-            color:white; font-size:40px;position: absolute;
-            z-index: 1; text-align: center; top:450px; left:630px;
+
+        #quit {
+            color: white;
+            font-size: 40px;
+            position: absolute;
+            z-index: 1;
+            text-align: center;
+            top: 450px;
+            left: 630px;
         }
+
         .cardfield {
             border: 3px solid rgb(68, 67, 67);
-            width:80px; height:116px;
+            width: 80px;
+            height: 116px;
         }
-        #field1{
-            position: absolute; z-index:1;
-            left:300px; top:200px;
+
+        #field1 {
+            position: absolute;
+            z-index: 1;
+            left: 300px;
+            top: 200px;
         }
-        #field2{
-            position: absolute; z-index:1;
-            left:500px; top:200px;
+
+        #field2 {
+            position: absolute;
+            z-index: 1;
+            left: 500px;
+            top: 200px;
         }
-        #field3{
-            position: absolute; z-index:1;
-            left:700px; top:200px;
+
+        #field3 {
+            position: absolute;
+            z-index: 1;
+            left: 700px;
+            top: 200px;
         }
-        #field4{
-            position: absolute; z-index:1;
-            left:900px; top:200px;
+
+        #field4 {
+            position: absolute;
+            z-index: 1;
+            left: 900px;
+            top: 200px;
         }
-        #field5{
-            position: absolute; z-index:1;
-            left:400px; top:50px;
+
+        #field5 {
+            position: absolute;
+            z-index: 1;
+            left: 400px;
+            top: 50px;
         }
-        #field6{
-            position: absolute; z-index:1;
-            left:600px; top:50px;
+
+        #field6 {
+            position: absolute;
+            z-index: 1;
+            left: 600px;
+            top: 50px;
         }
-        #field7{
-            position: absolute; z-index:1;
-            left:800px; top:50px;
+
+        #field7 {
+            position: absolute;
+            z-index: 1;
+            left: 800px;
+            top: 50px;
         }
-        #field8{
-            position: absolute; z-index:1;
-            left:300px; top:380px;
+
+        #field8 {
+            position: absolute;
+            z-index: 1;
+            left: 300px;
+            top: 380px;
         }
-        #field9{
-            position: absolute; z-index:1;
-            left:500px; top:380px;
+
+        #field9 {
+            position: absolute;
+            z-index: 1;
+            left: 500px;
+            top: 380px;
         }
-        #field10{
-            position: absolute; z-index:1;
-            left:700px; top:380px;
+
+        #field10 {
+            position: absolute;
+            z-index: 1;
+            left: 700px;
+            top: 380px;
         }
-        #field11{
-            position: absolute; z-index:1;
-            left:900px; top:380px;
+
+        #field11 {
+            position: absolute;
+            z-index: 1;
+            left: 900px;
+            top: 380px;
         }
-        #field12{
-            position: absolute; z-index:1;
-            left:400px; top:530px;
+
+        #field12 {
+            position: absolute;
+            z-index: 1;
+            left: 400px;
+            top: 530px;
         }
-        #field13{
-            position: absolute; z-index:1;
-            left:600px; top:530px;
+
+        #field13 {
+            position: absolute;
+            z-index: 1;
+            left: 600px;
+            top: 530px;
         }
-        #field14{
-            position: absolute; z-index:1;
-            left:800px; top:530px;
+
+        #field14 {
+            position: absolute;
+            z-index: 1;
+            left: 800px;
+            top: 530px;
         }
-        #field15{
-            position: absolute; z-index:1;
-            left:150px; top:200px;
+
+        #field15 {
+            position: absolute;
+            z-index: 1;
+            left: 150px;
+            top: 200px;
         }
-        #field16{
-            position: absolute; z-index:1;
-            left:1060px; top:380px;
+
+        #field16 {
+            position: absolute;
+            z-index: 1;
+            left: 1060px;
+            top: 380px;
         }
-        #playerstatus{
+
+        #playerstatus {
             border: 3px solid black;
-            width:350px; height:200px;
-            position:absolute;z-index: 1;
-            bottom:5px;font-size: 30px;
-            background-color:rgb(86, 94, 19);
-            color:white;
-        }
-        #enemystatus{
-            border: 3px solid black;
-            width:350px; height:200px;
-            position:absolute;z-index: 1;
-            right:0px; top:0px;
+            width: 350px;
+            height: 200px;
+            position: absolute;
+            z-index: 1;
+            bottom: 5px;
             font-size: 30px;
-            background-color:rgb(86, 94, 19);
-            color:white
+            background-color: rgb(86, 94, 19);
+            color: white;
         }
-        #menu{
+
+        #enemystatus {
+            border: 3px solid black;
+            width: 350px;
+            height: 200px;
+            position: absolute;
+            z-index: 1;
+            right: 0px;
+            top: 0px;
+            font-size: 30px;
+            background-color: rgb(86, 94, 19);
+            color: white
+        }
+
+        #menu {
             /* border: 1px solid black; */
-            position:absolute;
-            z-index:1; right:50px; bottom:250px;
+            position: absolute;
+            z-index: 1;
+            right: 50px;
+            bottom: 250px;
         }
-        .button{
-            font-size:20px;padding:5px; margin:5px;
-            width:100px;
+
+        .button {
+            font-size: 20px;
+            padding: 5px;
+            margin: 5px;
+            width: 100px;
         }
-        #playercard{
-            position: absolute; z-index:1;
+
+        #playercard {
+            position: absolute;
+            z-index: 1;
             /* border: 1px solid black; */
-            bottom:15px; left:500px;
+            bottom: 15px;
+            left: 500px;
         }
-        #enemycard{
-            position: absolute; z-index:1;
-            top:15px; left:5px;
+
+        #enemycard {
+            position: absolute;
+            z-index: 1;
+            top: 15px;
+            left: 5px;
         }
-        #cardbtn, #cardbtn2, #normallocation, #magiclocation{
-            position: absolute; z-index:1;
+
+        #cardbtn, #cardbtn2, #normallocation, #magiclocation {
+            position: absolute;
+            z-index: 1;
             border: 1px solid black;
-            left:500px; top:350px;
-            background-color:darkgrey;
-            display:none;
+            left: 500px;
+            top: 350px;
+            background-color: darkgrey;
+            display: none;
         }
-        
+
+        #card_check {
+            position: absolute;
+            z-index: 1;
+            border: 1px solid black;
+            left: 500px;
+            top: 350px;
+            background-color: darkgrey;
+        {#display: none;#}
+        }
+
+
     </style>
-</head>
-<body>
-    <!-- <audio src="resources/music/battle action.ogg" autoplay="autoplay" loop="loop"></audio> -->
+{% endblock %}
+{% block content %}
     <div id="main_menu" style="position:absolute; z-index:0">
-        <img src="/static/resources/img/background/background3.jpg" width="1500" height="840" alt>
+        <img src="{% static 'resources/img/background/background3.jpg' %}" width="1500" height="840" alt>
         <div id="cardfield1">
             <div id="field1" class="cardfield"></div>
             <div id="field2" class="cardfield"></div>
@@ -201,14 +285,29 @@
             <div style="margin-left:10px">무력 : <span id="enemy무력"></span> 정치: <span id="enemy정치"></span></div>
         </div>
         <div id="menu">
-            <button id="endturn" type="button" class="button">턴 종료</button><br>
-            <button id="draw" type="button" class="button">드로우</button><br>
-            <button id="grave" type="button" class="button">무덤효과</button><br>
-            <button id="fight" type="button" class="button">전투</button><br>
-            <button id="skill" type="button" class="button">전술스킬</button><br>
+            <button id="endturn" type="button" class="button">턴 종료</button>
+            <br>
+            <button id="draw" type="button" class="button">드로우</button>
+            <br>
+            <button id="grave" type="button" class="button">무덤효과</button>
+            <br>
+            <button id="fight" type="button" class="button">전투</button>
+            <br>
+            <button id="skill" type="button" class="button">전술스킬</button>
+            <br>
         </div>
         <div id="playercard"></div>
         <div id="enemycard"></div>
+        {#        <div id="card_check">#}
+        {#            <button id="attackbtn" type="button" class="button">공격#}
+        {#            <div class="cardfield"></div></button>#}
+        {#            <button id="defencebtn" type="button" class="button">방어#}
+        {#            <div class="cardfield"></div></button>#}
+        {#            <button id="frontbtn" type="button" class="button">앞면#}
+        {#            <div class="cardfield"></div></button>#}
+        {#            <button id="backbtn" type="button" class="button">뒷면#}
+        {#            <div class="cardfield"></div></button>#}
+        {#        </div>#}
         <div id="cardbtn">
             <button id="attackbtn" type="button" class="button">공격</button>
             <button id="defencebtn" type="button" class="button">방어</button>
@@ -229,304 +328,446 @@
             <button id="loc7" type="button" class="button">3</button>
         </div>
     </div>
+{% endblock %}
+
+{% block jscript %}
+
     <script>
-        let hp1=100
-        let hp2=100
-        playerhp.textContent=hp1
-        enemyhp.textContent=hp2
+        let hp1 = 100
+        let hp2 = 100
+        playerhp.textContent = hp1
+        enemyhp.textContent = hp2
 
-        endturn.disabled=true
-        skill.disabled=true
+        endturn.disabled = true
+        skill.disabled = true
 
-        let Acardlist=['/static/resources/img/card/resize/2_of_clubs.png','/static/resources/img/card/resize/2_of_diamonds.png','/static/resources/img/card/resize/2_of_hearts.png',
-        '/static/resources/img/card/resize/2_of_spades.png','/static/resources/img/card/resize/3_of_clubs.png','/static/resources/img/card/resize/3_of_diamonds.png',
-        '/static/resources/img/card/resize/3_of_hearts.png','/static/resources/img/card/resize/3_of_spades.png','/static/resources/img/card/resize/4_of_clubs.png',
-        '/static/resources/img/card/resize/4_of_diamonds.png','/static/resources/img/card/resize/4_of_hearts.png','/static/resources/img/card/resize/4_of_spades.png',
-        '/static/resources/img/card/resize/5_of_clubs.png','/static/resources/img/card/resize/5_of_diamonds.png','/static/resources/img/card/resize/5_of_hearts.png',
-        '/static/resources/img/card/resize/5_of_spades.png','/static/resources/img/card/resize/6_of_clubs.png','/static/resources/img/card/resize/6_of_diamonds.png',
-        '/static/resources/img/card/resize/6_of_hearts.png','/static/resources/img/card/resize/6_of_spades.png','/static/resources/img/card/resize/7_of_clubs.png',
-        '/static/resources/img/card/resize/7_of_diamonds.png','/static/resources/img/card/resize/7_of_hearts.png','/static/resources/img/card/resize/7_of_spades.png',
-        '/static/resources/img/card/resize/8_of_clubs.png','/static/resources/img/card/resize/8_of_diamonds.png','/static/resources/img/card/resize/8_of_hearts.png',
-        '/static/resources/img/card/resize/8_of_spades.png','/static/resources/img/card/resize/9_of_clubs.png','/static/resources/img/card/resize/9_of_diamonds.png',
-        '/static/resources/img/card/resize/9_of_hearts.png','/static/resources/img/card/resize/9_of_spades.png','/static/resources/img/card/resize/10_of_clubs.png',
-        '/static/resources/img/card/resize/10_of_diamonds.png','/static/resources/img/card/resize/10_of_hearts.png','/static/resources/img/card/resize/10_of_spades.png',
-        '/static/resources/img/card/resize/ace_of_clubs.png','/static/resources/img/card/resize/ace_of_diamonds.png','/static/resources/img/card/resize/ace_of_hearts.png',
-        '/static/resources/img/card/resize/ace_of_spades.png','/static/resources/img/card/resize/jack_of_clubs2.png','/static/resources/img/card/resize/jack_of_diamonds2.png',
-        '/static/resources/img/card/resize/jack_of_hearts2.png','/static/resources/img/card/resize/jack_of_spades2.png','/static/resources/img/card/resize/king_of_clubs2.png',
-        '/static/resources/img/card/resize/king_of_diamonds2.png','/static/resources/img/card/resize/king_of_hearts2.png','/static/resources/img/card/resize/king_of_spades2.png',
-        '/static/resources/img/card/resize/queen_of_clubs2.png','/static/resources/img/card/resize/queen_of_diamonds2.png','/static/resources/img/card/resize/queen_of_hearts2.png',
-        '/static/resources/img/card/resize/queen_of_spades2.png','/static/resources/img/card/resize/black_joker.png','/static/resources/img/card/resize/red_joker.png']
+        let card_list = [
+            '{% static "/resources/img/card/resize/back.png" %}',
+            '{% static "/resources/img/card/resize/2_of_clubs.png" %}',
+            '{% static "/resources/img/card/resize/2_of_diamonds.png" %}',
+            '{% static "/resources/img/card/resize/2_of_hearts.png" %}',
+            '{% static "/resources/img/card/resize/2_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/3_of_clubs.png" %}',
+            '{% static "/resources/img/card/resize/3_of_diamonds.png" %}',
+            '{% static "/resources/img/card/resize/3_of_hearts.png" %}',
+            '{% static "/resources/img/card/resize/3_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/4_of_clubs.png" %}',
+            '{% static "/resources/img/card/resize/4_of_diamonds.png" %}',
+            '{% static "/resources/img/card/resize/4_of_hearts.png" %}',
+            '{% static "/resources/img/card/resize/4_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/5_of_clubs.png" %}',
+            '{% static "/resources/img/card/resize/5_of_diamonds.png" %}',
+            '{% static "/resources/img/card/resize/5_of_hearts.png" %}',
+            '{% static "/resources/img/card/resize/5_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/6_of_clubs.png" %}',
+            '{% static "/resources/img/card/resize/6_of_diamonds.png" %}',
+            '{% static "/resources/img/card/resize/6_of_hearts.png" %}',
+            '{% static "/resources/img/card/resize/6_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/7_of_clubs.png" %}',
+            '{% static "/resources/img/card/resize/7_of_diamonds.png" %}',
+            '{% static "/resources/img/card/resize/7_of_hearts.png" %}',
+            '{% static "/resources/img/card/resize/7_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/8_of_clubs.png" %}',
+            '{% static "/resources/img/card/resize/8_of_diamonds.png" %}',
+            '{% static "/resources/img/card/resize/8_of_hearts.png" %}',
+            '{% static "/resources/img/card/resize/8_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/9_of_clubs.png" %}',
+            '{% static "/resources/img/card/resize/9_of_diamonds.png" %}',
+            '{% static "/resources/img/card/resize/9_of_hearts.png" %}',
+            '{% static "/resources/img/card/resize/9_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/10_of_clubs.png" %}',
+            '{% static "/resources/img/card/resize/10_of_diamonds.png" %}',
+            '{% static "/resources/img/card/resize/10_of_hearts.png" %}',
+            '{% static "/resources/img/card/resize/10_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/ace_of_clubs.png" %}',
+            '{% static "/resources/img/card/resize/ace_of_diamonds.png" %}',
+            '{% static "/resources/img/card/resize/ace_of_hearts.png" %}',
+            '{% static "/resources/img/card/resize/ace_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/jack_of_clubs2.png" %}',
+            '{% static "/resources/img/card/resize/jack_of_diamonds2.png" %}',
+            '{% static "/resources/img/card/resize/jack_of_hearts2.png" %}',
+            '{% static "/resources/img/card/resize/jack_of_spades2.png" %}',
+            '{% static "/resources/img/card/resize/king_of_clubs2.png" %}',
+            '{% static "/resources/img/card/resize/king_of_diamonds2.png" %}',
+            '{% static "/resources/img/card/resize/king_of_hearts2.png" %}',
+            '{% static "/resources/img/card/resize/king_of_spades2.png" %}',
+            '{% static "/resources/img/card/resize/queen_of_clubs2.png" %}',
+            '{% static "/resources/img/card/resize/queen_of_diamonds2.png" %}',
+            '{% static "/resources/img/card/resize/queen_of_hearts2.png" %}',
+            '{% static "/resources/img/card/resize/queen_of_spades2.png" %}',
+            '{% static "/resources/img/card/resize/black_joker.png" %}',
+            '{% static "/resources/img/card/resize/red_joker.png" %}']
 
-        let Acardback='/static/resources/img/card/resize/back.png'
-        
 
-        let classification={'마법카드':['/static/resources/img/card/resize/jack_of_clubs2.png','/static/resources/img/card/resize/jack_of_diamonds2.png',
-                            '/static/resources/img/card/resize/jack_of_hearts2.png','/static/resources/img/card/resize/jack_of_spades2.png','/static/resources/img/card/resize/king_of_clubs2.png',
-                            '/static/resources/img/card/resize/king_of_diamonds2.png','/static/resources/img/card/resize/king_of_hearts2.png','/static/resources/img/card/resize/king_of_spades2.png',
-                            '/static/resources/img/card/resize/queen_of_clubs2.png','/static/resources/img/card/resize/queen_of_diamonds2.png','/static/resources/img/card/resize/queen_of_hearts2.png',
-                            '/static/resources/img/card/resize/queen_of_spades2.png',],
-                            '일반카드':['/static/resources/img/card/resize/2_of_clubs.png','/static/resources/img/card/resize/2_of_diamonds.png','/static/resources/img/card/resize/2_of_hearts.png',
-                            '/static/resources/img/card/resize/2_of_spades.png','/static/resources/img/card/resize/3_of_clubs.png','/static/resources/img/card/resize/3_of_diamonds.png',
-                            '/static/resources/img/card/resize/3_of_hearts.png','/static/resources/img/card/resize/3_of_spades.png','/static/resources/img/card/resize/4_of_clubs.png',
-                            '/static/resources/img/card/resize/4_of_diamonds.png','/static/resources/img/card/resize/4_of_hearts.png','/static/resources/img/card/resize/4_of_spades.png',
-                            '/static/resources/img/card/resize/5_of_clubs.png','/static/resources/img/card/resize/5_of_diamonds.png','/static/resources/img/card/resize/5_of_hearts.png',
-                            '/static/resources/img/card/resize/5_of_spades.png','/static/resources/img/card/resize/6_of_clubs.png','/static/resources/img/card/resize/6_of_diamonds.png',
-                            '/static/resources/img/card/resize/6_of_hearts.png','/static/resources/img/card/resize/6_of_spades.png','/static/resources/img/card/resize/7_of_clubs.png',
-                            '/static/resources/img/card/resize/7_of_diamonds.png','/static/resources/img/card/resize/7_of_hearts.png','/static/resources/img/card/resize/7_of_spades.png',
-                            '/static/resources/img/card/resize/8_of_clubs.png','/static/resources/img/card/resize/8_of_diamonds.png','/static/resources/img/card/resize/8_of_hearts.png',
-                            '/static/resources/img/card/resize/8_of_spades.png','/static/resources/img/card/resize/9_of_clubs.png','/static/resources/img/card/resize/9_of_diamonds.png',
-                            '/static/resources/img/card/resize/9_of_hearts.png','/static/resources/img/card/resize/9_of_spades.png','/static/resources/img/card/resize/10_of_clubs.png',
-                            '/static/resources/img/card/resize/10_of_diamonds.png','/static/resources/img/card/resize/10_of_hearts.png','/static/resources/img/card/resize/10_of_spades.png',
-                            '/static/resources/img/card/resize/ace_of_clubs.png','/static/resources/img/card/resize/ace_of_diamonds.png','/static/resources/img/card/resize/ace_of_hearts.png',
-                            '/static/resources/img/card/resize/ace_of_spades.png','/static/resources/img/card/resize/black_joker.png','/static/resources/img/card/resize/red_joker.png']}
-        
-        function shuffle(array){
-            array.sort(()=>Math.random()-0.5)
+        let Acardback = '{% static "/resources/img/card/resize/back.png" %}'
+
+
+        function shuffle(array) {
+            array.sort(() => Math.random() - 0.5)
         }
 
-        function drawcard(){
-            drawimg1 = document.createElement('img')
-            drawimg1.src=Acardlist[0]
-            Acardlist.shift()
-            playercard.appendChild(drawimg1)
-        }
-
-        shuffle(Acardlist)
-        playerimg1 = document.createElement('img')
-        playerimg1.src=Acardlist[0]
-        sl1=playerimg1.src.slice(21)
-
-        playerimg11 = document.createElement('img')
-        playerimg11.src=Acardlist[0]
-        playerimg11.style.transform='rotate(90deg)'
-        Acardlist.shift()
-        enemyimg1 = document.createElement('img')
-        enemyimg1.src=Acardlist[0]
-        Acardlist.shift()
-        playerimg2 = document.createElement('img')
-        playerimg2.src=Acardlist[0]
-        sl2=playerimg2.src.slice(21)
-
-        playerimg22 = document.createElement('img')
-        playerimg22.src=Acardlist[0]
-        playerimg22.style.transform='rotate(90deg)'
-        Acardlist.shift()
-        enemyimg2 = document.createElement('img')
-        enemyimg2.src=Acardlist[0]
-        Acardlist.shift()
-        playerimg3 = document.createElement('img')
-        playerimg3.src=Acardlist[0]
-        playerimg33 = document.createElement('img')
-        playerimg33.src=Acardlist[0]
-        playerimg33.style.transform='rotate(90deg)'
-        Acardlist.shift()
-        enemyimg3 = document.createElement('img')
-        enemyimg3.src=Acardlist[0]
-        Acardlist.shift()
-        playerimg4 = document.createElement('img')
-        playerimg4.src=Acardlist[0]
-        playerimg44 = document.createElement('img')
-        playerimg44.src=Acardlist[0]
-        playerimg44.style.transform='rotate(90deg)'
-        Acardlist.shift()
-        enemyimg4 = document.createElement('img')
-        enemyimg4.src=Acardlist[0]
-        Acardlist.shift()
-        backimg1 = document.createElement('img')
-        backimg1.src=Acardback
-        backimg2 = document.createElement('img')
-        backimg2.src=Acardback
-        backimg2.style.transform='rotate(90deg)'
-
-        playercard=document.getElementById('playercard')
-        playercard.appendChild(playerimg1)
-        // playercard.appendChild(playerimg11)
-        playercard.appendChild(playerimg2)
-        playercard.appendChild(playerimg3)
-        playercard.appendChild(playerimg4)
-        enemycard=document.getElementById('enemycard')
-        enemycard.appendChild(enemyimg1)
-        enemycard.appendChild(enemyimg2)
-        enemycard.appendChild(enemyimg3)
-        enemycard.appendChild(enemyimg4)
-
-        draw= document.getElementById('draw')
-        draw.addEventListener("click",drawcard)
-
-        function cardset1(player1,player11,sl){
-            {#playercard.removeChild(player1)#}
-            cardbtn.style.display='block'
-            if(classification['일반카드'].includes(sl)==true){
-                attackbtn.appendChild(player1)
-                defencebtn.appendChild(player11)
-
-                attackbtn.addEventListener("click",()=>{
-                    cardbtn.style.display='none'
-                    cardbtn2.style.display='block'
-                    attackbtn.removeChild(player1)
-                    defencebtn.removeChild(player11)
-
-                    frontbtn.appendChild(player1)
-                    backbtn.appendChild(backimg1)
-
-                    frontbtn.addEventListener('click',()=>{
-                        cardbtn.style.display='none'
-                        cardbtn2.style.display='none'
-                        normallocation.style.display='block'
-                        frontbtn.removeChild(player1)
-                        backbtn.removeChild(backimg1)
-
-                        loc1.addEventListener('click',()=>{
-                            field8.appendChild(player1)
-                            normallocation.style.display='none'
-                            loc1.disabled=true
-                        })
-                        loc2.addEventListener('click',()=>{
-                            field9.appendChild(player1)
-                            normallocation.style.display='none'
-                            loc2.disabled=true
-                        })
-                        loc3.addEventListener('click',()=>{
-                            field10.appendChild(player1)
-                            normallocation.style.display='none'
-                            loc3.disabled=true
-                        })
-                        loc4.addEventListener('click',()=>{
-                            field11.appendChild(player1)
-                            normallocation.style.display='none'
-                            loc4.disabled=true
-                        })
-                    })
-
-                    backbtn.addEventListener('click',()=>{
-                        cardbtn.style.display='none'
-                        cardbtn2.style.display='none'
-                        normallocation.style.display='block'
-                        frontbtn.removeChild(player1)
-                        backbtn.removeChild(backimg1)
-
-                        loc1.addEventListener('click',()=>{
-                            field8.appendChild(backimg1)
-                            normallocation.style.display='none'
-                            loc1.disabled=true
-                        })
-                        loc2.addEventListener('click',()=>{
-                            field9.appendChild(backimg1)
-                            normallocation.style.display='none'
-                            loc2.disabled=true
-                        })
-                        loc3.addEventListener('click',()=>{
-                            field10.appendChild(backimg1)
-                            normallocation.style.display='none'
-                            loc3.disabled=true
-                        })
-                        loc4.addEventListener('click',()=>{
-                            field11.appendChild(backimg1)
-                            normallocation.style.display='none'
-                            loc4.disabled=true
-                        })
-                    })
-
-                })
-                defencebtn.addEventListener('click',()=>{
-                    cardbtn.style.display='none'
-                    cardbtn2.style.display='block'
-                    attackbtn.removeChild(player1)
-                    defencebtn.removeChild(player11)
-
-                    frontbtn.appendChild(player11)
-                    backbtn.appendChild(backimg2)
-
-                    frontbtn.addEventListener('click',()=>{
-                        cardbtn.style.display='none'
-                        cardbtn2.style.display='none'
-                        normallocation.style.display='block'
-                        frontbtn.removeChild(player11)
-                        backbtn.removeChild(backimg2)
-                        loc1.addEventListener('click',()=>{
-                            field8.appendChild(player11)
-                            normallocation.style.display='none'
-                            loc1.disabled=true
-                        })
-                        loc2.addEventListener('click',()=>{
-                            field9.appendChild(player11)
-                            normallocation.style.display='none'
-                            loc2.disabled=true
-                        })
-                        loc3.addEventListener('click',()=>{
-                            field10.appendChild(player11)
-                            normallocation.style.display='none'
-                            loc3.disabled=true
-                        })
-                        loc4.addEventListener('click',()=>{
-                            field11.appendChild(player11)
-                            normallocation.style.display='none'
-                            loc4.disabled=true
-                        })
-                    })
-                    backbtn.addEventListener('click',()=>{
-                        cardbtn.style.display='none'
-                        cardbtn2.style.display='none'
-                        normallocation.style.display='block'
-                        frontbtn.removeChild(player11)
-                        backbtn.removeChild(backimg2)
-                        loc1.addEventListener('click',()=>{
-                            field8.appendChild(backimg2)
-                            normallocation.style.display='none'
-                            loc1.disabled=true
-                        })
-                        loc2.addEventListener('click',()=>{
-                            field9.appendChild(backimg2)
-                            normallocation.style.display='none'
-                            loc2.disabled=true
-                        })
-                        loc3.addEventListener('click',()=>{
-                            field10.appendChild(backimg2)
-                            normallocation.style.display='none'
-                            loc3.disabled=true
-                        })
-                        loc4.addEventListener('click',()=>{
-                            field11.appendChild(backimg2)
-                            normallocation.style.display='none'
-                            loc4.disabled=true
-                        })
-                    })
-                })
-            }
-            else if(classification['마법카드'].includes(sl)==true){
-                attackbtn.appendChild(player1)
-                defencebtn.style.display='none'
-                attackbtn.addEventListener('click',()=>{
-                    cardbtn.style.display='none'
-                    cardbtn.style.display='none'
-                    magiclocation.style.display='block'
-                    attackbtn.removeChild(player1)
-                    loc5.addEventListener('click',()=>{
-                        field12.appendChild(player1)
-                        magiclocation.style.display='none'
-                    })
-                    loc6.addEventListener('click',()=>{
-                        field13.appendChild(player1)
-                        magiclocation.style.display='none'
-                    })
-                    loc7.addEventListener('click',()=>{
-                        field14.appendChild(player1)
-                        magiclocation.style.display='none'
-                    })
-                })
+        // 배열 초기화 함수
+        let clear_field = (array) => {
+            while (array.hasChildNodes()) {
+                array.removeChild(array.firstChild);
             }
         }
 
 
+        // 플레이어 덱 만들기
+        let player_deck = [];
+        let enemy_deck = [];
+        for (let i = 1; i <= 54; ++i) {
+            player_deck.push(i);
+        }
+        for (let i = 1; i <= 54; ++i) {
+            enemy_deck.push(i);
+        }
 
 
-        playerimg1.addEventListener('click',()=>{
-            cardset1(playerimg1,playerimg11,sl1)}
-            ,{once:true})
-        playerimg2.addEventListener('click',()=>{
-            cardset1(playerimg2,playerimg22,sl2)}
-            ,{once:true})
+        // 플레이어 덱 섞기
+        shuffle(player_deck);
+        shuffle(enemy_deck);
+
+        // 플레이어 손패 만들기
+        let player_hand = [];
+        let enemy_hand = [];
+
+        // 카드 드로우 함수
+        let draw_card = (hand, deck) => {
+            hand.push(deck[0]);
+            deck.shift();
+        };
+
+        playercard = document.getElementById('playercard');
+        enemycard = document.getElementById('enemycard');
+
+
+        // 카드 배치 함수
+        // (배치구역, 카드번호)
+        let set_card = (place, cardid) => {
+            let a = document.createElement('img')
+            a.src = card_list[cardid];
+            place.appendChild(a)
+        };
+        let set_card_rotate = (place, cardid) => {
+            let a = document.createElement('img');
+            a.src = card_list[cardid];
+            a.style.transform = 'rotate(90deg)';
+            place.appendChild(a);
+        };
+
+        /*
+        let set_card = (place, cardid) => {
+            place.class += ` card_${cardid}`
+        };
+        let set_card_rotate = (place, cardid) => {
+            a.style.transform = 'rotate(90deg)';
+            place.class += ` card_${cardid} defence_card`
+        };
+        */
+
+
+        // 손에 카드 넣기
+        // checkhand(손, 장소)
+        let checkhand = (hand, place) => {
+            while (place.hasChildNodes()) {
+                place.removeChild(place.firstChild);
+            }
+            for (let i = 0; i < hand.length; ++i) {
+                let a = document.createElement('img')
+                a.id = `${i}_${hand[i]}`;
+                a.className = 'card_in_hand';
+                a.src = card_list[hand[i]];
+                a.addEventListener('click', () => {
+                    active01(i, hand[i]);
+                });
+                place.appendChild(a)
+            }
+        };
+
+
+        //첫 턴 자동 함수
+        let first_turn = () => {
+            // 처음 4장씩 드로우
+            for (let i = 0; i < 4; ++i) {
+                draw_card(player_hand, player_deck);
+            }
+            checkhand(player_hand, playercard);
+
+        };
+
+        first_turn();
+
+        // 드로우 버튼 작용
+        draw = document.getElementById('draw');
+        draw.addEventListener("click", () => {
+            draw_card(player_hand, player_deck);
+            checkhand(player_hand, playercard);
+        });
+
+
+        // 마법카드 판단 함수
+        let ismagic = (cardid) => {
+            return cardid >= 41 && cardid <= 52;
+        };
+
+        // 플레이어 필드
+        let player_field = {}
+
+
+        // 손 안의 카드의 위치와 카드의 변수값을 받아 실행되는 함수
+        let active01 = (handid, cardid) => {
+            // 마법카드 여부 확인
+            let magic_card = 0
+            if (ismagic(cardid)) {
+                magic_card = 10000
+            }
+
+            cardbtn.style.display = 'block';  // 카드 포지션 설정구역 표시
+            player_hand.splice(handid, 1); // 뽑은 카드 손에서 지우기
+            checkhand(player_hand, playercard);
+            playercard.style.pointerEvents = 'none';
+
+            // 공수여부 판단
+            if (magic_card === 10000) {
+                set_card(attackbtn, cardid);
+                defencebtn.style.display = 'none';
+            } else {
+                set_card(attackbtn, cardid);
+                set_card_rotate(defencebtn, cardid);
+            }
+            let isattack = 1000
+            // 앞뒤판단 - 공격방향
+            attackbtn.addEventListener("click", () => {
+                attackbtn.removeChild(attackbtn.lastElementChild);
+                if (magic_card === 0) defencebtn.removeChild(defencebtn.lastElementChild);
+                cardbtn.style.display = 'none';
+                cardbtn2.style.display = 'block';
+                set_card(frontbtn, cardid);
+                set_card(backbtn, 0);
+            });
+            // 앞뒤판단 - 수비방향
+            defencebtn.addEventListener("click", () => {
+                isattack = 0
+                attackbtn.removeChild(attackbtn.lastElementChild);
+                defencebtn.removeChild(defencebtn.lastElementChild);
+                cardbtn.style.display = 'none';
+                cardbtn2.style.display = 'block';
+                set_card_rotate(frontbtn, cardid);
+                set_card_rotate(backbtn, 0);
+            });
+            let isfront = 100
+            // 앞방향 배치지정
+            frontbtn.addEventListener('click', () => {
+                frontbtn.removeChild(frontbtn.lastElementChild);
+                backbtn.removeChild(backbtn.lastElementChild);
+                cardbtn2.style.display = 'none';
+                if (magic_card === 10000) {
+                    magiclocation.style.display = 'block';
+                } else {
+                    normallocation.style.display = 'block';
+                }
+            });
+            // 뒷방향 배치지정
+            backbtn.addEventListener('click', () => {
+                isfront = 0
+                frontbtn.removeChild(frontbtn.lastElementChild);
+                backbtn.removeChild(backbtn.lastElementChild);
+                cardbtn2.style.display = 'none';
+                if (magic_card === 10000) {
+                    magiclocation.style.display = 'block';
+                } else {
+                    normallocation.style.display = 'block';
+                }
+            });
+
+            //필드에 카드 넣기
+            loc1.addEventListener('click', () => {
+                normallocation.style.display = 'none';
+                player_field['loc1'] = magic_card + isattack + isfront + cardid;
+                card_location();
+            });
+            loc2.addEventListener('click', () => {
+                normallocation.style.display = 'none';
+                player_field['loc2'] = magic_card + isattack + isfront + cardid;
+                card_location();
+            });
+            loc3.addEventListener('click', () => {
+                normallocation.style.display = 'none';
+                player_field['loc3'] = magic_card + isattack + isfront + cardid;
+                card_location();
+            });
+            loc4.addEventListener('click', () => {
+                normallocation.style.display = 'none';
+                player_field['loc4'] = magic_card + isattack + isfront + cardid;
+                card_location();
+            });
+            loc5.addEventListener('click', () => {
+                magiclocation.style.display = 'none';
+                player_field['loc5'] = magic_card + isattack + isfront + cardid;
+                card_location();
+            });
+            loc6.addEventListener('click', () => {
+                magiclocation.style.display = 'none';
+                player_field['loc6'] = magic_card + isattack + isfront + cardid;
+                card_location();
+            });
+            loc7.addEventListener('click', () => {
+                magiclocation.style.display = 'none';
+                player_field['loc7'] = magic_card + isattack + isfront + cardid;
+                card_location();
+            });
+
+
+        };
+        // 최종 배치 함수
+        // loc1 = 11150 === 1번 자리에 있는 마법카드, 공격배치, 앞면인 50번 카드
+        let card_location = () => {
+            playercard.style.pointerEvents = 'auto';
+            clear_field(field8);
+            clear_field(field9);
+            clear_field(field10);
+            clear_field(field11);
+            clear_field(field12);
+            clear_field(field13);
+            clear_field(field14);
+            for (let loc in player_field) {
+                let card = player_field[loc];
+                let card_info = card % 10000;
+                let cardid = card_info % 100;
+                switch (loc) {
+                    case 'loc1':
+                        switch ((card_info - cardid) / 100) {
+                            case 0:
+                                set_card_rotate(field8, 0)
+                                break;
+                            case 1:
+                                set_card_rotate(field8, cardid)
+                                break;
+                            case 10:
+                                set_card(field8, 0)
+                                break;
+                            case 11:
+                                set_card(field8, cardid)
+                                break;
+                            default:
+                                alert(`${loc}에 ${card_info}의 카드가 들어옴`);
+                        }
+                        break;
+                    case 'loc2':
+                        switch ((card_info - cardid) / 100) {
+                            case 0:
+                                set_card_rotate(field9, 0)
+                                break;
+                            case 1:
+                                set_card_rotate(field9, cardid)
+                                break;
+                            case 10:
+                                set_card(field9, 0)
+                                break;
+                            case 11:
+                                set_card(field9, cardid)
+                                break;
+                            default:
+                                alert(`${loc}에 ${card_info}의 카드가 들어옴`);
+                        }
+                        break;
+                    case 'loc3':
+                        switch ((card_info - cardid) / 100) {
+                            case 0:
+                                set_card_rotate(field10, 0)
+                                break;
+                            case 1:
+                                set_card_rotate(field10, cardid)
+                                break;
+                            case 10:
+                                set_card(field10, 0)
+                                break;
+                            case 11:
+                                set_card(field10, cardid)
+                                break;
+                            default:
+                                alert(`${loc}에 ${card_info}의 카드가 들어옴`);
+                        }
+                        break;
+                    case 'loc4':
+                        switch ((card_info - cardid) / 100) {
+                            case 0:
+                                set_card_rotate(field11, 0)
+                                break;
+                            case 1:
+                                set_card_rotate(field11, cardid)
+                                break;
+                            case 10:
+                                set_card(field11, 0)
+                                break;
+                            case 11:
+                                set_card(field11, cardid)
+                                break;
+                            default:
+                                alert(`${loc}에 ${card_info}의 카드가 들어옴`);
+                        }
+                        break;
+                    case 'loc5':
+                        switch ((card_info - cardid) / 100) {
+                            case 0:
+                                set_card_rotate(field12, 0)
+                                break;
+                            case 1:
+                                set_card_rotate(field12, cardid)
+                                break;
+                            case 10:
+                                set_card(field12, 0)
+                                break;
+                            case 11:
+                                set_card(field12, cardid)
+                                break;
+                            default:
+                                alert(`${loc}에 ${card_info}의 카드가 들어옴`);
+                        }
+                        break;
+                    case 'loc6':
+                        switch ((card_info - cardid) / 100) {
+                            case 0:
+                                set_card_rotate(field13, 0)
+                                break;
+                            case 1:
+                                set_card_rotate(field13, cardid)
+                                break;
+                            case 10:
+                                set_card(field13, 0)
+                                break;
+                            case 11:
+                                set_card(field13, cardid)
+                                break;
+                            default:
+                                alert(`${loc}에 ${card_info}의 카드가 들어옴`);
+                        }
+                        break;
+                    case 'loc7':
+                        switch ((card_info - cardid) / 100) {
+                            case 0:
+                                set_card_rotate(field14, 0)
+                                break;
+                            case 1:
+                                set_card_rotate(field14, cardid)
+                                break;
+                            case 10:
+                                set_card(field14, 0)
+                                break;
+                            case 11:
+                                set_card(field14, cardid)
+                                break;
+                            default:
+                                alert(`${loc}에 ${card_info}의 카드가 들어옴`);
+                        }
+                        break;
+                    default:
+                        alert(`${loc}에 ${card_info}의 카드가 들어오지 못 함`);
+                }
+            }
+        };
 
     </script>
-</body>
-</html>
+{% endblock %}
