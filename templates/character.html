@@ -104,24 +104,28 @@
                     <button id="btn4" type="button">전술</button>
                 </div>
             </div>
-            <div id="장수" class="img1"></div>
+            <div id="장수" class="img1">
+                <input type="hidden" id="portrait" name="portrait">
+            </div>
             <div id="next" class="mainui">
-                <button type="submit" id="nextstory">다음</button>
+                <button type="submit" id="complete">완료</button>
+{#                <a href="/story2">다음</a>#}
             </div>
         </form>
+
     </div>
-<script>
-function noEvent(event) {
-    if (event.keyCode == 116) {
-        alert('새로고침을 할 수 없습니다.')
-        event.keyCode = 2
-        return false
-    } else if (event.ctrlKey
-        && (event.keyCode == 78 || event.keyCode == 82)) {
-        return false
-    }}
-    document.onkeydown = noEvent
-</script>
+{#<script>#}
+{#function noEvent(event) {#}
+{#    if (event.keyCode == 116) {#}
+{#        alert('새로고침을 할 수 없습니다.')#}
+{#        event.keyCode = 2#}
+{#        return false#}
+{#    } else if (event.ctrlKey#}
+{#        && (event.keyCode == 78 || event.keyCode == 82)) {#}
+{#        return false#}
+{#    }}#}
+{#    document.onkeydown = noEvent#}
+{#</script>#}
 <script>
     function stat(){
         통솔=document.getElementById('통솔')
@@ -157,7 +161,7 @@ function noEvent(event) {
     }
 
     function 내정(){
-        trait = ['상재','경작','연병','수집','인맥','변설']
+        trait = ['상재','경작','연병','수집','인맥','변설','연병']
         shuffle(trait)
         btn2.disabled=true
         trait1.textContent=trait[0]
@@ -217,5 +221,6 @@ function noEvent(event) {
     img.src=illust[0]
     src=document.getElementById('장수')
     src.appendChild(img)
+    document.getElementById('portrait').value=illust[0]
 </script>
 {% endblock %}

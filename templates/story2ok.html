@@ -1,0 +1,105 @@
+{% extends 'project.html' %}
+{% block style %}
+    <style>
+        #wrapper a {font-weight: bold; text-decoration: none;
+                    color: black}
+        #wrapper a:hover{color:orangered}
+        #story1 {
+            position:absolute; z-index: 1;
+            color:white; font-size:30px;
+            top:60px; left:120px;
+        }
+        #main_menu{
+            position: relative; left:200px;
+            width:1500px;
+            height:840px;
+            background-color: black;
+            color: white;
+            font-size: 30px;
+            text-align: center;
+        }
+        .mainui {
+            position:absolute; z-index: 1;
+            font-size:30px; width:100px;
+            text-align: center;
+            padding:5px;
+            right:20px; bottom:30px;
+        }
+
+        #next1{background: black}
+        #next1 a{color:white; text-decoration: none}
+        #next1 a:hover{color:orange}
+
+        #next2{background: black}
+        #next2 a{color:white; text-decoration: none}
+        #next2 a:hover{color:orange}
+        #rtd{
+            border:1px solid white;
+            background-color:black;
+            width:500px; height:350px;
+            position:absolute; color:white;
+            font-size:30px; font-weight:bold;
+            bottom:80px; left:150px;
+        }
+        .rtd{
+            margin-top:20px; font-size: 50px;
+        }
+        #rollbtn{
+            color:black;
+            font-size:30px; font-weight:bold;
+            padding:10px; margin-top:20px;
+        }
+        #sect1{            
+            width:600px; height:350px;
+            position:absolute; color:white;
+            font-size:30px; right:150px; bottom:80px;
+        }
+            
+    </style>
+{% endblock %}
+{% block content %}
+    <audio src="/static/resources/music/서주대학살.ogg" autoplay="auto"></audio>
+    <div id="main_menu">
+     <form id="storyfrm" name="storyfrm">
+         {% csrf_token %}
+        <img src="/static/resources/img/background/background4.jpg" width="1500" height="840" alt>
+        <!-- 대실패시 전투특기, 전술, 내정특기 모두 삭제 -->
+        <!-- 대성공시 모든 능력치(통솔,무력,지력,정치)+5, 직급 도독으로 -->              
+        <div id="story1">
+            유비의 전쟁을 말릴 수 있습니다.<br>
+            * 설득을 하기 위해서 주사위 100d1을 굴려 기준을 보고, 설득에 성공하거나 실패를 정합니다.<br>
+            * 대실패를 하면 처형이 됩니다. 처형을 당하면 스킬/특기 모두 사용할 수 없습니다.
+        <hr>
+        유비 지력 수치보다 낮은 플레이어는 유비를 설득 할 수 없습니다.(항상 실패)<br>
+        - 78이하 실패/
+        - 39이하 대실패/
+        - 79이상 성공/
+        - 96이상 대성공/<br><br>
+            유비 지력 : 78 / 플레이어 지력 : {{ request.session.inteli }}
+        </div>
+        <div id="rtd">            
+            <button id="rollbtn" type="button" disabled>Roll the dice!(100d/1)</button><br>
+            <div id="rtd1" class="rtd">{{ request.session.dicenumber }}</div>
+            <div id="rtd2" class="rtd">{{ request.session.success }}</div><br>
+        </div>
+        <div id="sect1">
+
+        </div>
+
+        <div id="next1" class="mainui">
+            <a href="/story3">다음</a>
+        </div>
+        <div id="next2" class="mainui">
+            <a href="/내정">다음</a>
+        </div>
+     </form>
+    </div>
+    <script>
+        if('{{ request.session.success }}'=='성공' || '{{ request.session.success }}'=='대성공'){
+            next1.style.display='none'
+        }
+        else if('{{ request.session.success }}'=='실패' || '{{ request.session.success }}'=='대실패'){
+            next2.style.display='none'
+        }
+    </script>
+{% endblock %}
