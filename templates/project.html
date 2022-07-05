@@ -8,42 +8,68 @@
     <link rel="stylesheet" href="{% static '/css/project.css' %}">
     {% block style %}
         <style>
+        #wrapper { display:flex;}
         #wrapper a {font-weight: bold; text-decoration: none;
-        color: black}
+        color: white; font-size: 20px; }
         #wrapper a:hover{color:orangered}
+        header {background-image:url('/static/img/background.jpg'); height:140px }
+
+
+        a:link {color: black; text-decoration:none}
+        a:visited{color: black; text-decoration:underline}
+        a:hover {color: orangered; text-decoration:none}
+        a:active {color: orangered; text-decoration:none }
+
+        #logo {width: 500px; height:100px; float:left; margin-top:20px }
+        #gamestart { list-style:none; margin-left:330px; }
+        #gamestart img { width:200px; height: 100px;   }
+        #qmenu { word-spacing:20px; display:flex; float:right; margin-left:590px}
+
+        nav { width: 100%; background: silver; padding: 5px 15px; clear: both; display:inline-block}
+
+        nav ul { word-spacing:500px;  font-weight:bold; text-align: center; list-style: none; font-size: 25px; padding:3px;
+                margin-right:50px; }
+        nav li {  display: flex; align-items: center; flex-wrap: wrap; text-align: center}
+        nav a{ font-size:45px}
+
+        video { max-width: 100%; display: block; }
         </style>
     {% endblock %}
 </head>
-<body>
     <header>
     <div id="wrapper">
-         <h1><img src="/static/img/sword.jpg" alt="logo"></h1>
+         <h1><a href="/"><img id='logo' src="/static/img/logo.png" alt="logo"></a></h1>
+             <ul id="gamestart" ><a href="/main_menu"><img src="/static/img/gamestart.png"></a></ul>
             {% if not request.session.userid %}
-                <ul id="qmenu">
-                    <li><a href="/login">로그인</a></li>
-                    <li><a href="/join">회원가입</a></li>
-                </ul>
+            <ul id="qmenu">
+                <li><a href="/login">로그인</a></li>
+                <li><a href="/join">회원가입</a></li>
+            </ul>
             {% endif %}
-
             {% if request.session.userid %}
                 <ul id="qmenu">
                     <li><a href="/logout">로그아웃</a></li>
                     <li><a href="/myinfo">회원정보</a></li>
                 </ul>
             {% endif %}
-
+            </div>
+    </header>
         <nav>
         <ul id="mmenu">
-            <li><a href="/">Home</a></li>
             <li><a href="/game_info">게임소개</a></li>
-            <li><a href="/main_menu">게임시작</a></li>
             <li><a href="/pay">상점</a></li>
         </ul>
         </nav>
-    </div>
-    </header>
+
+
     <div id="main">
-        {% block content %} {% endblock %}
+        {% block content %}
+    <body>
+      <video autoplay controls loop muted>
+          <source src="/static/video/트레일러1.mp4" type="video/mp4">
+      </video>
+    </body>
+        {% endblock %}
     </div>
     <footer>
         <hr>
