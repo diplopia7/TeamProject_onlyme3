@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-결제완료 !!
-</body>
-</html>
+{% extends 'project.html' %}
+
+{% load static %}
+
+{% block title %}{% endblock %}
+
+{% block style %}
+    <style>
+        #wrapper a {
+            font-weight: bold;
+            text-decoration: none;
+            color: black}
+        #wrapper a:hover { color:orangered }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div id="main">
+        <h1 class="d">충전이 완료되었습니다 !!</h1>
+    </div>
+{% endblock %}
+
+{% block jscript %}{% endblock %}
