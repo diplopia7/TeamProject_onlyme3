@@ -150,7 +150,7 @@
             <span id="turnNumber"></span> 턴
         </div>
         <div id="next" class="mainui">
-            <button type="submit">완료</button>
+            <button type="submit" id="battleready">전투준비</button>
         </div>
     </form>
     </div>
@@ -483,6 +483,11 @@
         else if ('{{ request.session.status }}'=='부장'){
             btn4.disabled=false
         }
+
+        function foodconsum(){
+            document.getElementById('foodinput').value =Number(document.getElementById('foodinput').value) - Number(document.getElementById('armyinput').value)*10
+            food.textContent = document.getElementById('foodinput').value
+        }
         
 
         gold=document.getElementById("gold")
@@ -512,5 +517,7 @@
         btn7.addEventListener("click",moneytofood)
         btn8=document.getElementById("btn8")
         btn8.addEventListener("click",foodtomoney)
+        battleready=document.getElementById('battleready')
+        battleready.addEventListener('click',foodconsum)
     </script>
 {% endblock %}
