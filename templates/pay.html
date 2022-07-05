@@ -1,138 +1,717 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-  <link rel="stylesheet" href="/static/css/bs5/bootstrap.min.css">
-  <style>
-    form div {
-      margin-top: 5px;
-    }
-    form label {
-      display: inline-block;
-      width: 100px;
-    }
-  </style>
-</head>
-<body>
-<!-- Button trigger modal -->
-<div class="position-absolute top-50 start-50 translate-middle">
-  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  결제하기
-  </button>
-</div>
+{% extends 'project.html' %}
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><img src="/static/img/danal.png" width="80px" height="30px"></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="d-flex justify-content-between">
-          <p>결제금액</p>
-          <p>1,000,000</p>
+{% load static %}
+
+{% block title %}{% endblock %}
+
+{% block style %}
+    <style>
+        #wrapper a {
+            font-weight: bold;
+            text-decoration: none;
+            color: black}
+        #wrapper a:hover { color:orangered }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div id="main">
+        <div class="text-end">
+            <button type="button" class="btn btn-danger" id="rechargebtn" data-bs-toggle="modal" data-bs-target="#rechargeModal">충전하기</button>
         </div>
-        <div class="d-flex justify-content-between">
-          <p>상품명</p>
-          <p>테스트 아이템</p>
-        </div>
-        <hr>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input rd" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-          <label class="form-check-label" for="inlineRadio1">10,000원</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input rd" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-          <label class="form-check-label" for="inlineRadio2">20,000원</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input rd" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-          <label class="form-check-label" for="inlineRadio3">30,000원</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input rd" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option4">
-          <label class="form-check-label" for="inlineRadio4">50,000원</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input rd" type="radio" name="inlineRadioOptions" id="inlineRadio5" value="option5">
-          <label class="form-check-label" for="inlineRadio5">100,000원</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input rd" type="radio" name="inlineRadioOptions" id="inlineRadio6" value="option6">
-          <label class="form-check-label" for="inlineRadio6">1,000,000원</label>
-        </div>
-        <form name="phone_frm" id="phone_frm" method="post">
-            <div class="d-flex justify-content-between">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
-                <label class="btn btn-outline-danger col-4" for="btnradio1">SKT</label>
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                <label class="btn btn-outline-danger col-4 mx-1" for="btnradio2">KT</label>
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-                <label class="btn btn-outline-danger col-4" for="btnradio3">LG</label>
+        <div class="d-flex row">
+            <div class="card text-center d-flex" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/가후.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="gahu">가후</span>
+                <div class="card-text">내정특기 : 연병</div>
+                <div class="card-text">전투특기 : 냉정</div>
+                <div class="card-text">전술 : 복병신속</div>
+                <button class="btn btn-danger w-100" id="gahupay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
             </div>
-          <div>
-            <label>이 름</label>
-            <input type="text" id="name">
-          </div>
-          <di>
-            <label>전화번호</label>
-            <input type="tel" id="phone">
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
-            <label class="btn btn-outline-danger col-1" for="btnradio4">남</label>
 
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off">
-            <label class="btn btn-outline-danger col-1" for="btnradio5">여</label>
-          </di>
-          <div>
-            <label>주민번호</label>
-            <input type="text" id="rnum" size="6">-<input type="password" id="rnum2" size="7">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" id="payokbtn" class="btn btn-danger btn-lg w-100" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-          결제
-        </button>
-      </div>
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/강유.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="gangyu">강유</span>
+                <div class="card-text">내정특기 : 연병</div>
+                <div class="card-text">전투특기 : 호걸</div>
+                <div class="card-text">전술 : 공방일체</div>
+                <button class="btn btn-danger w-100" id="gangyupay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/곽가.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="gwagga">곽가</span>
+                <div class="card-text">내정특기 : 상재</div>
+                <div class="card-text">전투특기 : 귀모</div>
+                <div class="card-text">전술 : 맹공</div>
+                <button class="btn btn-danger w-100" id="gwaggapay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/관우.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="kwanwoo">관우</span>
+                <div class="card-text">내정특기 : 연병</div>
+                <div class="card-text">전투특기 : 호걸</div>
+                <div class="card-text">전술 : 대타격</div>
+                <button class="btn btn-danger w-100" id="kwanwoopay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/노숙.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="nosug">노숙</span>
+                <div class="card-text">내정특기 : 상재</div>
+                <div class="card-text">전투특기 : 군사</div>
+                <div class="card-text">전술 : 색적</div>
+                <button class="btn btn-danger w-100" id="nosugpay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/대교.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="daegyo">대교</span>
+                <div class="card-text">내정특기 : 경작</div>
+                <div class="card-text">전투특기 : 냉정</div>
+                <div class="card-text">전술 : 속공</div>
+                <button class="btn btn-danger w-100" id="daegyopay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/등애.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="deungae">등애</span>
+                <div class="card-text">내정특기 : 수집</div>
+                <div class="card-text">전투특기 : 냉정</div>
+                <div class="card-text">전술 : 복병신속</div>
+                <button class="btn btn-danger w-100" id="deungaepay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/문앙.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="munang">문앙</span>
+                <div class="card-text">내정특기 : 연병</div>
+                <div class="card-text">전투특기 : 호걸</div>
+                <div class="card-text">전술 : 대타격</div>
+                <button class="btn btn-danger w-100" id="munangpay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/법정.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="beobjeong">법정</span>
+                <div class="card-text">내정특기 : 인맥</div>
+                <div class="card-text">전투특기 : 귀모</div>
+                <div class="card-text">전술 : 신화계</div>
+                <button class="btn btn-danger w-100" id="beobjeongpay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/사마의.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="samaui">사마의</span>
+                <div class="card-text">내정특기 : 상재</div>
+                <div class="card-text">전투특기 : 귀모</div>
+                <div class="card-text">전술 : 위무지강</div>
+                <button class="btn btn-danger w-100" id="samauipay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/소교.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="sogyo">소교</span>
+                <div class="card-text">내정특기 : 경작</div>
+                <div class="card-text">전투특기 : 귀모</div>
+                <div class="card-text">전술 : 강습</div>
+                <button class="btn btn-danger w-100" id="sogyopay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/손견.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="songyeon">손견</span>
+                <div class="card-text">내정특기 : 인맥</div>
+                <div class="card-text">전투특기 : 호걸</div>
+                <div class="card-text">전술 : 맹공</div>
+                <button class="btn btn-danger w-100" id="songyeonpay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/손권.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="songwon">손권</span>
+                <div class="card-text">내정특기 : 인맥</div>
+                <div class="card-text">전투특기 : 냉정</div>
+                <div class="card-text">전술 : 방호</div>
+                <button class="btn btn-danger w-100" id="songwonpay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/손책.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="sonchaeg">손책</span>
+                <div class="card-text">내정특기 : 인맥</div>
+                <div class="card-text">전투특기 : 귀모</div>
+                <div class="card-text">전술 : 강습</div>
+                <button class="btn btn-danger w-100" id="sonchaegpay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/순욱.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="soonwook">순욱</span>
+                <div class="card-text">내정특기 : 변설</div>
+                <div class="card-text">전투특기 : 군사</div>
+                <div class="card-text">전술 : 회계</div>
+                <button class="btn btn-danger w-100" id="soonwookpay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/여몽.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="yeomong">여몽</span>
+                <div class="card-text">내정특기 : 연병</div>
+                <div class="card-text">전투특기 : 귀모</div>
+                <div class="card-text">전술 : 공방일체</div>
+                <button class="btn btn-danger w-100" id="yeomongpay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/유비.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="yubi">유비</span>
+                <div class="card-text">내정특기 : 인맥</div>
+                <div class="card-text">전투특기 : 냉정</div>
+                <div class="card-text">전술 : 의용병</div>
+                <button class="btn btn-danger w-100" id="yubipay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/육손.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="yugson">육손</span>
+                <div class="card-text">내정특기 : 연병</div>
+                <div class="card-text">전투특기 : 귀모</div>
+                <div class="card-text">전술 : 화계</div>
+                <button class="btn btn-danger w-100" id="yugsonpay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/장비.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="jangbi">장비</span>
+                <div class="card-text">내정특기 : 연병</div>
+                <div class="card-text">전투특기 : 호걸</div>
+                <div class="card-text">전술 : 만인적</div>
+                <button class="btn btn-danger w-100" id="jangbipay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/제갈량.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="jegallyang">제갈량</span>
+                <div class="card-text">내정특기 : 변설</div>
+                <div class="card-text">전투특기 : 귀모</div>
+                <div class="card-text">전술 : 팔진도</div>
+                <button class="btn btn-danger w-100" id="jegallyangpay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/조운.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="joun">조운</span>
+                <div class="card-text">내정특기 : 수집</div>
+                <div class="card-text">전투특기 : 호걸</div>
+                <div class="card-text">전술 : 운체풍신</div>
+                <button class="btn btn-danger w-100" id="jounpay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/조조.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="jojo">조조</span>
+                <div class="card-text">내정특기 : 인맥</div>
+                <div class="card-text">전투특기 : 군사</div>
+                <div class="card-text">전술 : 위무지강</div>
+                <button class="btn btn-danger w-100" id="jojopay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/주유.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="juyu">주유</span>
+                <div class="card-text">내정특기 : 수집</div>
+                <div class="card-text">전투특기 : 귀모</div>
+                <div class="card-text">전술 : 신화계</div>
+                <button class="btn btn-danger w-100" id="juyupay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/하후돈.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="hahudon">하후돈</span>
+                <div class="card-text">내정특기 : 연병</div>
+                <div class="card-text">전투특기 : 냉정</div>
+                <div class="card-text">전술 : 공방일체</div>
+                <button class="btn btn-danger w-100" id="hahudonpay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+
+            <div class="card text-center" style="width: 18rem;">
+              <img src="{% static '/resources/img/character/하후연.png' %}" class="card-img-top">
+              <div class="card-body">
+                <span class="card-title h5 fw-bold" id="hahuyeon">하후연</span>
+                <div class="card-text">내정특기 : 변설</div>
+                <div class="card-text">전투특기 : 호걸</div>
+                <div class="card-text">전술 : 강용</div>
+                <button class="btn btn-danger w-100" id="hahuyeonpay" data-bs-toggle="modal" data-bs-target="#payModal">
+                    <i class="bi bi-coin text-warning"></i> 10,000</button>
+              </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
+{% endblock %}
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel2"><img src="/static/img/danal.png" width="80px" height="30px"></h5>
-      </div>
-      <div class="modal-body">
-        <p>결제가 완료되었습니다 !!</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger btn-lg w-100" data-bs-dismiss="modal" onclick="location.href='/payok'">
-            완료
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+{% block jscript %}
+    <script>
+    const payok = document.querySelector('#payok');
+    const payq = document.querySelector('#payq');
+    const rechargebtn = document.querySelector('#rechargebtn');
 
-<script>
-    const payokbtn = document.querySelector('#payokbtn')
+    const gahu = document.querySelector('#gahu');
+    const gangyu = document.querySelector('#gangyu');
+    const gwagga = document.querySelector('#gwagga');
+    const kwanwoo = document.querySelector('#kwanwoo');
+    const nosug = document.querySelector('#nosug');
+    const daegyo = document.querySelector('#daegyo');
+    const deungae = document.querySelector('#deungae');
+    const munang = document.querySelector('#munang');
+    const beobjeong = document.querySelector('#beobjeong');
+    const samaui = document.querySelector('#samaui');
+    const sogyo = document.querySelector('#sogyo');
+    const songyeon = document.querySelector('#songyeon');
+    const songwon = document.querySelector('#songwon');
+    const sonchaeg = document.querySelector('#sonchaeg');
+    const soonwook = document.querySelector('#soonwook');
+    const yeomong = document.querySelector('#yeomong');
+    const yubi = document.querySelector('#yubi');
+    const yugson = document.querySelector('#yugson');
+    const jangbi = document.querySelector('#jangbi');
+    const jegallyang = document.querySelector('#jegallyang');
+    const joun = document.querySelector('#joun');
+    const jojo = document.querySelector('#jojo');
+    const juyu = document.querySelector('#juyu');
+    const hahudon = document.querySelector('#hahudon');
+    const hahuyeon = document.querySelector('#hahuyeon');
+
+    const gahupay = document.querySelector('#gahupay');
+    const gangyupay = document.querySelector('#gangyupay');
+    const gwaggapay = document.querySelector('#gwaggapay');
+    const kwanwoopay = document.querySelector('#kwanwoopay');
+    const nosugpay = document.querySelector('#nosugpay');
+    const daegyopay = document.querySelector('#daegyopay');
+    const deungaepay = document.querySelector('#deungaepay');
+    const munangpay = document.querySelector('#munangpay');
+    const beobjeongpay = document.querySelector('#beobjeongpay');
+    const samauipay = document.querySelector('#samauipay');
+    const sogyopay = document.querySelector('#sogyopay');
+    const songyeonpay = document.querySelector('#songyeonpay');
+    const songwonpay = document.querySelector('#songwonpay');
+    const sonchaegpay = document.querySelector('#sonchaegpay');
+    const soonwookpay = document.querySelector('#soonwookpay');
+    const yeomongpay = document.querySelector('#yeomongpay');
+    const yubipay = document.querySelector('#yubipay');
+    const yugsonpay = document.querySelector('#yugsonpay');
+    const jangbipay = document.querySelector('#jangbipay');
+    const jegallyangpay = document.querySelector('#jegallyangpay');
+    const jounpay = document.querySelector('#jounpay');
+    const jojopay = document.querySelector('#jojopay');
+    const juyupay = document.querySelector('#juyupay');
+    const hahudonpay = document.querySelector('#hahudonpay');
+    const hahuyeonpay = document.querySelector('#hahuyeonpay');
+
+    const payokbtn = document.querySelector('#payokbtn');
+    const rd1 = document.querySelector('#inlineRadio1');
+    const rd1lb = document.querySelector('#inlineRadio1lb');
+    const rd2 = document.querySelector('#inlineRadio2');
+    const rd2lb = document.querySelector('#inlineRadio2lb');
+    const rd3 = document.querySelector('#inlineRadio3');
+    const rd3lb = document.querySelector('#inlineRadio3lb');
+    const rd4 = document.querySelector('#inlineRadio4');
+    const rd4lb = document.querySelector('#inlineRadio4lb');
+    const rd5 = document.querySelector('#inlineRadio5');
+    const rd5lb = document.querySelector('#inlineRadio5lb');
+    const rd6 = document.querySelector('#inlineRadio6');
+    const rd6lb = document.querySelector('#inlineRadio6lb');
+    const recharge = document.querySelector('#recharge');
+    const rechargemodal = document.querySelector('#rechargeModal');
+    const paymodal = document.querySelector('#payModal');
+
+    gahupay.addEventListener('click', () => {
+        payq.innerHTML = gahu.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            gahupay.disabled = true;
+            gahupay.innerHTML = '구매완료';
+        });
+    });
+
+    gangyupay.addEventListener('click', () => {
+        payq.innerHTML = gangyu.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            gangyupay.disabled = true;
+            gangyupay.innerHTML = '구매완료';
+        });
+    });
+
+    gwaggapay.addEventListener('click', () => {
+        payq.innerHTML = gwagga.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            gwaggapay.disabled = true;
+            gwaggapay.innerHTML = '구매완료';
+        });
+    });
+
+    kwanwoopay.addEventListener('click', () => {
+        payq.innerHTML = kwanwoo.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            kwanwoopay.disabled = true;
+            kwanwoopay.innerHTML = '구매완료';
+        });
+    });
+
+    nosugpay.addEventListener('click', () => {
+        payq.innerHTML = nosug.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            nosugpay.disabled = true;
+            nosugpay.innerHTML = '구매완료';
+        });
+    });
+
+    daegyopay.addEventListener('click', () => {
+        payq.innerHTML = daegyo.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            daegyopay.disabled = true;
+            daegyopay.innerHTML = '구매완료';
+        });
+    });
+
+    deungaepay.addEventListener('click', () => {
+        payq.innerHTML = deungae.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            deungaepay.disabled = true;
+            deungaepay.innerHTML = '구매완료';
+        });
+    });
+
+    munangpay.addEventListener('click', () => {
+        payq.innerHTML = munang.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            munangpay.disabled = true;
+            munangpay.innerHTML = '구매완료';
+        });
+    });
+
+    beobjeongpay.addEventListener('click', () => {
+        payq.innerHTML = beobjeong.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            beobjeongpay.disabled = true;
+            beobjeongpay.innerHTML = '구매완료';
+        });
+    });
+
+    samauipay.addEventListener('click', () => {
+        payq.innerHTML = samaui.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            samauipay.disabled = true;
+            samauipay.innerHTML = '구매완료';
+        });
+    });
+
+    sogyopay.addEventListener('click', () => {
+        payq.innerHTML = sogyo.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            sogyopay.disabled = true;
+            sogyopay.innerHTML = '구매완료';
+        });
+    });
+
+    songyeonpay.addEventListener('click', () => {
+        payq.innerHTML = songyeon.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            songyeonpay.disabled = true;
+            songyeonpay.innerHTML = '구매완료';
+        });
+    });
+
+    songwonpay.addEventListener('click', () => {
+        payq.innerHTML = songwon.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            songwonpay.disabled = true;
+            songwonpay.innerHTML = '구매완료';
+        });
+    });
+
+    sonchaegpay.addEventListener('click', () => {
+        payq.innerHTML = sonchaeg.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            sonchaegpay.disabled = true;
+            sonchaegpay.innerHTML = '구매완료';
+        });
+    });
+
+    soonwookpay.addEventListener('click', () => {
+        payq.innerHTML = soonwook.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            soonwookpay.disabled = true;
+            soonwookpay.innerHTML = '구매완료';
+        });
+    });
+
+    yeomongpay.addEventListener('click', () => {
+        payq.innerHTML = yeomong.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            yeomongpay.disabled = true;
+            yeomongpay.innerHTML = '구매완료';
+        });
+    });
+
+    yubipay.addEventListener('click', () => {
+        payq.innerHTML = yubi.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            yubipay.disabled = true;
+            yubipay.innerHTML = '구매완료';
+        });
+    });
+
+    yugsonpay.addEventListener('click', () => {
+        payq.innerHTML = yugson.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            yugsonpay.disabled = true;
+            yugsonpay.innerHTML = '구매완료';
+        });
+    });
+
+    jangbipay.addEventListener('click', () => {
+        payq.innerHTML = jangbi.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            jangbipay.disabled = true;
+            jangbipay.innerHTML = '구매완료';
+        });
+    });
+
+    jegallyangpay.addEventListener('click', () => {
+        payq.innerHTML = jegallyang.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            jegallyangpay.disabled = true;
+            jegallyangpay.innerHTML = '구매완료';
+        });
+    });
+
+    jounpay.addEventListener('click', () => {
+        payq.innerHTML = joun.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            jounpay.disabled = true;
+            jounpay.innerHTML = '구매완료';
+        });
+    });
+
+    jojopay.addEventListener('click', () => {
+        payq.innerHTML = jojo.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            jojopay.disabled = true;
+            jojopay.innerHTML = '구매완료';
+        });
+    });
+
+    juyupay.addEventListener('click', () => {
+        payq.innerHTML = juyu.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            juyupay.disabled = true;
+            juyupay.innerHTML = '구매완료';
+        });
+    });
+
+    hahudonpay.addEventListener('click', () => {
+        payq.innerHTML = hahudon.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            hahudonpay.disabled = true;
+            hahudonpay.innerHTML = '구매완료';
+        });
+    });
+
+    hahuyeonpay.addEventListener('click', () => {
+        payq.innerHTML = hahuyeon.outerHTML + ' 캐릭터를 구매하시겠습니까?';
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+
+            hahuyeonpay.disabled = true;
+            hahuyeonpay.innerHTML = '구매완료';
+        });
+    });
+
+    rd1.addEventListener('click', () => {
+        recharge.innerHTML = rd1lb.outerHTML;
+        payokbtn.disabled = false;
+    });
+    rd2.addEventListener('click', () => {
+        recharge.innerHTML = rd2lb.outerHTML;
+        payokbtn.disabled = false;
+    });
+    rd3.addEventListener('click', () => {
+        recharge.innerHTML = rd3lb.outerHTML;
+        payokbtn.disabled = false;
+    });
+    rd4.addEventListener('click', () => {
+        recharge.innerHTML = rd4lb.outerHTML;
+        payokbtn.disabled = false;
+    });
+    rd5.addEventListener('click', () => {
+        recharge.innerHTML = rd5lb.outerHTML;
+        payokbtn.disabled = false;
+    });
+    rd6.addEventListener('click', () => {
+        recharge.innerHTML = rd6lb.outerHTML;
+        payokbtn.disabled = false;
+    });
+
     payokbtn.addEventListener('click', () => {
-        const name = document.phone_frm.name;
-        const phone = document.phone_frm.phone;
-        const rnum = document.phone_frm.rnum;
-        const rnum2 = document.phone_frm.rnum2;
+        const name = document.phonefrm.name;
+        const phone = document.phonefrm.phone;
+        const rrn = document.phonefrm.rrn;
 
-        if (rd.checked == true) {
-            name.value == 'aaa';
+        if (name.value == '') {
+            alert('이름을 입력하세요.');
+        } else if (phone.value == '') {
+            alert('전화번호를 입력해주세요.');
+        } else if (rrn.value == '') {
+            alert('주민번호를 입력해주세요.');
+        } else {
+            location.href='/payok';
         }
     });
 </script>
-<script src="/static/js/bs5/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+{% endblock %}
