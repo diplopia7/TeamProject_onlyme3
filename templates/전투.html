@@ -439,23 +439,18 @@
 
 
         // 플레이어 덱 만들기
+        let main_deck = [];
         let player_deck = [];
         let enemy_deck = [];
-        for (let i = 1; i <= 54; ++i) {
-            player_deck.push(i);
-        }
-        for (let i = 1; i <= 54; ++i) {
-            enemy_deck.push(i);
-        }
-
-
-        // 플레이어 덱 섞기
-        shuffle(player_deck);
-        shuffle(enemy_deck);
 
         // 플레이어 손패 만들기
         let player_hand = [];
         let enemy_hand = [];
+
+        for (let i = 1; i <= 54; ++i) {
+            main_deck.push(i);
+        }
+        shuffle(main_deck);
 
         // 카드 드로우 함수
         let draw_card = (hand, deck) => {
@@ -463,33 +458,44 @@
             deck.shift();
         };
 
+        // 절반씩 덱 생성
+        for (let i = 0; i < 27 ; ++i) {
+            draw_card(player_deck,main_deck)
+        }
+        for (let i = 0; i < 27 ; ++i) {
+            draw_card(enemy_deck,main_deck)
+        }
+
+        // 메인 필드
+        let main_field = {}
+
+
+
+
+
+
+
         playercard = document.getElementById('playercard');
         enemycard = document.getElementById('enemycard');
 
 
         // 카드 배치 함수
         // (배치구역, 카드번호)
-        let set_card = (place, cardid) => {
-            let a = document.createElement('img')
-            a.src = card_list[cardid];
-            place.appendChild(a)
-        };
-        let set_card_rotate = (place, cardid) => {
-            let a = document.createElement('img');
-            a.src = card_list[cardid];
-            a.style.transform = 'rotate(90deg)';
-            place.appendChild(a);
-        };
+        let set_card = (place, cardid3) => {
+            console.log(`set_card: ${cardid3}`);
 
-        /*
-        let set_card = (place, cardid) => {
-            place.class += ` card_${cardid}`
+            let a = document.createElement('img');
+            a.src = card_list[cardid3];
+            eval(place).appendChild(a);
         };
-        let set_card_rotate = (place, cardid) => {
+        let set_card_rotate = (place, cardid3) => {
+            console.log(`set_card_rotate: ${cardid3}`);
+
+            let a = document.createElement('img');
+            a.src = card_list[cardid3];
             a.style.transform = 'rotate(90deg)';
-            place.class += ` card_${cardid} defence_card`
+            eval(place).appendChild(a);
         };
-        */
 
 
         // 손에 카드 넣기
@@ -498,14 +504,18 @@
             while (place.hasChildNodes()) {
                 place.removeChild(place.firstChild);
             }
+
             for (let i = 0; i < hand.length; ++i) {
                 let a = document.createElement('img')
                 a.id = `${i}_${hand[i]}`;
                 a.className = 'card_in_hand';
                 a.src = card_list[hand[i]];
-                a.addEventListener('click', () => {
+
+                handf = () => {
+                    console.log(`handf with ${i}, ${hand[i]}`);
                     active01(i, hand[i]);
-                });
+                };
+                a.addEventListener('click', handf);
                 place.appendChild(a)
             }
         };
@@ -524,7 +534,7 @@
         first_turn();
 
         // 드로우 버튼 작용
-        draw = document.getElementById('draw');
+        let draw = document.getElementById('draw');
         draw.addEventListener("click", () => {
             draw_card(player_hand, player_deck);
             checkhand(player_hand, playercard);
@@ -532,123 +542,161 @@
 
 
         // 마법카드 판단 함수
-        let ismagic = (cardid) => {
-            return cardid >= 41 && cardid <= 52;
+        let ismagic = (cardid3) => {
+            return cardid3 >= 41 && cardid3 <= 52;
         };
 
-        // 플레이어 필드
-        let player_field = {}
 
 
+        let magic_card = 0
+        let cardid = 0
+
+        let isattack = 1000
+        let isfront = 100
+
+
+        //필드에 카드 넣기
+        const loc1f = () => {
+            normallocation.style.display = 'none';
+            main_field['field8'] = magic_card + isattack + isfront + cardid;
+            card_location();
+        };
+        const loc2f = () => {
+            normallocation.style.display = 'none';
+            main_field['field9'] = magic_card + isattack + isfront + cardid;
+            card_location();
+        };
+        const loc3f = () => {
+            normallocation.style.display = 'none';
+            main_field['field10'] = magic_card + isattack + isfront + cardid;
+            card_location();
+        };
+        const loc4f = () => {
+            normallocation.style.display = 'none';
+            main_field['field11'] = magic_card + isattack + isfront + cardid;
+            card_location();
+        };
+        const loc5f = () => {
+            magiclocation.style.display = 'none';
+            main_field['field12'] = magic_card + isattack + isfront + cardid;
+            card_location();
+        };
+        const loc6f = () => {
+            magiclocation.style.display = 'none';
+            main_field['field13'] = magic_card + isattack + isfront + cardid;
+            card_location();
+        };
+        const loc7f = () => {
+            magiclocation.style.display = 'none';
+            main_field['field14'] = magic_card + isattack + isfront + cardid;
+            card_location();
+        };
+
+
+        // 앞뒤판단 - 공격방향
+        const attackf = () => {
+            console.log(`in attackf = cardid: ${cardid}, magic_card: ${magic_card}`)
+            attackbtn.removeChild(attackbtn.lastElementChild);
+            defencebtn.removeChild(defencebtn.lastElementChild);
+            cardbtn.style.display = 'none';
+            cardbtn2.style.display = 'block';
+            set_card(frontbtn, cardid);
+            set_card(backbtn, 0);
+        };
+        // 앞뒤판단 - 수비방향
+        const defencef = () => {
+            isattack = 0
+            attackbtn.removeChild(attackbtn.lastElementChild);
+            defencebtn.removeChild(defencebtn.lastElementChild);
+            cardbtn.style.display = 'none';
+            cardbtn2.style.display = 'block';
+            set_card_rotate(frontbtn, cardid);
+            set_card_rotate(backbtn, 0);
+        };
+        // 앞방향 배치지정
+        const frontf = () => {
+            frontbtn.removeChild(frontbtn.lastElementChild);
+            backbtn.removeChild(backbtn.lastElementChild);
+            cardbtn2.style.display = 'none';
+            normallocation.style.display = 'block';
+
+        };
+        // 뒷방향 배치지정
+        const backf = () => {
+            isfront = 0
+            frontbtn.removeChild(frontbtn.lastElementChild);
+            backbtn.removeChild(backbtn.lastElementChild);
+            cardbtn2.style.display = 'none';
+            normallocation.style.display = 'block';
+        };
         // 손 안의 카드의 위치와 카드의 변수값을 받아 실행되는 함수
-        let active01 = (handid, cardid) => {
+        let active01 = (handid, cardid3) => {
+            cardid = cardid3;
+            magic_card = 0
+            isattack = 1000
+            isfront = 100
+            console.log(`receive active01: ${handid}, ${cardid}`);
             // 마법카드 여부 확인
-            let magic_card = 0
-            if (ismagic(cardid)) {
-                magic_card = 10000
-            }
+            if (ismagic(cardid)) magic_card = 10000;
 
-            cardbtn.style.display = 'block';  // 카드 포지션 설정구역 표시
+
             player_hand.splice(handid, 1); // 뽑은 카드 손에서 지우기
             checkhand(player_hand, playercard);
             playercard.style.pointerEvents = 'none';
-
             // 공수여부 판단
             if (magic_card === 10000) {
-                set_card(attackbtn, cardid);
-                defencebtn.style.display = 'none';
-            } else {
+                magiclocation.style.display = 'block';
+            }
+            else {
+                cardbtn.style.display = 'block';
                 set_card(attackbtn, cardid);
                 set_card_rotate(defencebtn, cardid);
             }
-            let isattack = 1000
-            // 앞뒤판단 - 공격방향
-            attackbtn.addEventListener("click", () => {
-                attackbtn.removeChild(attackbtn.lastElementChild);
-                if (magic_card === 0) defencebtn.removeChild(defencebtn.lastElementChild);
-                cardbtn.style.display = 'none';
-                cardbtn2.style.display = 'block';
-                set_card(frontbtn, cardid);
-                set_card(backbtn, 0);
-            });
-            // 앞뒤판단 - 수비방향
-            defencebtn.addEventListener("click", () => {
-                isattack = 0
-                attackbtn.removeChild(attackbtn.lastElementChild);
-                defencebtn.removeChild(defencebtn.lastElementChild);
-                cardbtn.style.display = 'none';
-                cardbtn2.style.display = 'block';
-                set_card_rotate(frontbtn, cardid);
-                set_card_rotate(backbtn, 0);
-            });
-            let isfront = 100
-            // 앞방향 배치지정
-            frontbtn.addEventListener('click', () => {
-                frontbtn.removeChild(frontbtn.lastElementChild);
-                backbtn.removeChild(backbtn.lastElementChild);
-                cardbtn2.style.display = 'none';
-                if (magic_card === 10000) {
-                    magiclocation.style.display = 'block';
-                } else {
-                    normallocation.style.display = 'block';
-                }
-            });
-            // 뒷방향 배치지정
-            backbtn.addEventListener('click', () => {
-                isfront = 0
-                frontbtn.removeChild(frontbtn.lastElementChild);
-                backbtn.removeChild(backbtn.lastElementChild);
-                cardbtn2.style.display = 'none';
-                if (magic_card === 10000) {
-                    magiclocation.style.display = 'block';
-                } else {
-                    normallocation.style.display = 'block';
-                }
-            });
-
-            //필드에 카드 넣기
-            loc1.addEventListener('click', () => {
-                normallocation.style.display = 'none';
-                player_field['loc1'] = magic_card + isattack + isfront + cardid;
-                card_location();
-            });
-            loc2.addEventListener('click', () => {
-                normallocation.style.display = 'none';
-                player_field['loc2'] = magic_card + isattack + isfront + cardid;
-                card_location();
-            });
-            loc3.addEventListener('click', () => {
-                normallocation.style.display = 'none';
-                player_field['loc3'] = magic_card + isattack + isfront + cardid;
-                card_location();
-            });
-            loc4.addEventListener('click', () => {
-                normallocation.style.display = 'none';
-                player_field['loc4'] = magic_card + isattack + isfront + cardid;
-                card_location();
-            });
-            loc5.addEventListener('click', () => {
-                magiclocation.style.display = 'none';
-                player_field['loc5'] = magic_card + isattack + isfront + cardid;
-                card_location();
-            });
-            loc6.addEventListener('click', () => {
-                magiclocation.style.display = 'none';
-                player_field['loc6'] = magic_card + isattack + isfront + cardid;
-                card_location();
-            });
-            loc7.addEventListener('click', () => {
-                magiclocation.style.display = 'none';
-                player_field['loc7'] = magic_card + isattack + isfront + cardid;
-                card_location();
-            });
 
 
+            attackbtn.addEventListener("click", attackf);
+            defencebtn.addEventListener("click", defencef);
+            frontbtn.addEventListener('click', frontf);
+            backbtn.addEventListener('click', backf);
+            loc1.addEventListener('click', loc1f);
+            loc2.addEventListener('click', loc2f);
+            loc3.addEventListener('click', loc3f);
+            loc4.addEventListener('click', loc4f);
+            loc5.addEventListener('click', loc5f);
+            loc6.addEventListener('click', loc6f);
+            loc7.addEventListener('click', loc7f);
+            if (main_field['field8']) loc1.style.display = 'none';
+            if (main_field['field9']) loc2.style.display = 'none';
+            if (main_field['field10']) loc3.style.display = 'none';
+            if (main_field['field11']) loc4.style.display = 'none';
+            if (main_field['field12']) loc5.style.display = 'none';
+            if (main_field['field13']) loc6.style.display = 'none';
+            if (main_field['field14']) loc7.style.display = 'none';
         };
         // 최종 배치 함수
         // loc1 = 11150 === 1번 자리에 있는 마법카드, 공격배치, 앞면인 50번 카드
+        // EventListener, 필드 전역 일괄 청소 후 카드 배치 실행
+        // 가장 일 많이 하는 녀석
         let card_location = () => {
             playercard.style.pointerEvents = 'auto';
+            defencebtn.removeEventListener("click", attackf);
+            defencebtn.removeEventListener("click", defencef);
+            frontbtn.removeEventListener('click', frontf);
+            backbtn.removeEventListener('click', backf);
+            loc1.removeEventListener('click', loc1f);
+            loc2.removeEventListener('click', loc2f);
+            loc3.removeEventListener('click', loc3f);
+            loc4.removeEventListener('click', loc4f);
+            loc5.removeEventListener('click', loc5f);
+            loc6.removeEventListener('click', loc6f);
+            loc7.removeEventListener('click', loc7f);
+            clear_field(field1);
+            clear_field(field2);
+            clear_field(field3);
+            clear_field(field4);
+            clear_field(field5);
+            clear_field(field6);
+            clear_field(field7);
             clear_field(field8);
             clear_field(field9);
             clear_field(field10);
@@ -656,140 +704,28 @@
             clear_field(field12);
             clear_field(field13);
             clear_field(field14);
-            for (let loc in player_field) {
-                let card = player_field[loc];
+            for (let loc in main_field) {
+                let card = main_field[loc];
                 let card_info = card % 10000;
                 let cardid = card_info % 100;
-                switch (loc) {
-                    case 'loc1':
-                        switch ((card_info - cardid) / 100) {
-                            case 0:
-                                set_card_rotate(field8, 0)
-                                break;
-                            case 1:
-                                set_card_rotate(field8, cardid)
-                                break;
-                            case 10:
-                                set_card(field8, 0)
-                                break;
-                            case 11:
-                                set_card(field8, cardid)
-                                break;
-                            default:
-                                alert(`${loc}에 ${card_info}의 카드가 들어옴`);
-                        }
+                switch ((card_info - cardid) / 100) {
+                    case 0:
+                        set_card_rotate(loc, 0)
                         break;
-                    case 'loc2':
-                        switch ((card_info - cardid) / 100) {
-                            case 0:
-                                set_card_rotate(field9, 0)
-                                break;
-                            case 1:
-                                set_card_rotate(field9, cardid)
-                                break;
-                            case 10:
-                                set_card(field9, 0)
-                                break;
-                            case 11:
-                                set_card(field9, cardid)
-                                break;
-                            default:
-                                alert(`${loc}에 ${card_info}의 카드가 들어옴`);
-                        }
+                    case 1:
+                        set_card_rotate(loc, cardid)
                         break;
-                    case 'loc3':
-                        switch ((card_info - cardid) / 100) {
-                            case 0:
-                                set_card_rotate(field10, 0)
-                                break;
-                            case 1:
-                                set_card_rotate(field10, cardid)
-                                break;
-                            case 10:
-                                set_card(field10, 0)
-                                break;
-                            case 11:
-                                set_card(field10, cardid)
-                                break;
-                            default:
-                                alert(`${loc}에 ${card_info}의 카드가 들어옴`);
-                        }
+                    case 10:
+                        set_card(loc, 0)
                         break;
-                    case 'loc4':
-                        switch ((card_info - cardid) / 100) {
-                            case 0:
-                                set_card_rotate(field11, 0)
-                                break;
-                            case 1:
-                                set_card_rotate(field11, cardid)
-                                break;
-                            case 10:
-                                set_card(field11, 0)
-                                break;
-                            case 11:
-                                set_card(field11, cardid)
-                                break;
-                            default:
-                                alert(`${loc}에 ${card_info}의 카드가 들어옴`);
-                        }
-                        break;
-                    case 'loc5':
-                        switch ((card_info - cardid) / 100) {
-                            case 0:
-                                set_card_rotate(field12, 0)
-                                break;
-                            case 1:
-                                set_card_rotate(field12, cardid)
-                                break;
-                            case 10:
-                                set_card(field12, 0)
-                                break;
-                            case 11:
-                                set_card(field12, cardid)
-                                break;
-                            default:
-                                alert(`${loc}에 ${card_info}의 카드가 들어옴`);
-                        }
-                        break;
-                    case 'loc6':
-                        switch ((card_info - cardid) / 100) {
-                            case 0:
-                                set_card_rotate(field13, 0)
-                                break;
-                            case 1:
-                                set_card_rotate(field13, cardid)
-                                break;
-                            case 10:
-                                set_card(field13, 0)
-                                break;
-                            case 11:
-                                set_card(field13, cardid)
-                                break;
-                            default:
-                                alert(`${loc}에 ${card_info}의 카드가 들어옴`);
-                        }
-                        break;
-                    case 'loc7':
-                        switch ((card_info - cardid) / 100) {
-                            case 0:
-                                set_card_rotate(field14, 0)
-                                break;
-                            case 1:
-                                set_card_rotate(field14, cardid)
-                                break;
-                            case 10:
-                                set_card(field14, 0)
-                                break;
-                            case 11:
-                                set_card(field14, cardid)
-                                break;
-                            default:
-                                alert(`${loc}에 ${card_info}의 카드가 들어옴`);
-                        }
+                    case 11:
+                        set_card(loc, cardid)
                         break;
                     default:
-                        alert(`${loc}에 ${card_info}의 카드가 들어오지 못 함`);
+                        alert(`${loc}에 ${card_info}의 카드가 들어옴`);
                 }
+
+
             }
         };
 
