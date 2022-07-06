@@ -11,6 +11,8 @@ class Member(models.Model):
     userid = models.CharField(max_length=18)
     passwd=models.CharField(max_length=18)
     name=models.CharField(max_length=5)
+    jumin=models.CharField(max_length=13, default='')
+    phone=models.CharField(max_length=11, default='')
     email=models.CharField(max_length=100)
     cash=models.IntegerField(default=0)
     regdate=models.DateTimeField(default=datetime.now)

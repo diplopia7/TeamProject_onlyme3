@@ -20,7 +20,7 @@
         #gamestart img { width:200px; height: 100px;   }
         #qmenu { word-spacing:20px; display:flex; float:right; margin-left:590px}
 
-        nav { width: 99%; background: silver; padding: 5px 15px; clear: both; display:inline-block}
+        nav { width: 100%; background: silver; padding: 5px 15px; clear: both; display:inline-block}
 
         nav ul { word-spacing:500px;  font-weight:bold; text-align: center; list-style: none; font-size: 25px; padding:3px;
                 margin-right:50px; }
@@ -72,6 +72,18 @@
     <input type="text" name="name" id="name" value="{{ form.name }}"></div>
     <div class="error">{{ error3 }}</div>
 
+    <div><label for="jumin">주민번호</label>
+    <input type="text" name="jumin" id="jumin" maxlength="13"
+           placeholder="'-'를 제외하고 입력하세요" value="{{ form.jumin }}"></div>
+    <div class="error">{{ error6 }}</div>
+    <div class="error">{{ error8 }}</div>
+
+    <div><label for="phone">전화번호</label>
+    <input type="text" name="phone" id="phone" maxlength="11"
+           placeholder="'-'를 제외하고 입력하세요" value="{{ form.phone }}"></div>
+    <div class="error">{{ error7 }}</div>
+    <div class="error">{{ error9 }}</div>
+
     <div><label for="email">이메일</label>
     <input type="email" name="email" id="email" value="{{ form.email }}"></div>
     <div class="error">{{ error4 }}</div>
@@ -84,6 +96,5 @@
 {% endblock %}
 
 {% block jscript %}
-
 {% endblock %}
 

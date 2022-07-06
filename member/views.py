@@ -18,6 +18,10 @@ def join(request):
         error3 = ''
         error4 = ''
         error5 = ''
+        error6 = ''
+        error7 = ''
+        error8 = ''
+        error9 = ''
         duplicate=''
 
         try:
@@ -37,6 +41,14 @@ def join(request):
                 error3='이름을 입력하세요'
             elif not form['email']:
                 error4 = '이메일 주소를 입력하세요'
+            elif not form['jumin']:
+                error6 = '주민번호를 입력하세요'
+            elif '-' in form['jumin'] or len(form['jumin']) != 13:
+                error8 = '올바른 주민번호가 아닙니다.'
+            elif not form['phone']:
+                error7 = '전화번호를 입력하세요'
+            elif '-' in form['phone']:
+                error9 = '올바른 전화번호를 입력하세요'
             elif form['passwd'] != form['repasswd']:
                 error5 = '비밀번호가 일치하지 않습니다!'
             else:
@@ -44,14 +56,16 @@ def join(request):
                     userid=form['userid'],
                     passwd=make_password(form['passwd']),
                     name=form['name'],
-                    email=form['email']
+                    jumin=form['jumin'],
+                    phone=form['phone'],
+                    email=form['email'],
                 )
                 member.save()
                 returnPage = 'joinok.html'
 
 
         context = {'form': form, 'error1': error1,'error2':error2,'error3':error3,'error4':error4,'error5':error5,
-                   'duplicate':duplicate}
+                   'error6':error6,'error7':error7,'error8':error8,'error9':error9,'duplicate':duplicate}
 
         return render(request, returnPage, context)
 
