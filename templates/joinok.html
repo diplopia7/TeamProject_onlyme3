@@ -27,15 +27,9 @@
         nav li {  display: flex; align-items: center; flex-wrap: wrap; text-align: center}
         nav a{ font-size:45px}
 
-        form { width: 350px; margin: 150px auto}
 
-        form div { margin-top: 10px }
-
-        form label { display:inline-block; width: 120px; text-align: right; font-weight:bold}
-
-        form button:first-child { margin-left: 125px }
-
-        h2 {margin-left: 55px}
+        #joform { display: table; margin-left: auto; margin-right: auto; margin-top:10%; position:relative; }
+        #jobtn { margin-left:25px}
 
         .error{position:relative; left:150px; color:red; font-weight: bold}
     </style>
@@ -47,15 +41,24 @@
 {% endif %}
 
 <h2>회원가입</h2>
-<form name="joinfrm" method="post" id="joinfrm">
-    {# django built-in template filter #}
-    <div style="color: red">{{ error|addslashes }}</div>
-
-    {% csrf_token %} {# 동일 출처origin 확인용 쿠키 생성 #}
-    <div>
-        <h3>회원가입 완료!</h3>
+<div id="joform">
+<form name="joinok" method="post" id="joinok">
+    <div id='jomsg' style="width:700px; background-color: lightblue; text-align: center">
+        <br>
+        <h2>{{ form.name }} 님</h2>
+       <h2>회원가입을 환영합니다!</h2>
+        <h3>게임 플레이 및 다양한 서비스를 이용하실 수 있습니다.</h3>
+        <h3>지금바로 전장으로 가보시죠!</h3>
+        <br>
+    </div>
+    <div id="jobtn">
+        <p class="button" style="margin-left: 200px">
+            <a href="/login"><img src="/static/img/login.gif" alt="로그인" /></a>
+            <a href="/"><img src="/static/img/movemain.gif" alt="메인으로 이동" /></a>
+        </p>
     </div>
 </form>
+</div>
 {% endblock %}
 
 {% block jscript %}
