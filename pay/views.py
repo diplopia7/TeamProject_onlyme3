@@ -1,6 +1,5 @@
-from django.db.models import F, Q
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.db.models import F
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from member.models import Member
@@ -16,40 +15,26 @@ def pay(request):
 
     elif request.method == 'POST':
         error = ''
-        complete=''
-
+        returnPage = ''
         form = request.POST.dict()
-        print(form)
 
         m = Member.objects.filter(name=form['name'], jumin=form['rrn'], phone=form['phone'])
 
         if request.session.get('userid'):
-            if not (form['name'] and form['rrn'] and form['phone'] and form['inlineRadioOptions']):
-                return HttpResponse(
-                    f'''
-                    <script>
-                        alert('입력하신 정보가 올바르지 않습니다. 다시 확인해주세요')
-                    </script>
-                    '''
-                )
-            # if form not in Member.objects.values('name'):
-            #     print(Member.objects.values('name'))
-            #     print(form)
-            #     return HttpResponse(
-            #         f'''
-            #         <script>
-            #             alert('입력하신 정보가 일치하지 않습니다. 다시 확인해주세요')
-            #         </script>
-            #         '''
-            #     )
-            else :
+            if m:
                 m.update(cash=F('cash') + form['inlineRadioOptions'])
 
-            # m.save()
+                returnPage = 'payok.html'
 
-        context = {'error':error}
+                return render(request, returnPage)
 
-        return render(request, 'payok.html', context)
+            else:
+                error = '잘못된 정보를 입력하셨습니다'
+                print(error)
+
+        context = {'m': m}
+
+        return render(request, 'pay.html', context)
 
 
 def payok(request):

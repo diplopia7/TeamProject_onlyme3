@@ -6,6 +6,7 @@
 
 {% block style %}
     <link rel="stylesheet" href="{% static '/css/bs5/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <style>
         #wrapper { display:flex;}
         #wrapper a {font-weight: bold; text-decoration: none;
@@ -48,7 +49,7 @@
                     <div class="card-text">전투특기 : {{ b.fighttrait }}</div>
                     <div class="card-text">전술 : {{ b.skill }}</div>
                     <button class="btn btn-danger w-100" id="paybtn" data-bs-toggle="modal" data-bs-target="#payModal">
-                        <i class="bi bi-coin text-warning"></i> {{ b.price }} 원</button>
+                        <i class="bi bi-coin text-warning"></i> {{ b.price }}</button>
                   </div>
                 </div>
             {% endfor %}
@@ -117,18 +118,22 @@
         payokbtn.disabled = false;
     });
 
-    {#payokbtn.addEventListener('submit', () => {#}
-    {#    const name = document.getElementById('name')#}
-    {#    const phone = document.getElementById('phone')#}
-    {#    const rrn = document.getElementById('rrn')#}
-    {#    const btnradio = document.getElementById('btnradio')#}
-    {##}
-    {#    if (name.value == '' && phone.value == '' && rrn.value == '' && btnradio.value == '') {#}
-    {#        alert('입력정보를 정확하게 기입하세요');#}
-    {#    } else {#}
-    {#        location.href = '/payok';#}
-    {#    }#}
-    {#})#}
+    payokbtn.addEventListener('click', () => {
+        const name = document.querySelector('#name')
+        const rrn = document.querySelector('#rrn')
+        const phone = document.querySelector('#phone')
+
+        if (name.value == '') {
+            alert('이름을 입력하세요');
+        } else if (rrn.value == '') {
+            alert('주민번호를 입력하세요.');
+        } else if (phone.value == '') {
+            alert('전화번호를 입력하세요.');
+        } else {
+            document.recfrm.submit();
+        }
+    });
+
 
 </script>
 {% endblock %}
