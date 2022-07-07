@@ -4,30 +4,6 @@
 {% load static %}
 {% block style %}
     <style>
-        #wrapper { display:flex;}
-        #wrapper a {font-weight: bold; text-decoration: none;
-        color: white; font-size: 20px; }
-        #wrapper a:hover{color:orangered}
-        header {background-image:url('/static/img/background.jpg'); height:140px; width: 100%  }
-
-
-        a:link {color: black; text-decoration:none}
-        a:visited{color: black; text-decoration:underline}
-        a:hover {color: orangered; text-decoration:none}
-        a:active {color: orangered; text-decoration:none }
-
-        #logo {width: 500px; height:100px; float:left; margin-top:20px }
-        #gamestart { list-style:none; margin-left:330px; }
-        #gamestart img { width:200px; height: 100px;   }
-        #qmenu { word-spacing:20px; display:flex; float:right; margin-left:590px}
-
-        nav { width:99%; background: silver; padding: 5px 15px; clear: both; display:inline-block}
-
-        nav ul { word-spacing:500px;  font-weight:bold; text-align: center; list-style: none; font-size: 25px; padding:3px;
-                margin-right:50px; }
-        nav li {  display: flex; align-items: center; flex-wrap: wrap; text-align: center}
-        nav a{ font-size:45px}
-
         a {
             text-decoration: none;
             color: brown;
@@ -459,24 +435,143 @@
         };
 
         // 절반씩 덱 생성
-        for (let i = 0; i < 27 ; ++i) {
-            draw_card(player_deck,main_deck)
+        for (let i = 0; i < 27; ++i) {
+            draw_card(player_deck, main_deck)
         }
-        for (let i = 0; i < 27 ; ++i) {
-            draw_card(enemy_deck,main_deck)
+        for (let i = 0; i < 27; ++i) {
+            draw_card(enemy_deck, main_deck)
         }
 
         // 메인 필드
         let main_field = {}
 
 
-
-
-
-
-
         playercard = document.getElementById('playercard');
         enemycard = document.getElementById('enemycard');
+
+
+        let magic_card = 0
+        let cardid = 0
+        let isattack = 1000
+        let isfront = 100
+
+        let enemy_turn = () => {
+            console.log('enemy_turn start');
+            console.log(enemy_hand);
+            if (!enemy_hand[0]) {
+                // 손이 텅 비었으면 무조건 드로우
+                console.log('enemy_hand is empty');
+                enemy_draw();
+            } else if (!main_field['field1'] && !main_field['field2'] && !main_field['field3'] && !main_field['field4']) {
+                // 일반 필드가 텅 비었으면 무조건 배치
+                console.log("enemy's normal field is empty");
+                if (ismagic(enemy_hand[0])) enemy_choose_card_magic(enemy_hand[0]);
+                else enemy_choose_card_normal(enemy_hand[0]);
+            } else {
+                console.log("enemy do something");
+                switch (Math.floor(Math.random() * 2)) {
+                    case 0:
+                        enemy_draw();
+                        break;
+                    case 1:
+                        if (ismagic(enemy_hand[0])) enemy_choose_card_magic(enemy_hand[0]);
+                        else enemy_choose_card_normal(enemy_hand[0]);
+                        break;
+                    case 3:
+                        enemy_attack_card();
+                        break;
+                }
+            }
+
+        }
+
+
+        let rnd = () => {
+            return Math.floor(Math.random() * 2) === 1;
+        };
+
+        // 상대편 드로우
+        let enemy_draw = () => {
+            console.log("enemy_draw");
+            draw_card(enemy_hand, enemy_deck);
+            let a = document.createElement('img');
+            a.src = card_list[0];
+            enemycard.appendChild(a);
+        };
+        // 노말카드 배치용
+        let enemy_choose_card_normal = (cardid) => {
+            console.log("enemy_choose_card_normal");
+            let field = enemy_choose_field(cardid);
+            let isattack = 1000;
+            let isfront = 100;
+            if (rnd()) isattack = 0;
+            if (rnd()) isfront = 0;
+            let card_info = +isattack + isfront + cardid;
+            enemycard.removeChild(enemycard.lastElementChild);
+            enemy_set_card(card_info, field);
+        }
+        let enemy_choose_card_magic = (cardid) => {
+            console.log("enemy_choose_card_magic");
+            let field = enemy_choose_field(cardid);
+            let magic_card = 10000;
+            let isattack = 1000;
+            let isfront = 100;
+            let card_info = magic_card + isattack + isfront + cardid;
+            enemycard.removeChild(enemycard.lastElementChild);
+            enemy_set_card(card_info, field);
+        }
+
+        // 카드 놓을 장소 고르기 (무작위)
+        let enemy_choose_field = (cardid) => {
+            console.log(`enemy_choose_field`);
+            let field = [];
+            if (!ismagic(cardid)) {
+                if (!main_field['field1']) field.push(1);
+                if (!main_field['field2']) field.push(2);
+                if (!main_field['field3']) field.push(3);
+                if (!main_field['field4']) field.push(4);
+            } else {
+                if (!main_field['field5']) field.push(5);
+                if (!main_field['field6']) field.push(6);
+                if (!main_field['field7']) field.push(7);
+            }
+            if (!field[0]) return 'full'
+            else return field[Math.floor(Math.random() * field.length)];
+        };
+        // 카드정보와 필드정보를 받아 메인필드에 삽입
+        let enemy_set_card = (card, field) => {
+            console.log(`enemy_set_card, card: ${card}, field: ${field}`);
+            switch (field) {
+                case 1:
+                    main_field['field1'] = card;
+                    break;
+                case 2:
+                    main_field['field2'] = card;
+                    break;
+                case 3:
+                    main_field['field3'] = card;
+                    break;
+                case 4:
+                    main_field['field4'] = card;
+                    break;
+                case 5:
+                    main_field['field5'] = card;
+                    break;
+                case 6:
+                    main_field['field6'] = card;
+                    break;
+                case 7:
+                    main_field['field7'] = card;
+                    break;
+            }
+            enemy_hand.shift();
+            card_location();
+        };
+
+
+        let enemy_attack_card = () => {
+            alert('공격!');
+        };
 
 
         // 카드 배치 함수
@@ -528,7 +623,6 @@
                 draw_card(player_hand, player_deck);
             }
             checkhand(player_hand, playercard);
-
         };
 
         first_turn();
@@ -538,6 +632,7 @@
         draw.addEventListener("click", () => {
             draw_card(player_hand, player_deck);
             checkhand(player_hand, playercard);
+            enemy_turn();
         });
 
 
@@ -547,49 +642,49 @@
         };
 
 
-
-        let magic_card = 0
-        let cardid = 0
-
-        let isattack = 1000
-        let isfront = 100
-
-
-        //필드에 카드 넣기
+        // 필드에 카드 넣기
+        // 상대 턴 진행
         const loc1f = () => {
             normallocation.style.display = 'none';
             main_field['field8'] = magic_card + isattack + isfront + cardid;
             card_location();
+            enemy_turn();
         };
         const loc2f = () => {
             normallocation.style.display = 'none';
             main_field['field9'] = magic_card + isattack + isfront + cardid;
             card_location();
+            enemy_turn();
         };
         const loc3f = () => {
             normallocation.style.display = 'none';
             main_field['field10'] = magic_card + isattack + isfront + cardid;
             card_location();
+            enemy_turn();
         };
         const loc4f = () => {
             normallocation.style.display = 'none';
             main_field['field11'] = magic_card + isattack + isfront + cardid;
             card_location();
+            enemy_turn();
         };
         const loc5f = () => {
             magiclocation.style.display = 'none';
             main_field['field12'] = magic_card + isattack + isfront + cardid;
             card_location();
+            enemy_turn();
         };
         const loc6f = () => {
             magiclocation.style.display = 'none';
             main_field['field13'] = magic_card + isattack + isfront + cardid;
             card_location();
+            enemy_turn();
         };
         const loc7f = () => {
             magiclocation.style.display = 'none';
             main_field['field14'] = magic_card + isattack + isfront + cardid;
             card_location();
+            enemy_turn();
         };
 
 
@@ -646,8 +741,7 @@
             // 공수여부 판단
             if (magic_card === 10000) {
                 magiclocation.style.display = 'block';
-            }
-            else {
+            } else {
                 cardbtn.style.display = 'block';
                 set_card(attackbtn, cardid);
                 set_card_rotate(defencebtn, cardid);
@@ -676,8 +770,11 @@
         // 최종 배치 함수
         // loc1 = 11150 === 1번 자리에 있는 마법카드, 공격배치, 앞면인 50번 카드
         // EventListener, 필드 전역 일괄 청소 후 카드 배치 실행
+        // main_field에서 모든 필드의 카드 정보를 받아 배치
         // 가장 일 많이 하는 녀석
         let card_location = () => {
+            console.log('card_location');
+            console.log(main_field);
             playercard.style.pointerEvents = 'auto';
             defencebtn.removeEventListener("click", attackf);
             defencebtn.removeEventListener("click", defencef);
