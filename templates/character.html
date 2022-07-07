@@ -77,7 +77,7 @@
 {% endblock %}
 
 {% block content %}
-    <div id="main_menu">
+    <div id="main_menu" oncontextmenu="return false">
         <!-- stat, 내정특기, 전투특기, 전술에 해당 하는 내용 모두 저장 -->
         <form id="chrfrm" name="chrfrm" method="post">
             {% csrf_token %}
@@ -133,18 +133,19 @@
         </form>
 
     </div>
-{#<script>#}
-{#function noEvent(event) {#}
-{#    if (event.keyCode == 116) {#}
-{#        alert('새로고침을 할 수 없습니다.')#}
-{#        event.keyCode = 2#}
-{#        return false#}
-{#    } else if (event.ctrlKey#}
-{#        && (event.keyCode == 78 || event.keyCode == 82)) {#}
-{#        return false#}
-{#    }}#}
-{#    document.onkeydown = noEvent#}
-{#</script>#}
+<script>
+function noEvent(event) {
+    if (event.keyCode == 116) {
+        alert('새로고침을 할 수 없습니다.')
+        event.keyCode = 2
+        return false
+    } else if (event.ctrlKey
+        && (event.keyCode == 78 || event.keyCode == 82)) {
+        alert('새로고침을 할 수 없습니다.')
+        return false
+    }}
+    document.onkeydown = noEvent;
+</script>
 <script>
     function stat(){
         통솔=document.getElementById('통솔')
@@ -242,4 +243,11 @@
     src.appendChild(img)
     document.getElementById('portrait').value=illust[0]
 </script>
+    <script>
+        history.pushState(null, null, location.href)
+        window.onpopstate = function(event){
+            alert('뒤로 갈 수 없습니다.')
+            history.go(1)
+        }
+    </script>
 {% endblock %}
