@@ -1,4 +1,4 @@
-from django.db.models import F
+from django.db.models import F, Q
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -15,11 +15,15 @@ def pay(request):
 
     elif request.method == 'POST':
         error = ''
+        returnPage = ''
         form = request.POST.dict()
-
+        print(form)
         m = Member.objects.filter(name=form['name'], jumin=form['rrn'], phone=form['phone'])
 
-        # m = Member.objects.all()
+        # muserid = Member.objects.filter().values('userid')
+        # mname = Member.objects.filter().values('name')
+        # mjumin = Member.objects.filter().values('jumin')
+        # mphone = Member.objects.filter().values('phone')
 
         if request.session.get('userid'):
             if m:
@@ -28,11 +32,11 @@ def pay(request):
                 returnPage = 'payok.html'
 
                 return render(request, returnPage)
-
             else:
-                error = '잘못된 정보를 입력하셨습니다'
+                returnPage = 'payfail.html'
+                return render(request, returnPage)
 
-        context = {'m': m, 'error': error}
+        context = {'m': m}
 
         return render(request, 'pay.html', context)
 
