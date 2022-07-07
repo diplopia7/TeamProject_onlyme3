@@ -121,105 +121,22 @@
                 <a href="/story2">다음</a>
             </div>
     </div>
-{#<script>#}
-{#function noEvent(event) {#}
-{#    if (event.keyCode == 116) {#}
-{#        alert('새로고침을 할 수 없습니다.')#}
-{#        event.keyCode = 2#}
-{#        return false#}
-{#    } else if (event.ctrlKey#}
-{#        && (event.keyCode == 78 || event.keyCode == 82)) {#}
-{#        return false#}
-{#    }}#}
-{#    document.onkeydown = noEvent#}
-{#</script>#}
-{#<script>#}
-{#    function stat(){#}
-{#        통솔=document.getElementById('통솔')#}
-{#        무력=document.getElementById('무력')#}
-{#        지력=document.getElementById('지력')#}
-{#        정치=document.getElementById('정치')#}
-{##}
-{#        rand1=parseInt(Math.random()*100+1)#}
-{#        rand2=parseInt(Math.random()*100+1)#}
-{#        rand3=parseInt(Math.random()*100+1)#}
-{#        rand4=parseInt(Math.random()*100+1)#}
-{##}
-{#        통솔.textContent=rand1#}
-{#        document.getElementById('command').value=rand1#}
-{#        무력.textContent=rand2#}
-{#        document.getElementById('power').value=rand2#}
-{#        지력.textContent=rand3#}
-{#        document.getElementById('inteli').value=rand3#}
-{#        정치.textContent=rand4#}
-{#        document.getElementById('politics').value=rand4#}
-{#        statbtn.disabled=true#}
-{#        if (statbtn.disabled==true && btn2.disabled==true#}
-{#            &&btn3.disabled==true && btn4.disabled==true) {#}
-{#            next.style.display='block'#}
-{#        }#}
-{#    }#}
-{#    statbtn=document.getElementById('statbtn')#}
-{#    statbtn.addEventListener('click',stat)#}
-{#</script>#}
-{#<script>#}
-{#    function shuffle(array){#}
-{#        array.sort(()=>Math.random()-0.5)#}
-{#    }#}
-{##}
-{#    function 내정(){#}
-{#        trait = ['상재','경작','연병','수집','인맥','변설']#}
-{#        shuffle(trait)#}
-{#        btn2.disabled=true#}
-{#        trait1.textContent=trait[0]#}
-{#        document.getElementById('innertrait').value=trait[0]#}
-{#        if (statbtn.disabled==true && btn2.disabled==true#}
-{#            &&btn3.disabled==true && btn4.disabled==true) {#}
-{#            next.style.display='block'#}
-{#        }#}
-{#    }#}
-{#    trait1=document.getElementById('trait1')#}
-{#    btn2=document.getElementById('btn2')#}
-{#    btn2.addEventListener('click',내정)#}
-{#</script>#}
-{#<script>#}
-{#    function 전투(){#}
-{#        trait = ['호걸','귀모','군사','냉정']#}
-{#        shuffle(trait)#}
-{#        btn3.disabled=true#}
-{#        trait2.textContent=trait[0]#}
-{#        document.getElementById('fighttrait').value=trait[0]#}
-{#        if (statbtn.disabled==true && btn2.disabled==true#}
-{#            &&btn3.disabled==true && btn4.disabled==true) {#}
-{#            next.style.display='block'#}
-{#        }#}
-{#    }#}
-{#    trait2=document.getElementById('trait2')#}
-{#    btn3=document.getElementById('btn3')#}
-{#    btn3.addEventListener('click',전투)#}
-{#</script>#}
-{#<script>#}
-{#    function 전술(){#}
-{#        trait = ['공격강화','방어강화','색적','속공','복병','복병신속',#}
-{#        '노당익장','맹공','공방일체','강용','철벽','강습','만인적','운체풍신',#}
-{#        '위무지강','방호','의용병','팔진도','용의지혜','대타격','화계','신화계','인중여포']#}
-{#        shuffle(trait)#}
-{#        btn4.disabled=true#}
-{#        trait3.textContent=trait[0]#}
-{#        document.getElementById('skill').value=trait[0]#}
-{#        if (statbtn.disabled==true && btn2.disabled==true#}
-{#            &&btn3.disabled==true && btn4.disabled==true) {#}
-{#            next.style.display='block'#}
-{#        }#}
-{#    }#}
-{#    trait3=document.getElementById('trait3')#}
-{#    btn4=document.getElementById('btn4')#}
-{#    btn4.addEventListener('click',전술)#}
-{#</script>#}
-{#<script>#}
-{#    img = document.createElement('img')#}
-{#    img.src= {{ image }}#}
-{#    src=document.getElementById('장수')#}
-{#    src.appendChild(img)#}
-{#</script>#}
+<script>
+    history.pushState(null, null, location.href)
+    window.onpopstate = function(event){
+        alert('뒤로 갈 수 없습니다.')
+        history.go(1)
+    }
+        function noEvent(event) {
+    if (event.keyCode == 116) {
+        alert('새로고침을 할 수 없습니다.')
+        event.keyCode = 2
+        return false
+    } else if (event.ctrlKey
+        && (event.keyCode == 78 || event.keyCode == 82)) {
+        alert('새로고침을 할 수 없습니다.')
+        return false
+    }}
+    document.onkeydown = noEvent;
+    </script>
 {% endblock %}
