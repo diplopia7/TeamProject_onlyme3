@@ -60,27 +60,30 @@
           <label class="form-check-label" for="inlineRadio6" id="inlineRadio6lb">1,000,000원</label>
         </div>
             <div class="d-flex justify-content-between">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" value="skt">
                 <label class="btn btn-outline-danger col-4" for="btnradio1">SKT</label>
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="kt">
                 <label class="btn btn-outline-danger col-4 mx-1" for="btnradio2">KT</label>
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" value="lg">
                 <label class="btn btn-outline-danger col-4" for="btnradio3">LG</label>
             </div>
+
             <div class="row mt-2">
                 <label for="name" class="col-form-label col-3 text-end">이름</label>
-                <div class="col-5">
+                <div class="col-6">
                     <input type="text" name="name" id="name" class="form-control border-danger"></div>
             </div>
             <div class="row mt-2">
                 <label for="rrn" class="col-form-label col-3 text-end">주민번호</label>
-                <div class="col-5">
-                    <input type="text" name="rrn" id="rrn" class="form-control border-danger"></div>
+                <div class="col-6">
+                    <input type="text" name="rrn" id="rrn" class="form-control border-danger"
+                           maxlength="13" placeholder="'-'를 제외하고 입력해주세요"></div>
             </div>
             <div class="row mt-2">
                 <label for="phone" class="col-form-label col-3 text-end">전화번호</label>
-                <div class="col-5">
-                    <input type="text" name="phone" id="phone" class="form-control border-danger">
+                <div class="col-6">
+                    <input type="text" name="phone" id="phone" class="form-control border-danger"
+                        maxlength="11" placeholder="'-'를 제외하고 입력해주세요">
                 </div>
             </div>
           <div>{{ error }}</div>

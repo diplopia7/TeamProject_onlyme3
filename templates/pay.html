@@ -24,7 +24,7 @@
         #gamestart img { width:200px; height: 100px;   }
         #qmenu { word-spacing:20px; display:flex; float:right; margin-left:590px}
 
-        nav { width:99%; background: silver; padding: 5px 15px; clear: both; display:inline-block}
+        nav { width:100%; background: silver; padding: 5px 15px; clear: both; display:inline-block}
 
         nav ul { word-spacing:500px;  font-weight:bold; text-align: center; list-style: none; font-size: 25px; padding:3px;
                 margin-right:50px; }
@@ -48,13 +48,13 @@
                     <div class="card-text">전투특기 : {{ b.fighttrait }}</div>
                     <div class="card-text">전술 : {{ b.skill }}</div>
                     <button class="btn btn-danger w-100" id="paybtn" data-bs-toggle="modal" data-bs-target="#payModal">
-                        <i class="bi bi-coin text-warning"></i> 10,000</button>
+                        <i class="bi bi-coin text-warning"></i> {{ b.price }} 원</button>
                   </div>
                 </div>
             {% endfor %}
         </div>
     </div>
-    {% include 'modal.html' %}
+{% include 'modal.html' %}
 {% endblock %}
 
 
@@ -117,20 +117,18 @@
         payokbtn.disabled = false;
     });
 
-    payokbtn.addEventListener('click', () => {
-        const name = document.phonefrm.name;
-        const phone = document.phonefrm.phone;
-        const rrn = document.phonefrm.rrn;
+    {#payokbtn.addEventListener('submit', () => {#}
+    {#    const name = document.getElementById('name')#}
+    {#    const phone = document.getElementById('phone')#}
+    {#    const rrn = document.getElementById('rrn')#}
+    {#    const btnradio = document.getElementById('btnradio')#}
+    {##}
+    {#    if (name.value == '' && phone.value == '' && rrn.value == '' && btnradio.value == '') {#}
+    {#        alert('입력정보를 정확하게 기입하세요');#}
+    {#    } else {#}
+    {#        location.href = '/payok';#}
+    {#    }#}
+    {#})#}
 
-        if (name.value == '') {
-            alert('이름을 입력하세요.');
-        } else if (phone.value == '') {
-            alert('전화번호를 입력해주세요.');
-        } else if (rrn.value == '') {
-            alert('주민번호를 입력해주세요.');
-        } else {
-            location.href='/payok';
-        }
-    });
 </script>
 {% endblock %}
