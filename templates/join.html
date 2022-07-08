@@ -1,6 +1,7 @@
 {% extends 'project.html' %}
 {% block title %}회원가입{% endblock %}
 
+
 {% block style %}
     <style>
         #wrapper { display:flex;}
@@ -15,10 +16,19 @@
         a:hover {color: orangered; text-decoration:none}
         a:active {color: orangered; text-decoration:none }
 
+
+
         #logo {width: 515px; height:115px; float:left; margin-top:15px }
         #gamestart { list-style:none; margin-left:300px; margin-top: 10px}
         #gamestart img { width:250px; height: 120px;   }
         #qmenu { word-spacing:35px; display:flex; float:right; margin-left:530px; margin-top: 15px}
+
+        body{
+            background-image: url(../static/img/joinbg.jpg);
+            background-repeat: no-repeat;
+            background-position:center;
+            background-size: 100%;
+        }
 
         nav { width:100%; background: silver; padding: 5px 15px; clear: both; display:inline-block}
 
@@ -27,17 +37,36 @@
         nav li { display: flex; align-items: center; flex-wrap: wrap; text-align: center}
         nav a{ font-size:45px}
 
-        form { width: 350px; margin: 150px auto}
 
-        form div { margin-top: 10px }
+        .container{
+            position: absolute;
+            top: 70%;
+            left: 20%;
+            transform: translate(-50%,-50%);
+            width: 20%;
+            margin: auto;
+            background-color: rgba(60, 60, 60, 10);
+            color: white;
+            padding: 30px;
+            box-shadow: 0 0 0 1px;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
 
-        form label { display:inline-block; width: 120px; text-align: right; font-weight:bold}
+        input, button{
+            width: 100%;
+            padding: 10px 12px;
+            margin: 8px 0px;
+            display: inline-block;
+            box-sizing: border-box;
+            color: white;
+            background-color: transparent;
+            border: 2px solid white;
+            text-decoration:none
 
-        form button:first-child { margin-left: 125px }
+        }
 
-        h2 {margin-left: 55px}
-
-        .error{position:relative; left:150px; color:red; font-weight: bold}
+        .error{position:relative; left:10px; color:red; font-weight: bold}
 
     </style>
 {% endblock %}
@@ -47,52 +76,53 @@
     <script>location.href='/';</script>
 {% endif %}
 
-<h2>회원가입</h2>
-<form name="joinfrm" method="post" id="joinfrm">
-    {# django built-in template filter #}
+<div class="container">
+    <form name="joinfrm" method="post" id="joinfrm">
+        {# django built-in template filter #}
 
-    {% csrf_token %} {# 동일 출처origin 확인용 쿠키 생성 #}
-    <div><label for="userid">아이디</label>
-    <input type="text" name="userid" id="userid" value="{{ form.userid }}">
-    <div class="error">{{ error1 }}</div>
-    <div class="error">{{ duplicate }}</div>
-    </div>
+        {% csrf_token %} {# 동일 출처origin 확인용 쿠키 생성 #}
+        <div><label for="userid">아이디</label>
+        <input type="text" name="userid" id="userid" value="{{ form.userid }}">
+        <div class="error">{{ error1 }}</div>
+        <div class="error">{{ duplicate }}</div>
+        </div>
 
 
-    <div><label for="passwd">비밀번호</label>
-    <input type="password" name="passwd" id="passwd" value="{{ form.passwd }}">
-    <div class="error">{{ error2 }}</div>
-    </div>
+        <div><label for="passwd">비밀번호</label>
+        <input type="password" name="passwd" id="passwd" value="{{ form.passwd }}">
+        <div class="error">{{ error2 }}</div>
+        </div>
 
-    <div><label for="repasswd">비밀번호 확인</label>
-    <input type="password" name="repasswd" id="repasswd" ></div>
-    <div class="error">{{ error5 }}</div>
+        <div><label for="repasswd">비밀번호 확인</label>
+        <input type="password" name="repasswd" id="repasswd" ></div>
+        <div class="error">{{ error5 }}</div>
 
-    <div><label for="name">이름</label>
-    <input type="text" name="name" id="name" value="{{ form.name }}"></div>
-    <div class="error">{{ error3 }}</div>
+        <div><label for="name">이름</label>
+        <input type="text" name="name" id="name" value="{{ form.name }}"></div>
+        <div class="error">{{ error3 }}</div>
 
-    <div><label for="jumin">주민번호</label>
-    <input type="text" name="jumin" id="jumin" maxlength="13"
-           placeholder="'-'를 제외하고 입력하세요" value="{{ form.jumin }}"></div>
-    <div class="error">{{ error6 }}</div>
-    <div class="error">{{ error8 }}</div>
+        <div><label for="jumin">주민번호</label>
+        <input type="text" name="jumin" id="jumin" maxlength="13"
+               placeholder="'-'를 제외하고 입력하세요" value="{{ form.jumin }}"></div>
+        <div class="error">{{ error6 }}</div>
+        <div class="error">{{ error8 }}</div>
 
-    <div><label for="phone">전화번호</label>
-    <input type="text" name="phone" id="phone" maxlength="11"
-           placeholder="'-'를 제외하고 입력하세요" value="{{ form.phone }}"></div>
-    <div class="error">{{ error7 }}</div>
-    <div class="error">{{ error9 }}</div>
+        <div><label for="phone">전화번호</label>
+        <input type="text" name="phone" id="phone" maxlength="11"
+               placeholder="'-'를 제외하고 입력하세요" value="{{ form.phone }}"></div>
+        <div class="error">{{ error7 }}</div>
+        <div class="error">{{ error9 }}</div>
 
-    <div><label for="email">이메일</label>
-    <input type="email" name="email" id="email" value="{{ form.email }}"></div>
-    <div class="error">{{ error4 }}</div>
+        <div><label for="email">이메일</label>
+        <input type="email" name="email" id="email" value="{{ form.email }}"></div>
+        <div class="error">{{ error4 }}</div>
 
-    <div><!--<label></label>-->
-     <button type="submit" id="joinfrm" class="btn btn-primary">입력완료</button>
-     <button type="reset" class="btn btn-danger">다시입력</button>
-    </div>
-</form>
+        <div><!--<label></label>-->
+         <button type="submit" id="joinfrm" class="btn btn-primary">입력완료</button>
+         <button type="reset" class="btn btn-danger">다시입력</button>
+        </div>
+    </form>
+</div>
 {% endblock %}
 
 {% block jscript %}
