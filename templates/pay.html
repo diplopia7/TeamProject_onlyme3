@@ -31,17 +31,21 @@
                 margin-right:60px; margin-top: 10px }
         nav li { display: flex; align-items: center; flex-wrap: wrap; text-align: center}
         nav a{ font-size:45px}
+
+        #chr {margin-left: 15px}
+        #charge {margin-top: 10px; margin-right: 5px}
     </style>
 {% endblock %}
 
 {% block content %}
+
     <div id="main">
-        <div class="text-end">
+        <div class="text-end" id="charge">
             <button type="button" class="btn btn-danger" id="rechargebtn" data-bs-toggle="modal" data-bs-target="#rechargeModal">충전하기</button>
         </div>
 {#    <form action="{% url 'pay:buy' %}" name="payfrm" id="payfrm" method="post">#}
 {#            {% csrf_token %}#}
-        <div class="d-flex row">
+        <div class="d-flex row" id="chr">
             {% for b in bds %}
                 <div class="card text-center d-flex" style="width: 18rem;">
                     <img src="{{ b.img }}" class="card-img-top">
@@ -59,8 +63,8 @@
                 </div>
             {% endfor %}
         </div>
-    </form>
     </div>
+     <div class="col-2"></div>
 {% include 'modal.html' %}
 {% endblock %}
 
