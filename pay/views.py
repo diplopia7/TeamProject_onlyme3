@@ -1,9 +1,9 @@
 from django.db.models import F
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from member.models import Member
-from pay.models import Shop
+from pay.models import Shop, Possession
 
 
 def pay(request):
@@ -38,6 +38,34 @@ def pay(request):
         context = {'m': m, 'error': error}
 
         return render(request, returnPage, context)
+
+def buy(request):
+    if request.method == 'GET':
+        # bds = Shop.objects.all()
+        #
+        # context = {'bds': bds}
+        return redirect('pay:pay')
+
+    elif request.method == 'POST':
+        form = request.POST.dict()
+        shop = Shop.objects.filter(cname=form['chrname'],price=form['price'])
+
+        print(form)
+        print(shop.values('cname'),shop.values('price'))
+
+
+        # possession = Possession(
+        #     userid_id=request.session['userid'],
+        #     cname_id=form['chrname'],
+        # )
+        # possession.save()
+        #
+        # context={'bds':bds}
+
+        # return render(request,'pay.html')
+        return redirect('pay:buy')
+
+
 
 
 def payok(request):

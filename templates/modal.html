@@ -5,12 +5,15 @@
       <div class="modal-header">
         <h5 class="modal-title" id="payModalLabel">구매</h5>
       </div>
-        <form name="payfrm" id="payfrm">
+        <form action="{% url 'pay:buy' %}" name="payfrm" id="payfrm" method="post">
+            {% csrf_token %}
       <div class="modal-body">
         <h5 id="payq" class="fw-bold"></h5>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" id="payok">구매하기</button>
+          <input type="hidden" id="chrname" name="chrname" value="">
+          <input type="hidden" id="price" name="price" value="">
+        <button type="submit" class="btn btn-danger" id="payok">구매하기</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
       </div>
         </form>
@@ -27,7 +30,7 @@
         <h5 class="modal-title" id="rechargeModalLabel"><img src="/static/img/danal.png" width="80px" height="30px"></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-        <form name="recfrm" id="recfrm" method="post">
+        <form action="{% url 'pay:pay' %}" name="recfrm" id="recfrm" method="post">
             {% csrf_token %}
       <div class="modal-body">
         <div class="d-flex justify-content-between">

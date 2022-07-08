@@ -39,21 +39,27 @@
         <div class="text-end">
             <button type="button" class="btn btn-danger" id="rechargebtn" data-bs-toggle="modal" data-bs-target="#rechargeModal">충전하기</button>
         </div>
+{#    <form action="{% url 'pay:buy' %}" name="payfrm" id="payfrm" method="post">#}
+{#            {% csrf_token %}#}
         <div class="d-flex row">
             {% for b in bds %}
                 <div class="card text-center d-flex" style="width: 18rem;">
-                  <img src="{{ b.img }}" class="card-img-top">
+                    <img src="{{ b.img }}" class="card-img-top">
                   <div class="card-body">
                     <span class="card-title h5 fw-bold" id="cname">{{ b.cname }}</span>
+                      <input type="text" id="chrname1" name="chrname1" value="{{ b.cname }}">
                     <div class="card-text">내정특기 : {{ b.innertrait }}</div>
                     <div class="card-text">전투특기 : {{ b.fighttrait }}</div>
                     <div class="card-text">전술 : {{ b.skill }}</div>
-                    <button class="btn btn-danger w-100" id="paybtn" data-bs-toggle="modal" data-bs-target="#payModal">
+                      <input type="hidden" id="price1" name="price1" value="{{ b.price }}">
+                    <button type="button" class="btn btn-danger w-100" id="paybtn" data-bs-toggle="modal"
+                            data-bs-target="#payModal" value="1">
                         <i class="bi bi-coin text-warning"></i> {{ b.price }}</button>
                   </div>
                 </div>
             {% endfor %}
         </div>
+    </form>
     </div>
 {% include 'modal.html' %}
 {% endblock %}
@@ -83,7 +89,17 @@
     const rechargemodal = document.querySelector('#rechargeModal');
     const paymodal = document.querySelector('#payModal');
 
+    const chrname= document.querySelector('#chrname')
+    const chrname1= document.querySelector('#chrname1')
+    const price= document.querySelector('#price')
+    const price1= document.querySelector('#price1')
+
     paybtn.addEventListener('click', () => {
+        alert(paybtn.value)
+        alert(chrname1.value)
+        chrname.value=chrname1.value
+        alert(chrname.value)
+        price.value=price1.value
         payq.innerHTML = '구매 하시겠습니까?';
     });
 
