@@ -1,5 +1,3 @@
-{% extends 'project.html' %}
-
 {% load static %}
 
 {% block title %}{% endblock %}
@@ -33,15 +31,14 @@
 {% endblock %}
 
 {% block content %}
-    <div id="main">
-        <h1 class="d">결재오류 : 회원정보와 일치하지 않습니다.</h1>
-    </div>
+    {% include 'pay.html' %}
 {% endblock %}
 
 {% block jscript %}
     <script>
         window.addEventListener("load", () => {
-            alert('')
+            alert('회원정보가 잘못입력되었습니다!')
+            location.href = '/pay';
         });
     </script>
 {% endblock %}
