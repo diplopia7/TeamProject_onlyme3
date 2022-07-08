@@ -1,5 +1,5 @@
-from django.db.models import F, Q
-from django.shortcuts import render, redirect
+from django.db.models import F
+from django.shortcuts import render
 
 # Create your views here.
 from member.models import Member
@@ -18,12 +18,8 @@ def pay(request):
         returnPage = ''
         form = request.POST.dict()
         print(form)
-        m = Member.objects.filter(name=form['name'], jumin=form['rrn'], phone=form['phone'])
 
-        # muserid = Member.objects.filter().values('userid')
-        # mname = Member.objects.filter().values('name')
-        # mjumin = Member.objects.filter().values('jumin')
-        # mphone = Member.objects.filter().values('phone')
+        m = Member.objects.filter(name=form['name'], jumin=form['rrn'], phone=form['phone'])
 
         if request.session.get('userid'):
             if m:
@@ -33,12 +29,15 @@ def pay(request):
 
                 return render(request, returnPage)
             else:
+                error = '잘못된 정보를 입력하셨습니다'
+
                 returnPage = 'payfail.html'
+
                 return render(request, returnPage)
 
-        context = {'m': m}
+        context = {'m': m, 'error': error}
 
-        return render(request, 'pay.html', context)
+        return render(request, returnPage, context)
 
 
 def payok(request):
