@@ -32,36 +32,45 @@
         nav li { display: flex; align-items: center; flex-wrap: wrap; text-align: center}
         nav a{ font-size:45px}
 
-
+        #chr {margin-left: 15px}
+        #charge {margin-top: 10px; margin-right: 5px}
     </style>
 {% endblock %}
 
 {% block content %}
 
     <div id="main">
-        <div class="text-end mt-2 me-2" >
+        <div class="text-end" id="charge">
             <button type="button" class="btn btn-danger" id="rechargebtn" data-bs-toggle="modal" data-bs-target="#rechargeModal">충전하기</button>
         </div>
-{#    <form action="{% url 'pay:buy' %}" name="payfrm" id="payfrm" method="post">#}
-{#            {% csrf_token %}#}
-        <div class="d-flex row mx-3">
-            {% for b in bds %}
-                <div class="card text-center d-flex" style="width: 18rem;">
-                    <img src="{{ b.img }}" class="card-img-top">
-                  <div class="card-body">
-                    <span class="card-title h5 fw-bold" id="cname">{{ b.cname }}</span>
-                      <input type="text" id="chrname1" name="chrname1" value="{{ b.cname }}">
-                    <div class="card-text">내정특기 : {{ b.innertrait }}</div>
-                    <div class="card-text">전투특기 : {{ b.fighttrait }}</div>
-                    <div class="card-text">전술 : {{ b.skill }}</div>
-                      <input type="hidden" id="price1" name="price1" value="{{ b.price }}">
-                    <button type="button" class="btn btn-danger w-100" id="paybtn" data-bs-toggle="modal"
-                            data-bs-target="#payModal" value="1">
-                        <i class="bi bi-coin text-warning"></i> {{ b.price }}</button>
-                  </div>
-                </div>
-            {% endfor %}
-        </div>
+        <form action="{% url 'buy' %}" name="buyfrm" id="buyfrm" method="post">
+            {% csrf_token %}
+            <div class="d-flex row" id="chr">
+                {% for b in bds %}
+                    <div class="card text-center d-flex" style="width: 18rem;">
+                        <img src="{{ b.img }}" class="card-img-top">
+                      <div class="card-body">
+                        <span class="card-title h5 fw-bold" id="cname">{{ b.cname }}</span>
+                          <input type="text" id="chrname" name="chrname" value="{{ b.cname }}">
+                        <div class="card-text">내정특기 : {{ b.innertrait }}</div>
+                        <div class="card-text">전투특기 : {{ b.fighttrait }}</div>
+                        <div class="card-text">전술 : {{ b.skill }}</div>
+                          <input type="hidden" id="price" name="price" value="{{ b.price }}">
+                        <button type="button" class="btn btn-danger w-100" id="paybtn" data-bs-toggle="modal"
+                                data-bs-target="#payModal" value="1">
+                            <i class="bi bi-coin text-warning"></i> {{ b.price }}</button>
+                      </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </form>
+    <ul class="pagination justify-content-center">
+    <li class="page-item"><a class="page-link" href="?cpage={{ request.GET.cpage|add:-1 }}">이전</a></li>
+        {% for i in range %}
+            <li class="page-item"><a class="page-link" href="?cpage={{ i }}">{{ i }}</a></li>
+        {% endfor %}
+    <li class="page-item"><a class="page-link" href="?cpage={{ request.GET.cpage|add:1 }}">다음</a></li>
+  </ul>
     </div>
      <div class="col-2"></div>
 {% include 'modal.html' %}
@@ -93,16 +102,14 @@
     const paymodal = document.querySelector('#payModal');
 
     const chrname= document.querySelector('#chrname')
-    const chrname1= document.querySelector('#chrname1')
     const price= document.querySelector('#price')
-    const price1= document.querySelector('#price1')
 
     paybtn.addEventListener('click', () => {
-        alert(paybtn.value)
-        alert(chrname1.value)
-        chrname.value=chrname1.value
-        alert(chrname.value)
-        price.value=price1.value
+        {% if not request.session.userid %}
+            alert('로그인 후 이용 바랍니다!');
+            location.href = '/login';
+        {% endif %}
+
         payq.innerHTML = '구매 하시겠습니까?';
     });
 
@@ -110,6 +117,7 @@
         bootstrap.Modal.getInstance('#payModal').hide();
         paybtn.disabled = true;
         paybtn.innerHTML = '보유중';
+        document.buyfrm.submit();
     });
 
     rd1.addEventListener('click', () => {
@@ -135,6 +143,13 @@
     rd6.addEventListener('click', () => {
         recharge.innerHTML = rd6lb.outerHTML;
         payokbtn.disabled = false;
+    });
+
+    rechargebtn.addEventListener('click', () => {
+        {% if not request.session.userid %}
+            alert('로그인 후 이용 바랍니다!');
+            location.href = '/login';
+        {% endif %}
     });
 
     payokbtn.addEventListener('click', () => {
