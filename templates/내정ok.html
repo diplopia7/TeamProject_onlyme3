@@ -85,7 +85,7 @@
     </style>
 {% endblock %}
 {% block content %}
-    <audio src="/static/resources/music/oriental peace.ogg" autoplay="autoplay" loop="loop"></audio>
+{#    <audio src="/static/resources/music/oriental peace.ogg" autoplay="autoplay" loop="loop"></audio>#}
     <div id="main_menu">
     <form id="innerfrm" name="innerfrm" method="post">
         <img src="/static/resources/img/background/background2.jpg" width="1500" height="840" alt>
@@ -150,4 +150,22 @@
         </div>
     </form>
     </div>
+    <script>
+        history.pushState(null, null, location.href)
+        window.onpopstate = function(event){
+            alert('뒤로 갈 수 없습니다.')
+            history.go(1)
+        }
+        function noEvent(event) {
+    if (event.keyCode == 116) {
+        alert('새로고침을 할 수 없습니다.')
+        event.keyCode = 2
+        return false
+    } else if (event.ctrlKey
+        && (event.keyCode == 78 || event.keyCode == 82)) {
+        alert('새로고침을 할 수 없습니다.')
+        return false
+    }}
+    document.onkeydown = noEvent;
+    </script>
 {% endblock %}

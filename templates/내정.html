@@ -1,305 +1,399 @@
 {% extends 'project.html' %}
 {% block style %}
     <style>
-        #wrapper { display:flex;}
-        #wrapper a {font-size: 23px; font-weight: bold; text-decoration: none;
-        color: white;  }
-        #wrapper a:hover{color:orangered}
-        header {background-image:url('/static/img/background.jpg'); height:140px; width: 100%  }
+        #wrapper {
+            display: flex;
+        }
+
+        #wrapper a {
+            font-size: 23px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        #wrapper a:hover {
+            color: orangered
+        }
+
+        header {
+            background-image: url('/static/img/background.jpg');
+            height: 140px;
+            width: 100%
+        }
 
 
-        a:link {color: black; text-decoration:none}
-        a:visited{color: black; text-decoration:underline}
-        a:hover {color: orangered; text-decoration:none}
-        a:active {color: orangered; text-decoration:none }
+        a:link {
+            color: black;
+            text-decoration: none
+        }
 
-        #logo {width: 515px; height:115px; float:left; margin-top:15px }
-        #gamestart { list-style:none; margin-left:300px; margin-top: 10px}
-        #gamestart img { width:250px; height: 120px;   }
-        #qmenu { word-spacing:35px; display:flex; float:right; margin-left:530px; margin-top: 15px}
+        a:visited {
+            color: black;
+            text-decoration: underline
+        }
 
-        nav { width:100%; background: silver; padding: 5px 15px; clear: both; display:inline-block}
+        a:hover {
+            color: orangered;
+            text-decoration: none
+        }
 
-        nav ul { word-spacing:500px;  font-weight:bold; text-align: center; list-style: none; font-size: 25px; padding:3px;
-                margin-right:60px; margin-top: 10px }
-        nav li { display: flex; align-items: center; flex-wrap: wrap; text-align: center}
-        nav a{ font-size:45px}
-        #main_menu{
-            position: relative; left:200px;
-            width:1500px;
-            height:840px;
+        a:active {
+            color: orangered;
+            text-decoration: none
+        }
+
+        #logo {
+            width: 515px;
+            height: 115px;
+            float: left;
+            margin-top: 15px
+        }
+
+        #gamestart {
+            list-style: none;
+            margin-left: 300px;
+            margin-top: 10px
+        }
+
+        #gamestart img {
+            width: 250px;
+            height: 120px;
+        }
+
+        #qmenu {
+            word-spacing: 35px;
+            display: flex;
+            float: right;
+            margin-left: 530px;
+            margin-top: 15px
+        }
+
+        nav {
+            width: 100%;
+            background: silver;
+            padding: 5px 15px;
+            clear: both;
+            display: inline-block
+        }
+
+        nav ul {
+            word-spacing: 500px;
+            font-weight: bold;
+            text-align: center;
+            list-style: none;
+            font-size: 25px;
+            padding: 3px;
+            margin-right: 60px;
+            margin-top: 10px
+        }
+
+        nav li {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            text-align: center
+        }
+
+        nav a {
+            font-size: 45px
+        }
+
+        #main_menu {
+            position: relative;
+            left: 200px;
+            width: 1500px;
+            height: 840px;
             background-color: black;
             color: white;
             font-size: 30px;
             text-align: center;
         }
 
-        .button{font-size:20px;
-            padding:5px;width:100px;
-            margin:10px;
+        .button {
+            font-size: 20px;
+            padding: 5px;
+            width: 100px;
+            margin: 10px;
         }
-        #menu{position:absolute;
-            top:200px; left:15px;
+
+        #menu {
+            position: absolute;
+            top: 200px;
+            left: 15px;
         }
-        #resources{
-            position:absolute; z-index: 1;
-            color:black; top:50px; left:20px;
-            font-size:30px; background-color:bisque;
-            padding:10px; width:1200px;
+
+        #resources {
+            position: absolute;
+            z-index: 1;
+            color: black;
+            top: 50px;
+            left: 20px;
+            font-size: 30px;
+            background-color: bisque;
+            padding: 10px;
+            width: 1200px;
             text-align: left;
             font-weight: bold;
         }
-        #next{
-            position:absolute; z-index:1;
-            right:20px; bottom:30px;display: none;
+
+        #next {
+            position: absolute;
+            z-index: 1;
+            right: 20px;
+            bottom: 30px;
+            display: none;
         }
 
-        #turn{
-            position:absolute; z-index: 1;
-            font-size:30px; background-color:bisque;
-            color:black; bottom:50px; left:30px;
-            padding:10px; font-weight: bold;
-        }
-        #chrstat{
-            position: absolute; z-index: 1;
-            font-size: 30px; background-color:bisque;
-            color:black; bottom:296px; left:530px;
-            padding:20px; font-weight: bold;
-        }
-        #portrait{
-            position:absolute; z-index: 1;
-            right:350px; top:195px
+        #turn {
+            position: absolute;
+            z-index: 1;
+            font-size: 30px;
+            background-color: bisque;
+            color: black;
+            bottom: 50px;
+            left: 30px;
+            padding: 10px;
+            font-weight: bold;
         }
 
-        
+        #chrstat {
+            position: absolute;
+            z-index: 1;
+            font-size: 30px;
+            background-color: bisque;
+            color: black;
+            bottom: 296px;
+            left: 530px;
+            padding: 20px;
+            font-weight: bold;
+        }
+
+        #portrait {
+            position: absolute;
+            z-index: 1;
+            right: 350px;
+            top: 195px
+        }
+
+
     </style>
 {% endblock %}
 {% block content %}
     <audio src="/static/resources/music/oriental peace.ogg" autoplay="autoplay" loop="loop"></audio>
     <div id="main_menu">
-    <form id="innerfrm" name="innerfrm" method="post">
-        <img src="/static/resources/img/background/background2.jpg" width="1500" height="840" alt>
-        <!-- 자원에 해당되는 모든 내용 저장 -->
-        <!-- 직급이 비장군 부터 인맥버튼 활성화
-        플레이어가 가지고 있는 내정특기 적용 -->
-        {% csrf_token %}
-        <div id="resources">
-            금 : <span id="gold"> </span>/
-            병량 : <span id="food"> </span>/
-            병사 : <span id="army"> </span>/
-            부장 : <span id="officer"> </span>/
-            직급 : <span id="general"> {{ request.session.status }} </span><br>
-            아이템 : <span id="item"> </span>
-            <input type="hidden" id="goldinput" name="goldinput">
-            <input type="hidden" id="foodinput" name="foodinput">
-            <input type="hidden" id="armyinput" name="armyinput">
-            <input type="hidden" id="officerinput" name="officerinput">
-            <input type="hidden" id="iteminput1" name="iteminput1">
-            <input type="hidden" id="iteminput2" name="iteminput2">
-            <input type="hidden" id="iteminput3" name="iteminput3">
-            <input type="hidden" id="itemfullname" name="itemfullname">
+        <form id="innerfrm" name="innerfrm" method="post">
+            <img src="/static/resources/img/background/background2.jpg" width="1500" height="840" alt>
+            <!-- 자원에 해당되는 모든 내용 저장 -->
+            <!-- 직급이 비장군 부터 인맥버튼 활성화
+            플레이어가 가지고 있는 내정특기 적용 -->
+            {% csrf_token %}
+            <div id="resources">
+                금 : <span id="gold"> </span>/
+                병량 : <span id="food"> </span>/
+                병사 : <span id="army"> </span>/
+                부장 : <span id="officer"> </span>/
+                직급 : <span id="general"> {{ request.session.status }} </span><br>
+                아이템 : <span id="item"> </span>
+                <input type="hidden" id="goldinput" name="goldinput">
+                <input type="hidden" id="foodinput" name="foodinput">
+                <input type="hidden" id="armyinput" name="armyinput">
+                <input type="hidden" id="officerinput" name="officerinput">
+                <input type="hidden" id="iteminput1" name="iteminput1">
+                <input type="hidden" id="iteminput2" name="iteminput2">
+                <input type="hidden" id="iteminput3" name="iteminput3">
+                <input type="hidden" id="itemfullname" name="itemfullname">
 
-        </div>
-        <div id="menu">
-            <div>
-                <button id="btn1" type="button" class="button">세금징수</button>
             </div>
-            <div>
-                <button id="btn2" type="button" class="button">병량징수</button>
+            <div id="menu">
+                <div>
+                    <button id="btn1" type="button" class="button">세금징수</button>
+                </div>
+                <div>
+                    <button id="btn2" type="button" class="button">병량징수</button>
+                </div>
+                <div>
+                    <button id="btn3" type="button" class="button">병사모집</button>
+                </div>
+                <div>
+                    <button id="btn4" type="button" class="button">인재모집</button>
+                </div>
+                <div>
+                    <button id="btn5" type="button" class="button">수집</button>
+                </div>
+                <div>
+                    <button id="btn7" type="button" class="button">돈->병량</button>
+                </div>
+                <div>
+                    <button id="btn8" type="button" class="button">병량->돈</button>
+                </div>
             </div>
-            <div>
-                <button id="btn3" type="button" class="button">병사모집</button>
+            <div id="chrstat">
+                플레이어 정보<br>
+                통솔 : <span id="stat1">{{ request.session.command }}</span><br>
+                무력 : <span id="stat2">{{ request.session.power }}</span><br>
+                지력 : <span id="stat3">{{ request.session.inteli }}</span><br>
+                정치 : <span id="stat4">{{ request.session.politics }}</span><br>
+                내정특기 : <span id="trait1">{{ request.session.innertrait }}</span><br>
+                전투특기 : <span id="trait2">{{ request.session.fighttrait }}</span><br>
+                스킬 : <span id="trait3">{{ request.session.skill }}</span><br>
+                hp : <span id="hp">{{ request.session.hp }}</span>
+                <input type="hidden" id="command" name="command" value="{{ request.session.command }}">
+                <input type="hidden" id="power" name="power" value="{{ request.session.power }}">
+                <input type="hidden" id="inteli" name="inteli" value="{{ request.session.inteli }}">
+                <input type="hidden" id="politics" name="politics" value="{{ request.session.politics }}">
+                <input type="hidden" id="innertrait" name="innertrait" value="{{ request.session.innertrait }}">
+                <input type="hidden" id="fighttrait" name="fighttrait" value="{{ request.session.fighttrait }}">
+                <input type="hidden" id="skill" name="skill" value="{{ request.session.skill }}">
+                <input type="hidden" id="hpinput" name="hpinput" value="{{ request.session.hp }}">
             </div>
-            <div>
-                <button id="btn4" type="button" class="button">인재모집</button>
+            <div id="portrait">
+                <img src="{{ request.session.portrait }}">
             </div>
-            <div>
-                <button id="btn5" type="button" class="button">수집</button>
+            <div id="turn">
+                <span id="turnNumber"></span> 턴
             </div>
-            <div>
-                <button id="btn7" type="button" class="button">돈->병량</button>
+            <div id="next" class="mainui">
+                <button type="submit" id="battleready">전투준비</button>
             </div>
-            <div>
-                <button id="btn8" type="button" class="button">병량->돈</button>
-            </div>
-        </div>
-        <div id="chrstat">
-            플레이어 정보<br>
-            통솔 : <span id="stat1">{{ request.session.command }}</span><br>
-            무력 : <span id="stat2">{{ request.session.power }}</span><br>
-            지력 : <span id="stat3">{{ request.session.inteli }}</span><br>
-            정치 : <span id="stat4">{{ request.session.politics }}</span><br>
-            내정특기 : <span id="trait1">{{ request.session.innertrait }}</span><br>
-            전투특기 : <span id="trait2">{{ request.session.fighttrait }}</span><br>
-            스킬 : <span id="trait3">{{ request.session.skill }}</span><br>
-            hp : <span id="hp">{{ request.session.hp }}</span>
-            <input type="hidden" id="command" name="command" value="{{ request.session.command }}">
-            <input type="hidden" id="power" name="power" value="{{ request.session.power }}">
-            <input type="hidden" id="inteli" name="inteli" value="{{ request.session.inteli }}">
-            <input type="hidden" id="politics" name="politics" value="{{ request.session.politics }}">
-            <input type="hidden" id="innertrait" name="innertrait" value="{{ request.session.innertrait }}">
-            <input type="hidden" id="fighttrait" name="fighttrait" value="{{ request.session.fighttrait }}">
-            <input type="hidden" id="skill" name="skill" value="{{ request.session.skill }}">
-            <input type="hidden" id="hpinput" name="hpinput" value="{{ request.session.hp }}">
-        </div>
-        <div id="portrait">
-            <img src="{{ request.session.portrait }}">
-        </div>
-        <div id="turn">
-            <span id="turnNumber"></span> 턴
-        </div>
-        <div id="next" class="mainui">
-            <button type="submit" id="battleready">전투준비</button>
-        </div>
-    </form>
+        </form>
     </div>
-    
-    <script>
-        let init_gold=1000
-        document.getElementById('goldinput').value=init_gold
-        let init_food=100000
-        document.getElementById('foodinput').value=init_food
-        let init_army=10000
-        document.getElementById('armyinput').value=init_army
-        let init_turn=1
-        let init_officer=0
-        document.getElementById('officerinput').value=init_officer
-        let init_item='없음'
-        {#document.getElementById('iteminput1').value=init_item#}
-        let turn=1
 
-        function tax(){
-            if('{{ request.session.innertrait }}'=='상재'){
-                init_gold+=150
-            }
-            else {
+    <script>
+        let init_gold = 1000
+        document.getElementById('goldinput').value = init_gold
+        let init_food = 100000
+        document.getElementById('foodinput').value = init_food
+        let init_army = 10000
+        document.getElementById('armyinput').value = init_army
+        let init_turn = 1
+        let init_officer = 0
+        document.getElementById('officerinput').value = init_officer
+        let init_item = '없음'
+        {#document.getElementById('iteminput1').value=init_item#}
+        let turn = 1
+
+        function tax() {
+            if ('{{ request.session.innertrait }}' == '상재') {
+                init_gold += 150
+            } else {
                 init_gold += 100
             }
-            init_turn+=1
-            gold.textContent=init_gold
-            document.getElementById('goldinput').value=init_gold
-            turnNumber.textContent=init_turn
-            if (init_turn>12){
-                btn1.disabled=true
-                btn2.disabled=true
-                btn3.disabled=true
-                btn4.disabled=true
-                btn5.disabled=true
-                btn7.disabled=true
-                btn8.disabled=true
-                next.style.display='block'
-            }            
-        }
-        function provisions(){
-        if ('{{ request.session.innertrait }}'=='경작'){
-            init_food += 15000
-        }
-        else
-            {
-            init_food += 10000
+            init_turn += 1
+            gold.textContent = init_gold
+            document.getElementById('goldinput').value = init_gold
+            turnNumber.textContent = init_turn
+            if (init_turn > 12) {
+                btn1.disabled = true
+                btn2.disabled = true
+                btn3.disabled = true
+                btn4.disabled = true
+                btn5.disabled = true
+                btn7.disabled = true
+                btn8.disabled = true
+                next.style.display = 'block'
             }
-        init_turn += 1
+        }
+
+        function provisions() {
+            if ('{{ request.session.innertrait }}' == '경작') {
+                init_food += 15000
+            } else {
+                init_food += 10000
+            }
+            init_turn += 1
             food.textContent = init_food
             document.getElementById('foodinput').value = init_food
             turnNumber.textContent = init_turn
             if (init_turn > 12) {
-                    btn1.disabled = true
-                    btn2.disabled = true
-                    btn3.disabled = true
-                    btn4.disabled = true
-                    btn5.disabled = true
-                    btn7.disabled = true
-                    btn8.disabled = true
-                    next.style.display = 'block'
-                }
-        }
-        function call(){
-            if ('{{ request.session.innertrait }}'=='연병'){
-                init_army+=1500
-                document.getElementById('hpinput').value=Number(document.getElementById('hpinput').value)+15
+                btn1.disabled = true
+                btn2.disabled = true
+                btn3.disabled = true
+                btn4.disabled = true
+                btn5.disabled = true
+                btn7.disabled = true
+                btn8.disabled = true
+                next.style.display = 'block'
             }
-            else {
-                init_army += 1000
-                document.getElementById('hpinput').value=Number(document.getElementById('hpinput').value)+10
-            }
-            init_turn+=1
-            army.textContent=init_army
-            document.getElementById('armyinput').value=init_army
-            hp.textContent = document.getElementById('hpinput').value
-            turnNumber.textContent=init_turn
-            if (init_turn>12){
-                btn1.disabled=true
-                btn2.disabled=true
-                btn3.disabled=true
-                btn4.disabled=true
-                btn5.disabled=true
-                btn7.disabled=true
-                btn8.disabled=true
-                next.style.display='block'
-            }            
         }
-        function get_officer(){
 
-            init_officer+=1
-            init_turn+=1
-            officer.textContent=init_officer
-            document.getElementById('officerinput').value=init_officer
-            document.getElementById('hpinput').value=Number(document.getElementById('hpinput').value)+10
-            hp.textContent=document.getElementById('hpinput').value
-            turnNumber.textContent=init_turn
-            if ('{{ request.session.innertrait }}'=='인맥'){
-                if('{{ request.session.status }}'== '비장군'){
-                if(init_officer>=11){
-                    btn4.disabled=true
+        function call() {
+            if ('{{ request.session.innertrait }}' == '연병') {
+                init_army += 1500
+                document.getElementById('hpinput').value = Number(document.getElementById('hpinput').value) + 15
+            } else {
+                init_army += 1000
+                document.getElementById('hpinput').value = Number(document.getElementById('hpinput').value) + 10
+            }
+            init_turn += 1
+            army.textContent = init_army
+            document.getElementById('armyinput').value = init_army
+            hp.textContent = document.getElementById('hpinput').value
+            turnNumber.textContent = init_turn
+            if (init_turn > 12) {
+                btn1.disabled = true
+                btn2.disabled = true
+                btn3.disabled = true
+                btn4.disabled = true
+                btn5.disabled = true
+                btn7.disabled = true
+                btn8.disabled = true
+                next.style.display = 'block'
+            }
+        }
+
+        function get_officer() {
+
+            init_officer += 1
+            init_turn += 1
+            officer.textContent = init_officer
+            document.getElementById('officerinput').value = init_officer
+            document.getElementById('hpinput').value = Number(document.getElementById('hpinput').value) + 10
+            hp.textContent = document.getElementById('hpinput').value
+            turnNumber.textContent = init_turn
+            if ('{{ request.session.innertrait }}' == '인맥') {
+                if ('{{ request.session.status }}' == '비장군') {
+                    if (init_officer >= 11) {
+                        btn4.disabled = true
+                    }
+                } else if ('{{ request.session.status }}' == '편장군') {
+                    if (init_officer >= 12) {
+                        btn4.disabled = true
+                    }
+                } else if ('{{ request.session.status }}' == '도독') {
+                    if (init_officer >= 13) {
+                        btn4.disabled = true
+                    }
+                } else if ('{{ request.session.status }}' == '잡호장군') {
+                    if (init_officer >= 14) {
+                        btn4.disabled = true
+                    }
+                } else if ('{{ request.session.status }}' == '사진장군') {
+                    if (init_officer >= 15) {
+                        btn4.disabled = true
+                    }
+                } else if ('{{ request.session.status }}' == '사정장군') {
+                    if (init_officer >= 16) {
+                        btn4.disabled = true
+                    }
+                } else if ('{{ request.session.status }}' == '사방장군') {
+                    if (init_officer >= 17) {
+                        btn4.disabled = true
+                    }
+                } else if ('{{ request.session.status }}' == '거기장군') {
+                    if (init_officer >= 18) {
+                        btn4.disabled = true
+                    }
+                } else if ('{{ request.session.status }}' == '표기장군') {
+                    if (init_officer >= 19) {
+                        btn4.disabled = true
+                    }
+                } else if ('{{ request.session.status }}' == '대장군') {
+                    if (init_officer >= 20) {
+                        btn4.disabled = true
+                    }
                 }
-            }
-            else if('{{ request.session.status }}'== '편장군'){
-                if(init_officer>=12){
-                    btn4.disabled=true
-                }
-            }
-            else if('{{ request.session.status }}'== '도독'){
-                if(init_officer>=13){
-                    btn4.disabled=true
-                }
-            }
-            else if('{{ request.session.status }}'== '잡호장군'){
-                if(init_officer>=14){
-                    btn4.disabled=true
-                }
-            }
-            else if('{{ request.session.status }}'== '사진장군'){
-                if(init_officer>=15){
-                    btn4.disabled=true
-                }
-            }
-            else if('{{ request.session.status }}'== '사정장군'){
-                if(init_officer>=16){
-                    btn4.disabled=true
-                }
-            }
-            else if('{{ request.session.status }}'== '사방장군'){
-                if(init_officer>=17){
-                    btn4.disabled=true
-                }
-            }
-            else if('{{ request.session.status }}'== '거기장군'){
-                if(init_officer>=18){
-                    btn4.disabled=true
-                }
-            }
-            else if('{{ request.session.status }}'== '표기장군'){
-                if(init_officer>=19){
-                    btn4.disabled=true
-                }
-            }
-            else if('{{ request.session.status }}'== '대장군'){
-                if(init_officer>=20){
-                    btn4.disabled=true
-                }
-            }
-            }
-            else {
+            } else {
                 if ('{{ request.session.status }}' == '비장군') {
                     if (init_officer >= 1) {
                         btn4.disabled = true
@@ -342,35 +436,36 @@
                     }
                 }
             }
-            if (init_turn>12){
-                btn1.disabled=true
-                btn2.disabled=true
-                btn3.disabled=true
-                btn4.disabled=true
-                btn5.disabled=true
-                btn7.disabled=true
-                btn8.disabled=true
-                next.style.display='block'
-            }            
+            if (init_turn > 12) {
+                btn1.disabled = true
+                btn2.disabled = true
+                btn3.disabled = true
+                btn4.disabled = true
+                btn5.disabled = true
+                btn7.disabled = true
+                btn8.disabled = true
+                next.style.display = 'block'
+            }
         }
-        function shuffle(array){
-            array.sort(()=>Math.random()-0.5)
+
+        function shuffle(array) {
+            array.sort(() => Math.random() - 0.5)
         }
-        function get_item(){
-            itemlist=['무기','갑옷','말','책서','장신구']
-            statlist=['통솔','무력','지력','정치']
+
+        function get_item() {
+            itemlist = ['무기', '갑옷', '말', '책서', '장신구']
+            statlist = ['통솔', '무력', '지력', '정치']
             shuffle(itemlist)
             shuffle(statlist)
-            stat=parseInt(Math.random()*10+1);
+            stat = parseInt(Math.random() * 10 + 1);
 
-            if ('{{ request.session.innertrait }}'=='수집') {
+            if ('{{ request.session.innertrait }}' == '수집') {
                 if (init_item == '없음') {
                     init_item = itemlist[0] + '(' + statlist[0] + '+' + 10 + ')' + ' '
                 } else if (init_item != '없음') {
                     init_item += itemlist[0] + '(' + statlist[0] + '+' + 10 + ')' + ' '
                 }
-            }
-            else {
+            } else {
                 if (init_item == '없음') {
                     init_item = itemlist[0] + '(' + statlist[0] + '+' + stat + ')' + ' '
                 } else if (init_item != '없음') {
@@ -399,124 +494,142 @@
             } else if (statlist[0] == '정치') {
                 document.getElementById('politics').value = Number(document.getElementById('politics').value) + 10
                 stat4.textContent = document.getElementById('politics').value
-                }
+            }
 
-            gold.textContent=init_gold
-            document.getElementById('goldinput').value=init_gold
-            if (turn>5){
-                btn5.disabled=true
+            gold.textContent = init_gold
+            document.getElementById('goldinput').value = init_gold
+            if (turn > 5) {
+                btn5.disabled = true
             }
-            if (init_turn>12){
-                btn1.disabled=true
-                btn2.disabled=true
-                btn3.disabled=true
-                btn4.disabled=true
-                btn5.disabled=true
-                btn7.disabled=true
-                btn8.disabled=true
-                next.style.display='block'
+            if (init_turn > 12) {
+                btn1.disabled = true
+                btn2.disabled = true
+                btn3.disabled = true
+                btn4.disabled = true
+                btn5.disabled = true
+                btn7.disabled = true
+                btn8.disabled = true
+                next.style.display = 'block'
             }
-            if(init_gold<=0){
-                btn5.disalbed=true
+            if (init_gold <= 0) {
+                btn5.disalbed = true
             }
         }
 
-        function moneytofood(){
-            init_gold-=100
-            init_food+=5000
-            init_turn+=1
-            turnNumber.textContent=init_turn
-            gold.textContent=init_gold
-            document.getElementById('goldinput').value=init_gold
-            food.textContent=init_food
-            document.getElementById('foodinput').value=init_food
-            if(init_gold<=0){
-                btn7.disabled=true
+        function moneytofood() {
+            init_gold -= 100
+            init_food += 5000
+            init_turn += 1
+            turnNumber.textContent = init_turn
+            gold.textContent = init_gold
+            document.getElementById('goldinput').value = init_gold
+            food.textContent = init_food
+            document.getElementById('foodinput').value = init_food
+            if (init_gold <= 0) {
+                btn7.disabled = true
+            } else if (init_food > 0) {
+                btn8.disabled = false
             }
-            else if(init_food>0){
-                btn8.disabled=false
+            if (init_turn > 12) {
+                btn1.disabled = true
+                btn2.disabled = true
+                btn3.disabled = true
+                btn4.disabled = true
+                btn5.disabled = true
+                btn7.disabled = true
+                btn8.disabled = true
+                next.style.display = 'block'
             }
-            if (init_turn>12){
-                btn1.disabled=true
-                btn2.disabled=true
-                btn3.disabled=true
-                btn4.disabled=true
-                btn5.disabled=true
-                btn7.disabled=true
-                btn8.disabled=true
-                next.style.display='block'
-            }
-            
-        }
-        function foodtomoney(){
-            init_gold+=100
-            init_food-=5000
-            init_turn+=1
-            turnNumber.textContent=init_turn
-            gold.textContent=init_gold
-            document.getElementById('goldinput').value=init_gold
-            food.textContent=init_food
-            document.getElementById('foodinput').value=init_food
-            if(init_food<=0){
-                btn8.disabled=true
-            }
-            else if(init_gold>0){
-                btn7.disabled=false
-            }
-            if (init_turn>12){
-                btn1.disabled=true
-                btn2.disabled=true
-                btn3.disabled=true
-                btn4.disabled=true
-                btn5.disabled=true
-                btn7.disabled=true
-                btn8.disabled=true
-                next.style.display='block'
-            }
-                           
+
         }
 
-        if ('{{ request.session.status }}'=='부장'){
-                btn4.disabled=true
+        function foodtomoney() {
+            init_gold += 100
+            init_food -= 5000
+            init_turn += 1
+            turnNumber.textContent = init_turn
+            gold.textContent = init_gold
+            document.getElementById('goldinput').value = init_gold
+            food.textContent = init_food
+            document.getElementById('foodinput').value = init_food
+            if (init_food <= 0) {
+                btn8.disabled = true
+            } else if (init_gold > 0) {
+                btn7.disabled = false
             }
-        else if ('{{ request.session.status }}'=='부장'){
-            btn4.disabled=false
+            if (init_turn > 12) {
+                btn1.disabled = true
+                btn2.disabled = true
+                btn3.disabled = true
+                btn4.disabled = true
+                btn5.disabled = true
+                btn7.disabled = true
+                btn8.disabled = true
+                next.style.display = 'block'
+            }
+
         }
 
-        function foodconsum(){
-            document.getElementById('foodinput').value =Number(document.getElementById('foodinput').value) - Number(document.getElementById('armyinput').value)*10
+        if ('{{ request.session.status }}' == '부장') {
+            btn4.disabled = true
+        } else if ('{{ request.session.status }}' == '부장') {
+            btn4.disabled = false
+        }
+
+        function foodconsum() {
+            document.getElementById('foodinput').value = Number(document.getElementById('foodinput').value) - Number(document.getElementById('armyinput').value) * 10
             food.textContent = document.getElementById('foodinput').value
         }
-        
 
-        gold=document.getElementById("gold")
-        gold.textContent=init_gold
-        food=document.getElementById("food")
-        food.textContent=init_food
-        army=document.getElementById("army")
-        army.textContent=init_army
-        turnNumber=document.getElementById("turnNumber")
-        turnNumber.textContent=init_turn
-        officer=document.getElementById("officer")
-        officer.textContent=init_officer
-        item=document.getElementById("item")
-        item.textContent=init_item
 
-        btn1=document.getElementById("btn1")
-        btn1.addEventListener("click",tax)
-        btn2=document.getElementById("btn2")
-        btn2.addEventListener("click",provisions)
-        btn3=document.getElementById("btn3")
-        btn3.addEventListener("click",call)
-        btn4=document.getElementById("btn4")
-        btn4.addEventListener("click",get_officer)
-        btn5=document.getElementById("btn5")
-        btn5.addEventListener("click",get_item)
-        btn7=document.getElementById("btn7")
-        btn7.addEventListener("click",moneytofood)
-        btn8=document.getElementById("btn8")
-        btn8.addEventListener("click",foodtomoney)
-        battleready=document.getElementById('battleready')
-        battleready.addEventListener('click',foodconsum)
+        gold = document.getElementById("gold")
+        gold.textContent = init_gold
+        food = document.getElementById("food")
+        food.textContent = init_food
+        army = document.getElementById("army")
+        army.textContent = init_army
+        turnNumber = document.getElementById("turnNumber")
+        turnNumber.textContent = init_turn
+        officer = document.getElementById("officer")
+        officer.textContent = init_officer
+        item = document.getElementById("item")
+        item.textContent = init_item
+
+        btn1 = document.getElementById("btn1")
+        btn1.addEventListener("click", tax)
+        btn2 = document.getElementById("btn2")
+        btn2.addEventListener("click", provisions)
+        btn3 = document.getElementById("btn3")
+        btn3.addEventListener("click", call)
+        btn4 = document.getElementById("btn4")
+        btn4.addEventListener("click", get_officer)
+        btn5 = document.getElementById("btn5")
+        btn5.addEventListener("click", get_item)
+        btn7 = document.getElementById("btn7")
+        btn7.addEventListener("click", moneytofood)
+        btn8 = document.getElementById("btn8")
+        btn8.addEventListener("click", foodtomoney)
+        battleready = document.getElementById('battleready')
+        battleready.addEventListener('click', foodconsum)
+    </script>
+    <script>
+        function noEvent(event) {
+            if (event.keyCode == 116) {
+                alert('새로고침을 할 수 없습니다.')
+                event.keyCode = 2
+                return false
+            } else if (event.ctrlKey
+                && (event.keyCode == 78 || event.keyCode == 82)) {
+                return false
+            }
+        }
+        document.onkeydown = noEvent
+    </script>
+    <script>
+        history.pushState(null, null, location.href)
+        window.onpopstate = function (event) {
+            alert('뒤로 갈 수 없습니다.')
+            history.go(1)
+        }
     </script>
 {% endblock %}
