@@ -4,7 +4,8 @@ from member.models import Member
 
 # Create your models here.
 class Shop(models.Model):
-    cname = models.TextField(primary_key=True)
+    id = models.AutoField(primary_key=True)
+    cname = models.TextField()
     img = models.TextField(default='')
     innertrait = models.TextField()
     fighttrait = models.TextField()

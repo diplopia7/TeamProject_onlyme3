@@ -1,11 +1,11 @@
 from math import ceil
 
 from django.db.models import F
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from member.models import Member
-from pay.models import Shop
+from pay.models import Shop, Possession
 
 
 def pay(request, perPage=6):
@@ -55,12 +55,18 @@ def pay(request, perPage=6):
 def buy(request):
     if request.method == 'GET':
         pass
-
     elif request.method == 'POST':
         form = request.POST.dict()
+        print(form)
+        possession = Possession.objects.select_related().get(cname=form['chrname'], userid=request.session['userid_id'])
+        possession = Possession(
+            cname_id=form['chrname'],
+            userid=request.session['userid_id'],
+        )
+        possession.save()
 
-        p = Shop.objects.filter(cname=form['chrname'])
-        return render(request, 'pay.html')
+        return redirect('/pay')
+
 
 
 def payok(request):

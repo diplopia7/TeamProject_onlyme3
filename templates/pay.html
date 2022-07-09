@@ -8,32 +8,112 @@
     <link rel="stylesheet" href="{% static '/css/bs5/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <style>
-        #wrapper { display:flex;}
-        #wrapper a {font-size: 23px; font-weight: bold; text-decoration: none;
-        color: white;  }
-        #wrapper a:hover{color:orangered}
-        header {background-image:url('/static/img/background.jpg'); height:140px; width: 100%  }
+        #wrapper {
+            display: flex;
+        }
+
+        #wrapper a {
+            font-size: 23px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        #wrapper a:hover {
+            color: orangered
+        }
+
+        header {
+            background-image: url('/static/img/background.jpg');
+            height: 140px;
+            width: 100%
+        }
 
 
-        a:link {color: black; text-decoration:none}
-        a:visited{color: black; text-decoration:underline}
-        a:hover {color: orangered; text-decoration:none}
-        a:active {color: orangered; text-decoration:none }
+        a:link {
+            color: black;
+            text-decoration: none
+        }
 
-        #logo {width: 515px; height:115px; float:left; margin-top:15px }
-        #gamestart { list-style:none; margin-left:300px; margin-top: 10px}
-        #gamestart img { width:250px; height: 120px;   }
-        #qmenu { word-spacing:35px; display:flex; float:right; margin-left:530px; margin-top: 15px}
+        a:visited {
+            color: black;
+            text-decoration: underline
+        }
 
-        nav { width:100%; background: silver; padding: 5px 15px; clear: both; display:inline-block}
+        a:hover {
+            color: orangered;
+            text-decoration: none
+        }
 
-        nav ul { word-spacing:500px;  font-weight:bold; text-align: center; list-style: none; font-size: 25px; padding:3px;
-                margin-right:60px; margin-top: 10px }
-        nav li { display: flex; align-items: center; flex-wrap: wrap; text-align: center}
-        nav a{ font-size:45px}
+        a:active {
+            color: orangered;
+            text-decoration: none
+        }
 
-        #chr {margin-left: 15px}
-        #charge {margin-top: 10px; margin-right: 5px}
+        #logo {
+            width: 515px;
+            height: 115px;
+            float: left;
+            margin-top: 15px
+        }
+
+        #gamestart {
+            list-style: none;
+            margin-left: 300px;
+            margin-top: 10px
+        }
+
+        #gamestart img {
+            width: 250px;
+            height: 120px;
+        }
+
+        #qmenu {
+            word-spacing: 35px;
+            display: flex;
+            float: right;
+            margin-left: 530px;
+            margin-top: 15px
+        }
+
+        nav {
+            width: 100%;
+            background: silver;
+            padding: 5px 15px;
+            clear: both;
+            display: inline-block
+        }
+
+        nav ul {
+            word-spacing: 500px;
+            font-weight: bold;
+            text-align: center;
+            list-style: none;
+            font-size: 25px;
+            padding: 3px;
+            margin-right: 60px;
+            margin-top: 10px
+        }
+
+        nav li {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            text-align: center
+        }
+
+        nav a {
+            font-size: 45px
+        }
+
+        #chr {
+            margin-left: 15px
+        }
+
+        #charge {
+            margin-top: 10px;
+            margin-right: 5px
+        }
     </style>
 {% endblock %}
 
@@ -41,7 +121,9 @@
 
     <div id="main">
         <div class="text-end" id="charge">
-            <button type="button" class="btn btn-danger" id="rechargebtn" data-bs-toggle="modal" data-bs-target="#rechargeModal">충전하기</button>
+            <button type="button" class="btn btn-danger" id="rechargebtn" data-bs-toggle="modal"
+                    data-bs-target="#rechargeModal">충전하기
+            </button>
         </div>
         <form action="{% url 'buy' %}" name="buyfrm" id="buyfrm" method="post">
             {% csrf_token %}
@@ -49,123 +131,133 @@
                 {% for b in bds %}
                     <div class="card text-center d-flex" style="width: 18rem;">
                         <img src="{{ b.img }}" class="card-img-top">
-                      <div class="card-body">
-                        <span class="card-title h5 fw-bold" id="cname">{{ b.cname }}</span>
-                          <input type="text" id="chrname" name="chrname" value="{{ b.cname }}">
-                        <div class="card-text">내정특기 : {{ b.innertrait }}</div>
-                        <div class="card-text">전투특기 : {{ b.fighttrait }}</div>
-                        <div class="card-text">전술 : {{ b.skill }}</div>
-                          <input type="hidden" id="price" name="price" value="{{ b.price }}">
-                        <button type="button" class="btn btn-danger w-100" id="paybtn" data-bs-toggle="modal"
-                                data-bs-target="#payModal" value="1">
-                            <i class="bi bi-coin text-warning"></i> {{ b.price }}</button>
-                      </div>
+                        <div class="card-body" id="card{{ b.id }}">
+                            <input type="hidden" id="chrname1" name="chrname1" value="{{ b.cname }}">
+                            <span class="card-title h5 fw-bold">{{ b.cname }}</span>
+                            <div class="card-text">내정특기 : {{ b.innertrait }}</div>
+                            <div class="card-text">전투특기 : {{ b.fighttrait }}</div>
+                            <div class="card-text">전술 : {{ b.skill }}</div>
+                            <button type="button" class="btn btn-danger w-100" id="paybtn{{ b.id }}"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#payModal">
+                                <i class="bi bi-coin text-warning"></i><a>  {{ b.price }} </a></button>
+                            <input type="hidden" id="price1" name="price1" value="{{ b.price }}">
+                        </div>
                     </div>
                 {% endfor %}
             </div>
         </form>
-    <ul class="pagination justify-content-center">
-    <li class="page-item"><a class="page-link" href="?cpage={{ request.GET.cpage|add:-1 }}">이전</a></li>
-        {% for i in range %}
-            <li class="page-item"><a class="page-link" href="?cpage={{ i }}">{{ i }}</a></li>
-        {% endfor %}
-    <li class="page-item"><a class="page-link" href="?cpage={{ request.GET.cpage|add:1 }}">다음</a></li>
-  </ul>
+        <ul class="pagination justify-content-center">
+            <li class="page-item"><a class="page-link" href="?cpage={{ request.GET.cpage|add:-1 }}">이전</a></li>
+            {% for i in range %}
+                <li class="page-item"><a class="page-link" href="?cpage={{ i }}">{{ i }}</a></li>
+            {% endfor %}
+            <li class="page-item"><a class="page-link" href="?cpage={{ request.GET.cpage|add:1 }}">다음</a></li>
+        </ul>
     </div>
-     <div class="col-2"></div>
-{% include 'modal.html' %}
+    <div class="col-2"></div>
+    {% include 'modal.html' %}
 {% endblock %}
 
 
 {% block jscript %}
     <script>
-    const payok = document.querySelector('#payok');
-    const payq = document.querySelector('#payq');
-    const paybtn = document.querySelector('#paybtn')
-    const rechargebtn = document.querySelector('#rechargebtn');
+        const payok = document.querySelector('#payok');
+        const payq = document.querySelector('#payq');
+        const paybtn = document.querySelector('#paybtn')
+        const rechargebtn = document.querySelector('#rechargebtn');
 
-    const payokbtn = document.querySelector('#payokbtn');
-    const rd1 = document.querySelector('#inlineRadio1');
-    const rd1lb = document.querySelector('#inlineRadio1lb');
-    const rd2 = document.querySelector('#inlineRadio2');
-    const rd2lb = document.querySelector('#inlineRadio2lb');
-    const rd3 = document.querySelector('#inlineRadio3');
-    const rd3lb = document.querySelector('#inlineRadio3lb');
-    const rd4 = document.querySelector('#inlineRadio4');
-    const rd4lb = document.querySelector('#inlineRadio4lb');
-    const rd5 = document.querySelector('#inlineRadio5');
-    const rd5lb = document.querySelector('#inlineRadio5lb');
-    const rd6 = document.querySelector('#inlineRadio6');
-    const rd6lb = document.querySelector('#inlineRadio6lb');
-    const recharge = document.querySelector('#recharge');
-    const rechargemodal = document.querySelector('#rechargeModal');
-    const paymodal = document.querySelector('#payModal');
+        const payokbtn = document.querySelector('#payokbtn');
+        const rd1 = document.querySelector('#inlineRadio1');
+        const rd1lb = document.querySelector('#inlineRadio1lb');
+        const rd2 = document.querySelector('#inlineRadio2');
+        const rd2lb = document.querySelector('#inlineRadio2lb');
+        const rd3 = document.querySelector('#inlineRadio3');
+        const rd3lb = document.querySelector('#inlineRadio3lb');
+        const rd4 = document.querySelector('#inlineRadio4');
+        const rd4lb = document.querySelector('#inlineRadio4lb');
+        const rd5 = document.querySelector('#inlineRadio5');
+        const rd5lb = document.querySelector('#inlineRadio5lb');
+        const rd6 = document.querySelector('#inlineRadio6');
+        const rd6lb = document.querySelector('#inlineRadio6lb');
+        const recharge = document.querySelector('#recharge');
+        const rechargemodal = document.querySelector('#rechargeModal');
+        const paymodal = document.querySelector('#payModal');
 
-    const chrname= document.querySelector('#chrname')
-    const price= document.querySelector('#price')
+        const chrname = document.querySelector('#chrname')
+        const chrname1 = document.querySelector('#chrname1')
+        const price = document.querySelector('#price')
+        const price1 = document.querySelector('#price1')
 
-    paybtn.addEventListener('click', () => {
-        {% if not request.session.userid %}
-            alert('로그인 후 이용 바랍니다!');
-            location.href = '/login';
-        {% endif %}
 
-        payq.innerHTML = '구매 하시겠습니까?';
-    });
-
-    payok.addEventListener('click', () => {
-        bootstrap.Modal.getInstance('#payModal').hide();
-        paybtn.disabled = true;
-        paybtn.innerHTML = '보유중';
-        document.buyfrm.submit();
-    });
-
-    rd1.addEventListener('click', () => {
-        recharge.innerHTML = rd1lb.outerHTML;
-        payokbtn.disabled = false;
-    });
-    rd2.addEventListener('click', () => {
-        recharge.innerHTML = rd2lb.outerHTML;
-        payokbtn.disabled = false;
-    });
-    rd3.addEventListener('click', () => {
-        recharge.innerHTML = rd3lb.outerHTML;
-        payokbtn.disabled = false;
-    });
-    rd4.addEventListener('click', () => {
-        recharge.innerHTML = rd4lb.outerHTML;
-        payokbtn.disabled = false;
-    });
-    rd5.addEventListener('click', () => {
-        recharge.innerHTML = rd5lb.outerHTML;
-        payokbtn.disabled = false;
-    });
-    rd6.addEventListener('click', () => {
-        recharge.innerHTML = rd6lb.outerHTML;
-        payokbtn.disabled = false;
-    });
-
-    rechargebtn.addEventListener('click', () => {
-        {% if not request.session.userid %}
-            alert('로그인 후 이용 바랍니다!');
-            location.href = '/login';
-        {% endif %}
-    });
-
-    payokbtn.addEventListener('click', () => {
-        const name = document.querySelector('#name')
-        const rrn = document.querySelector('#rrn')
-        const phone = document.querySelector('#phone')
-
-        if (name.value == '') {
-            alert('이름을 입력하세요');
-        } else if (rrn.value == '') {
-            alert('주민번호를 입력하세요.');
-        } else if (phone.value == '') {
-            alert('전화번호를 입력하세요.');
-        } else {
-            document.recfrm.submit();
+        for (i = 1; i <= 25; ++i) {
+            let aaa = `paybtn${i}`
+            let bbb = `card${i}`
+            eval(aaa).addEventListener('click', () => {
+                name = eval(bbb).firstElementChild.value;
+                cprice = eval(bbb).lastElementChild.value;
+                alert(name)
+                alert(cprice)
+                chrname.value = name
+                price.value = Number(cprice)
+                payq.innerHTML = '구매 하시겠습니까?';
+            });
         }
-    });
-</script>
+
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+            paybtn.disabled = true;
+            paybtn.innerHTML = '보유중';
+            document.buyfrm.submit();
+        });
+
+        rd1.addEventListener('click', () => {
+            recharge.innerHTML = rd1lb.outerHTML;
+            payokbtn.disabled = false;
+        });
+        rd2.addEventListener('click', () => {
+            recharge.innerHTML = rd2lb.outerHTML;
+            payokbtn.disabled = false;
+        });
+        rd3.addEventListener('click', () => {
+            recharge.innerHTML = rd3lb.outerHTML;
+            payokbtn.disabled = false;
+        });
+        rd4.addEventListener('click', () => {
+            recharge.innerHTML = rd4lb.outerHTML;
+            payokbtn.disabled = false;
+        });
+        rd5.addEventListener('click', () => {
+            recharge.innerHTML = rd5lb.outerHTML;
+            payokbtn.disabled = false;
+        });
+        rd6.addEventListener('click', () => {
+            recharge.innerHTML = rd6lb.outerHTML;
+            payokbtn.disabled = false;
+        });
+
+        rechargebtn.addEventListener('click', () => {
+            {% if not request.session.userid %}
+                alert('로그인 후 이용 바랍니다!');
+                location.href = '/login';
+            {% endif %}
+        });
+
+        payokbtn.addEventListener('click', () => {
+            const name = document.querySelector('#name')
+            const rrn = document.querySelector('#rrn')
+            const phone = document.querySelector('#phone')
+
+            if (name.value == '') {
+                alert('이름을 입력하세요');
+            } else if (rrn.value == '') {
+                alert('주민번호를 입력하세요.');
+            } else if (phone.value == '') {
+                alert('전화번호를 입력하세요.');
+            } else {
+                document.recfrm.submit();
+            }
+        });
+    </script>
 {% endblock %}
