@@ -148,11 +148,15 @@
             </div>
         </form>
         <ul class="pagination justify-content-center">
+        {% if requeset.GET.cpage|add:0 > 1 %}
             <li class="page-item"><a class="page-link" href="?cpage={{ request.GET.cpage|add:-1 }}">이전</a></li>
+        {% endif %}
             {% for i in range %}
                 <li class="page-item"><a class="page-link" href="?cpage={{ i }}">{{ i }}</a></li>
             {% endfor %}
+        {% if request.GET.cpage|add:0 < pages %}
             <li class="page-item"><a class="page-link" href="?cpage={{ request.GET.cpage|add:1 }}">다음</a></li>
+        {% endif %}
         </ul>
     </div>
     <div class="col-2"></div>
