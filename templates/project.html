@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="ko">
 <head>
     {% load static %}
@@ -18,20 +18,19 @@
 
 
         a:link {color: black; text-decoration:none}
-        a:visited{color: black; text-decoration:underline}
+        a:visited{color: black; text-decoration:underline}v
         a:hover {color: orangered; text-decoration:none}
         a:active {color: orangered; text-decoration:none }
 
         #logo {width: 515px; height:115px; float:left; margin-top:15px }
-        #gamestart { list-style:none; margin-left:300px; margin-top: 10px}
+        #gamestart {list-style:none; position:absolute; left:43%; margin-top: 10px; }
         #gamestart img { width:250px; height: 120px;   }
-        #qmenu { word-spacing:35px; display:flex; float:right; margin-left:530px; margin-top: 15px}
+        #qmenu { position: absolute; word-spacing:35px; display:flex; left:82%; margin-top: 15px}
 
-        nav { width:100%; background: silver; padding: 5px 15px; clear: both; display:inline-block}
+        nav { clear: both; width:100%; position:relative; background: silver; padding: 5px 15px; }
 
-        nav ul { word-spacing:500px;  font-weight:bold; text-align: center; list-style: none; font-size: 25px; padding:3px;
-                margin-right:60px; margin-top: 10px }
-        nav li { display: flex; align-items: center; flex-wrap: wrap; text-align: center}
+        nav ul { word-spacing: 500px; font-weight:bold; }
+        nav li { list-style: none; position:relative; left:20%; margin-top:10px; }
         nav a{ font-size:45px}
 
         video { max-width: 100%; display: block; }
