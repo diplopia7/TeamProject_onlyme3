@@ -56,7 +56,7 @@ def pay(request, perPage=6):
 
 def buy(request):
     if request.method == 'GET':
-        return render(request, 'pay.html')
+        pass
 
     elif request.method == 'POST':
         form = request.POST.dict()
@@ -67,7 +67,11 @@ def buy(request):
         )
         possession.save()
 
-        return render(request, 'pay.html')
+        qry = '/pay/?cpage=' + form['cpage']
+        #
+        # context={'qry':qry}
+
+        return redirect(qry)
 
 
 def payok(request):

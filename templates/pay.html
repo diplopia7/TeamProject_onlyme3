@@ -193,6 +193,7 @@
         const chrname1 = document.querySelector('#chrname')
         const idnum = document.querySelector('#idnum')
         const idnum1 = document.querySelector('#idnum1')
+        const cpage = document.querySelector('#cpage')
 
         {#idnum1.value=Number({{ request.session.userid_id }});#}
 
@@ -250,13 +251,15 @@
             eval(aaa).addEventListener('click', () => {
                 name = eval(bbb).firstElementChild.value;
                 {#cprice = eval(bbb).lastElementChild.value;#}
-                chrname.value = name
-                idnum.value = idnum1.value
+                chrname.value = name;
+                idnum.value = idnum1.value;
+                cpage.value = {{ request.GET.cpage }};
                 payq.innerHTML = '구매 하시겠습니까?';
             });
         }
 
         payok.addEventListener('click', () => {
+            {#location.href="?cpage={{ request.GET.cpage }}"#}
             bootstrap.Modal.getInstance('#payModal').hide();
             document.buyfrm.submit();
         });
