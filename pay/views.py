@@ -17,7 +17,8 @@ def pay(request, perPage=6):
         pages = ceil(bds.count() / perPage)
 
         cpage = 1
-        if request.GET.get('cpage') is not None: cpage = form['cpage']
+        if request.GET.get('cpage') is not None:
+            cpage = form['cpage']
 
         start = (int(cpage) - 1) * perPage
         end = start + perPage
@@ -57,10 +58,9 @@ def pay(request, perPage=6):
 def buy(request):
     if request.method == 'GET':
         pass
-
     elif request.method == 'POST':
         form = request.POST.dict()
-        print(form)
+
         possession = Possession(
             cname_id=form['chrname'],
             userid_id=form['idnum'],
