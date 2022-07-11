@@ -6,110 +6,140 @@
 
 {% block style %}
 <style>
-        #wrapper { display:flex;}
-        #wrapper a {font-size: 23px; font-weight: bold; text-decoration: none;
-        color: white;  }
-        #wrapper a:hover{color:orangered}
-        header {background-image:url('/static/img/background.jpg'); height:140px; width: 100%  }
+
+    #wrapper { display:flex;}
+    #wrapper a {font-size: 20px; font-weight: bold; text-decoration: none;
+    color: white;  }
+    #wrapper a:hover{color:orangered}
+    header {background-image:url('/static/img/background.jpg'); height:140px; width: 100%  }
 
 
-        {#a:link {color: black; text-decoration:none}#}
-        {#a:visited{color: black; text-decoration:underline}#}
-        {#a:hover {color: orangered; text-decoration:none}#}
-        {#a:active {color: orangered; text-decoration:none }#}
+    a:link {color: black; text-decoration:none}
+    a:visited{color: black; text-decoration:underline}
+    a:hover {color: orangered; text-decoration:none}
+    a:active {color: orangered; text-decoration:none }
 
-        #logo {width: 515px; height:115px; float:left; margin-top:15px }
-        #gamestart { list-style:none; margin-left:300px; margin-top: 10px}
-        #gamestart img { width:250px; height: 120px;   }
-        #qmenu { word-spacing:35px; display:flex; float:right; margin-left:530px; margin-top: 15px}
+    header img:hover {
+    width: 89%;
+    height: 100%;
+    transform:scale(110%);
+    transition: transform.3s;
+    }
 
-        nav { width:100%; background: silver; padding: 5px 15px; clear: both; display:inline-block}
+    #qm2 img:hover {
+    width: 102%;
+    height: 100%;
+    transform:scale(110%);
+    transition: transform.3s;
+    }
 
-        nav ul { word-spacing:500px;  font-weight:bold; text-align: center; list-style: none; font-size: 25px; padding:3px;
-                margin-right:60px; margin-top: 10px }
-        nav li { display: flex; align-items: center; flex-wrap: wrap; text-align: center}
-        nav a{ font-size:45px; color: black; text-decoration:none; }
-        nav a:hover { color: orangered; text-decoration:none }
+    #mmenu img:hover {
+    width: 89%;
+    height: 100%;
+    transform:scale(110%);
+    transition: transform.3s;
+    }
 
-body{
-	background-image: url(../static/img/bg.jpg);
-	background-repeat: no-repeat;;
-    background-position:center;
-	background-size: 100%;
-}
-.container{
-	position: absolute;
-	top: 60%;
-	left: 50%;
-	transform: translate(-50%,-50%);
-	width: 20%;
-	margin: auto;
-	background-color: rgba(0, 0, 0, 0.1);
-	color: white;
-	padding: 30px;
-	box-shadow: 0px 2px 8px 2px #555;
-	border-radius: 6px;
-	box-sizing: border-box;
-}
-.container h2{
-	padding: 10px 15px;
-	letter-spacing: 1px;
-}
-.form-container{
-	padding: 20px;
-}
-.form-container label{
+    #logo {width: 515px; height:115px; float:left; margin-top:15px }
+    #gamestart {list-style:none; position:absolute; left:43%; margin-top: 10px; }
+    #gamestart img { width:250px; height: 120px;   }
+    {##qm { position: absolute; display:flex; left: 84%; margin-top: 15px; height:47px;}#}
+    #qm1 { position: absolute; display:flex; left: 84%; margin-top: 15px; height:47px;}
+    #qm2 { position: absolute; display:flex; left: 84%; margin-top: 15px; height:47px;}
+    #qm img { height:45px; position:absolute}
+    #qmenu1 img { margin-top:-1px;}
+    #qmenu2 { margin-left: 150px;}
+    #qmenu3 img { margin-top:-0.5px;}
+    #qmenu4 { margin-left: 24px;}
 
-}
-input[type=text], input[type=password], button{
-	width: 100%;
-	padding: 10px 12px;
-	margin: 8px 0px;
-	display: inline-block;
-	box-sizing: border-box;
-    color: white;
-	background-color: transparent;
-	border: 1px solid white;
-    text-decoration:none
+    nav{ clear: both; width:100%; position:relative;  background: silver; padding: 5px 15px; }
+    nav div  { position:relative; left: 6%; display:flex; font-weight:bold;
+            list-style: none; margin-top: 8px; margin-bottom: 8px}
+    nav img { height: 75px; position:relative}
+    #mmenu2 { left : 27%;}
+    #mmenu3 { left : 43%; bottom:2px}
 
-}
-input[type=text]:focus, input[type=password]:focus{
-	outline: none;
-}
-button a{
-	padding: 10px 20px;
-	cursor: pointer;
-	font-size: 15px;
-	letter-spacing: 1px;
-    color: white;
-    text-decoration:none
-}
-button a:hover, button:hover{
-    color: orangered;
-}
+    .container{
+        position: relative;
+        transform: translate(0,20%);
+        width: 20%;
+        margin: auto;
+        background-color: rgba(0, 0, 0, 0.1);
+        color: white;
+        padding: 30px;
+        box-shadow: 0 2px 8px 2px #555;
+        border-radius: 6px;
+        box-sizing: border-box;
+    }
+
+
+    .body img{
+        position:absolute;
+        width:100%;
+        height: 855px;
+    }
+    .container h2{
+        padding: 10px 15px;
+        letter-spacing: 1px;
+    }
+    .form-container{
+        padding: 20px;
+    }
+    .form-container label{
+
+    }
+    input[type=text], input[type=password], button{
+        width: 100%;
+        padding: 10px 12px;
+        margin: 8px 0px;
+        display: inline-block;
+        box-sizing: border-box;
+        color: white;
+        background-color: transparent;
+        border: 1px solid white;
+        text-decoration:none
+
+    }
+    input[type=text]:focus, input[type=password]:focus{
+        outline: none;
+    }
+    button a{
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 15px;
+        letter-spacing: 1px;
+        color: white;
+        text-decoration:none
+    }
+    button a:hover, button:hover{
+        color: orangered;
+    }
 
 
 </style>
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-    <form name="loginfrm" method="post" id="loginfrm">
-        {% csrf_token %}
-        <div style="color: red">{{ error }}</div>
-        <div><label for="userid"><b>아이디</b></label>
-            <input type="text" name="userid" id="userid" placeholder="아이디를 입력하세요" required>
+
+    <div class="body">
+    <img src="/static/img/bg.jpg" alt="bg">
+        <div class="container">
+        <form name="loginfrm" method="post" id="loginfrm">
+            {% csrf_token %}
+            <div style="color: red">{{ error }}</div>
+            <div><label for="userid"><b>아이디</b></label>
+                <input type="text" name="userid" id="userid" placeholder="아이디를 입력하세요" required>
+            </div>
+
+            <div><label for="passwd"><b>비밀번호</b></label>
+            <input type="password" name='passwd' id='passwd' placeholder="비밀번호를 입력하세요" required></div>
+
+            <div>
+                <button type="submit" id="loginbtn" ><b>로그인</b></button>
+                <button type="button" id="joinbtn" class="joinbtn" ><a href="/join"><b>회원가입</b></a></button>
+            </div>
+        </form>
         </div>
-
-        <div><label for="passwd"><b>비밀번호</b></label>
-        <input type="password" name='passwd' id='passwd' placeholder="비밀번호를 입력하세요" required></div>
-
-        <div>
-            <button type="submit" id="loginbtn" ><b>로그인</b></button>
-            <button type="button" id="joinbtn" class="joinbtn" ><a href="/join"><b>회원가입</b></a></button>
-        </div>
-
-    </form>
     </div>
 {% endblock %}
 {% block jscript %}
