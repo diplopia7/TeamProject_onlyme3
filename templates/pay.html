@@ -89,10 +89,12 @@
                             <div class="card-text">내정특기 : {{ b.innertrait }}</div>
                             <div class="card-text">전투특기 : {{ b.fighttrait }}</div>
                             <div class="card-text">전술 : {{ b.skill }}</div>
+                            {% if p in  %}
                             <button type="button" class="btn btn-danger w-100" id="paybtn{{ b.id }}"
                                     data-bs-toggle="modal"
                                     data-bs-target="#payModal">
-                                <i class="bi bi-coin text-warning"></i><a>  {{ b.price }} </a></button>
+                                <i class="bi bi-coin text-warning"></i><a>  {{ p }} </a></button>
+{#                            {% endif %}#}
                             <input type="text" id="idnum1" name="idnum1" value="{{ request.session.userid_id }}">
                         </div>
                     </div>

@@ -13,6 +13,8 @@ def pay(request, perPage=6):
         form = request.GET.dict()
         bds = Shop.objects.all()
         qry = ''
+        # p = Possession.objects.all().values('userid_id')
+        p = Possession.objects.select_related().filter(userid_id=request.session['userid_id']).values('cname_id')
 
         pages = ceil(bds.count() / perPage)
 
@@ -27,7 +29,7 @@ def pay(request, perPage=6):
 
         stpgn = int((int(cpage) - 1) / 10) * 10 + 1
 
-        context = {'bds': bds, 'pages': pages, 'range': range(stpgn, stpgn + 5), 'qry': qry}
+        context = {'bds': bds, 'pages': pages, 'range': range(stpgn, stpgn + 5), 'qry': qry, 'p':p}
         return render(request, 'pay.html', context)
 
 
@@ -57,6 +59,9 @@ def pay(request, perPage=6):
 
 def buy(request):
     if request.method == 'GET':
+        # p = Possession.objects.all()
+        # context={'p':p}
+        # return (request, 'pay.html', context)
         pass
     elif request.method == 'POST':
         form = request.POST.dict()
