@@ -89,11 +89,12 @@
                             <div class="card-text">내정특기 : {{ b.innertrait }}</div>
                             <div class="card-text">전투특기 : {{ b.fighttrait }}</div>
                             <div class="card-text">전술 : {{ b.skill }}</div>
-                            {% if p in  %}
+{#                            {% if p in  %}#}
                             <button type="button" class="btn btn-danger w-100" id="paybtn{{ b.id }}"
                                     data-bs-toggle="modal"
                                     data-bs-target="#payModal">
-                                <i class="bi bi-coin text-warning"></i><a>  {{ p }} </a></button>
+{#                                <input type="text" value="">#}
+                                <i class="bi bi-coin text-warning"></i><a> {{ b.price }} </a></button>
 {#                            {% endif %}#}
                             <input type="text" id="idnum1" name="idnum1" value="{{ request.session.userid_id }}">
                         </div>
@@ -177,6 +178,12 @@
             payokbtn.disabled = false;
         });
 
+        user_have = [];
+        {% for p in pa %}
+            user_have.push('{{ p.cname_id }}')
+        {% endfor %}
+
+
         rechargebtn.addEventListener('click', () => {
             {% if not request.session.userid %}
                 alert('로그인 후 이용 바랍니다!');
@@ -203,6 +210,10 @@
         for (i = 1 + 6 * ({{ request.GET.cpage }}-1); i <= 6 * ({{ request.GET.cpage }}); ++i) {
             let aaa = `paybtn${i}`
             let bbb = `card${i}`
+            if (user_have.includes(`${i}`)) {
+                eval(aaa).textContent = '보유';
+                eval(aaa).disabled = true;
+            }
             eval(aaa).addEventListener('click', () => {
                 name = eval(bbb).firstElementChild.value;
                 {#cprice = eval(bbb).lastElementChild.value;#}
