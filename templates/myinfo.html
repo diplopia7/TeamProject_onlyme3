@@ -55,27 +55,62 @@
         #mmenu2 { left : 23%;}
         #mmenu3 { left : 43%; bottom:2px}
 
-    table { /*border: 1px solid red;*/
-       margin: 120px auto }
+        .body img{
+            position:absolute;
+            width:100%;
+            height: 855px;
+        }
 
-    th, td { padding: 10px }
+        .container{
+            position: relative;
+            transform: translate(80%,60%);
+            width: 20%;
+            margin: auto;
+            background-color: rgba(60, 60, 60, 10);
+            color: white;
+            padding: 30px;
+            box-shadow: 0 0 0 1px;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
 
-    th { text-align: right }
-
-    h2 {margin-left: 55px}
+        label{
+            width: 100%;
+            padding: 10px 12px;
+            margin: 8px 0px;
+            display: inline-block;
+            box-sizing: border-box;
+            color: white;
+            font-weight: bold;
+            background-color: transparent;
+            border: 2px solid white;
+            text-decoration:none
+        }
 
 </style>
 {% endblock %}
 
 {% block content %}
-    <h2>회원정보</h2>
-        <table>
-            <tr><th>아이디</th><td>{{ member.userid }}</td></tr>
-            <tr><th>이름</th><td>{{ member.name }}</td></tr>
-            <tr><th>이메일</th><td>{{ member.email }}</td></tr>
-            <tr><th>캐시</th><td>{{ member.cash }} 원</td></tr>
-            <tr><th>가입일</th><td>{{ member.regdate }}</td></tr>
-        </table>
+    <div class="body">
+    <img src="/static/img/myinfo2.png" alt="bg">
+        <div class="container">
+            <form name="myinfofrm" method="post" id="myinfofrm">
+                <div><label for="userid">아이디 : {{ member.userid }}</label></div>
+                <div><label for="name">이름 : {{ member.name }}</label></div>
+                <div><label for="email">이메일 : {{ member.email }}</label></div>
+                <div><label for="cash">캐시 : {{ member.cash }}</label></div>
+                <div><label for="regdate">가입일 : {{ member.regdate }}</label></div>
+            </form>
+        </div>
+    </div>
+{#        <table>#}
+{#            <tr><th>아이디</th><td>{{ member.userid }}</td></tr>#}
+{#            <tr><th>이름</th><td>{{ member.name }}</td></tr>#}
+{#            <tr><th>이메일</th><td>{{ member.email }}</td></tr>#}
+{#            <tr><th>캐시</th><td>{{ member.cash }} 원</td></tr>#}
+{#            <tr><th>가입일</th><td>{{ member.regdate }}</td></tr>#}
+{#        </table>#}
+
 {% endblock %}
 
 {% block jscript %}{% endblock %}
