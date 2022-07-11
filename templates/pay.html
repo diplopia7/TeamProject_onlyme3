@@ -141,7 +141,7 @@
                                     data-bs-toggle="modal"
                                     data-bs-target="#payModal">
                                 <i class="bi bi-coin text-warning"></i><a>  {{ b.price }} </a></button>
-                            <input type="hidden" id="price1" name="price1" value="{{ b.price }}">
+                            <input type="hidden" id="price1" name="price1" value="{{ reqeust.session.userid }}">
                         </div>
                     </div>
                 {% endfor %}
@@ -156,7 +156,7 @@
             {% for i in range %}
                 <li class="page-item"><a class="page-link" href="?cpage={{ i }}">{{ i }}</a></li>
             {% endfor %}
-            {% if not request.GET.cpage|add:0 == pages %}
+            {% if request.GET.cpage|add:0 < pages %}
                 <li class="page-item"><a class="page-link" href="?cpage={{ request.GET.cpage|add:1 }}">다음</a></li>
             {% endif %}
         </ul>
@@ -191,32 +191,9 @@
         const paymodal = document.querySelector('#payModal');
 
         const chrname = document.querySelector('#chrname')
-        const chrname1 = document.querySelector('#chrname1')
+        const chrname1 = document.querySelector('#chrname')
         const price = document.querySelector('#price')
         const price1 = document.querySelector('#price1')
-
-
-        for (i = 1; i <= 25; ++i) {
-            let aaa = `paybtn${i}`
-            let bbb = `card${i}`
-            eval(aaa).addEventListener('click', () => {
-                name = eval(bbb).firstElementChild.value;
-                cprice = eval(bbb).lastElementChild.value;
-                alert(name)
-                alert(cprice)
-                chrname.value = name
-                price.value = Number(cprice)
-                payq.innerHTML = '구매 하시겠습니까?';
-            });
-        }
-
-
-        payok.addEventListener('click', () => {
-            bootstrap.Modal.getInstance('#payModal').hide();
-            paybtn.disabled = true;
-            paybtn.innerHTML = '보유중';
-            document.buyfrm.submit();
-        });
 
         rd1.addEventListener('click', () => {
             recharge.innerHTML = rd1lb.outerHTML;
@@ -264,6 +241,23 @@
             } else {
                 document.recfrm.submit();
             }
+        });
+
+        for (i = 1 + 6 * ({{ request.GET.cpage }}-1); i <= 6 * ({{ request.GET.cpage }}); ++i) {
+            let aaa = `paybtn${i}`
+            let bbb = `card${i}`
+            eval(aaa).addEventListener('click', () => {
+                name = eval(bbb).firstElementChild.value;
+                cprice = eval(bbb).lastElementChild.value;
+                chrname.value = name
+                price.value = Number(cprice)
+                payq.innerHTML = '구매 하시겠습니까?';
+            });
+        }
+
+        payok.addEventListener('click', () => {
+            bootstrap.Modal.getInstance('#payModal').hide();
+            document.buyfrm.submit();
         });
     </script>
 {% endblock %}
