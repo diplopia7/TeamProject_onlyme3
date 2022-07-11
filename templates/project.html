@@ -11,64 +11,82 @@
     {% block style %}
         <style>
         #wrapper { display:flex;}
-        #wrapper a {font-size: 23px; font-weight: bold; text-decoration: none;
+        #wrapper a {font-size: 20px; font-weight: bold; text-decoration: none;
         color: white;  }
         #wrapper a:hover{color:orangered}
         header {background-image:url('/static/img/background.jpg'); height:140px; width: 100%  }
 
 
         a:link {color: black; text-decoration:none}
-        a:visited{color: black; text-decoration:underline}v
+        a:visited{color: black; text-decoration:underline}
         a:hover {color: orangered; text-decoration:none}
         a:active {color: orangered; text-decoration:none }
 
         #logo {width: 515px; height:115px; float:left; margin-top:15px }
         #gamestart {list-style:none; position:absolute; left:43%; margin-top: 10px; }
         #gamestart img { width:250px; height: 120px;   }
-        #qmenu { position: absolute; word-spacing:35px; display:flex; left:82%; margin-top: 15px}
+        #qmenu { position: absolute; display:flex; left: 84%; margin-top: 15px}
+        #qmenu1 img { height: 42px; position:relative}
 
-        nav { clear: both; width:100%; position:relative; background: silver; padding: 5px 15px; }
+        nav{ clear: both; width:100%; position:relative;  background: silver; padding: 5px 15px; }
 
-        nav ul { word-spacing: 500px; font-weight:bold; }
-        nav li { list-style: none; position:relative; left:20%; margin-top:10px; }
-        nav a{ font-size:45px}
 
-        video { max-width: 100%; display: block; }
+        nav div  { position:relative; left: 6%; display:flex; font-weight:bold;
+                list-style: none; margin-top: 8px; margin-bottom: 8px}
+        nav img { height: 75px; position:relative}
+        #mmenu2 { left : 27%;}
+        #mmenu3 { left : 43%;}
+
+        video { width:100%;}
+
+
         </style>
     {% endblock %}
 </head>
     <header>
     <div id="wrapper">
          <h1><a href="/"><img id='logo' src="/static/img/logo.png" alt="logo"></a></h1>
-             <ul id="gamestart" ><a href="/main_menu"><img src="/static/img/gamestart.png"></a></ul>
+             <ul id="gamestart" ><a href="/main_menu"><img src="/static/img/gamestart.png" alt="gamestart" class="img"></a></ul>
             {% if not request.session.userid %}
-            <ul id="qmenu">
-                <li><a href="/login">로그인</a></li>
-                <li><a href="/join">회원가입</a></li>
-            </ul>
-            {% endif %}
-            {% if request.session.userid %}
-                <ul id="qmenu">
-                    <li><a href="/logout">로그아웃</a></li>
-                    <li><a href="/myinfo">회원정보</a></li>
-                </ul>
-            {% endif %}
+            <div class='qmenu' id="qmenu">
+                <div id="qmenu1">
+                    <a href="/login"><img src="/static/img/login.png" alt="login"></a>
+                </div>
+                <div id="qmenu2">
+                    <a href="/join"><img src="/static/img/join.png" alt="join"></a>
+                </div>
             </div>
+                {% endif %}
+                {% if request.session.userid %}
+            <div class="qmenu" id="qmenu">
+                <div id="qmenu3">
+                    <a href="/logout"><img src="/static/img/logout.png" alt="logout"></a>
+                    <a href="/myinfo"><img src="/static/img/myinfo.png" alt="myinfo"></a>
+                </div>
+            </div>
+                {% endif %}
+    </div>
     </header>
-        <nav>
-        <ul id="mmenu">
-            <li><a href="/game_info">게임소개</a></li>
-            <li><a href="/pay/?cpage=1">상점</a></li>
-            <li><a href="/userpos">보유 캐릭터</a></li>
-        </ul>
-        </nav>
 
+        <nav>
+           <div id="mmenu">
+                <div id="mmenu1">
+                    <a href="/game_info"><img src="/static/img/gameintro1.png" alt="gameinfo"></a>
+                </div>
+                <div id="mmenu2">
+                    <a href="/pay"><img src="/static/img/shop1.png" alt="pay"></a>
+                </div>
+                <div id="mmenu3">
+                    <a href="/pay"><img src="/static/img/userpos.png" alt="userpos"></a>
+                </div>
+           </div>
+        </nav>
 
     <div id="main">
         {% block content %}
     <body>
       <video autoplay controls loop muted>
-          <source src="/static/video/트레일러1.mp4" type="video/mp4">
+          <source src="/static/video/트레일러2.mp4" type="video/mp4">
       </video>
     </body>
         {% endblock %}
