@@ -8,25 +8,13 @@ from member.models import Member
 from pay.models import Shop, Possession
 
 
-def pay(request, perPage=6):
+def pay(request):
     if request.method == 'GET':
-        form = request.GET.dict()
         bds = Shop.objects.all()
 
-        pages = ceil(bds.count() / perPage)
-
-        cpage = 1
-        if request.GET.get('cpage') is not None: cpage = form['cpage']
-
-        start = (int(cpage) - 1) * perPage
-        end = start + perPage
-
-        bds = bds[start:end]
-
-        stpgn = int((int(cpage) - 1) / 10) * 10 + 1
-
-        context = {'bds': bds, 'pages': pages, 'range': range(stpgn, stpgn + 5)}
+        context = {'bds': bds}
         return render(request, 'pay.html', context)
+
 
     elif request.method == 'POST':
         returnPage = ''
@@ -55,6 +43,7 @@ def pay(request, perPage=6):
 def buy(request):
     if request.method == 'GET':
         pass
+
     elif request.method == 'POST':
         form = request.POST.dict()
         print(form)
@@ -73,3 +62,24 @@ def payok(request):
     return render(request, 'payok.html')
 
 
+def page(request, perPage=6):
+    if request.method == 'GET':
+        form = request.GET.dict()
+        qry = ''
+
+        bdlist = Shop.objects.select_related()
+
+        pages = ceil(bdlist.count() / perPage)
+
+        cpage = 1
+        if request.GET.get('cpage') is not None: cpage = form['cpage']
+
+        start = (int(cpage) - 1) * perPage
+        end = start + perPage
+
+        bdlist = bdlist[start:end]
+
+        stpgn = int((int(cpage) - 1) / 10) * 10 + 1
+
+        context = {'bdlist': bdlist, 'pages': pages, 'range': range(stpgn, stpgn + 5), 'qry': qry}
+        return render(request, 'pay.html', context)
