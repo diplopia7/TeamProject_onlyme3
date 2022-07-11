@@ -56,19 +56,18 @@ def pay(request, perPage=6):
 
 def buy(request):
     if request.method == 'GET':
-        pass
+        return render(request, 'pay.html')
 
     elif request.method == 'POST':
         form = request.POST.dict()
         print(form)
-        possession = Possession.objects.select_related().get(cname=form['chrname'], userid=request.session['userid_id'])
         possession = Possession(
             cname_id=form['chrname'],
-            userid=request.session['userid_id'],
+            userid_id=form['idnum'],
         )
         possession.save()
 
-        return redirect('/pay')
+        return render(request, 'pay.html')
 
 
 def payok(request):

@@ -3,9 +3,12 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
+          <form action="{% url 'buy' %}" name="buyfrm" id="buyfrm" method="post">
+            {% csrf_token %}
         <h5 class="modal-title" id="payModalLabel">구매</h5>
           <input type="text" id="chrname" name="chrname">
-          <input type="text" id="price" name="price">
+          <input type="text" id="idnum" name="idnum">
+          </form>
       </div>
       <div class="modal-body">
         <h5 id="payq" class="fw-bold"></h5>

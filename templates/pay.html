@@ -125,14 +125,13 @@
                     data-bs-target="#rechargeModal">충전하기
             </button>
         </div>
-        <form action="{% url 'buy' %}" name="buyfrm" id="buyfrm" method="post">
-            {% csrf_token %}
+
             <div class="d-flex row" id="chr">
                 {% for b in bds %}
                     <div class="card text-center d-flex" style="width: 18rem;">
                         <img src="{{ b.img }}" class="card-img-top">
                         <div class="card-body" id="card{{ b.id }}">
-                            <input type="hidden" id="chrname1" name="chrname1" value="{{ b.cname }}">
+                            <input type="hidden" id="chrname1" name="chrname1" value="{{ b.id }}">
                             <span class="card-title h5 fw-bold">{{ b.cname }}</span>
                             <div class="card-text">내정특기 : {{ b.innertrait }}</div>
                             <div class="card-text">전투특기 : {{ b.fighttrait }}</div>
@@ -141,12 +140,12 @@
                                     data-bs-toggle="modal"
                                     data-bs-target="#payModal">
                                 <i class="bi bi-coin text-warning"></i><a>  {{ b.price }} </a></button>
-                            <input type="hidden" id="price1" name="price1" value="{{ reqeust.session.userid }}">
+                            <input type="text" id="idnum1" name="idnum1" value="{{ request.session.userid_id }}">
                         </div>
                     </div>
                 {% endfor %}
             </div>
-        </form>
+{#        </form>#}
         <ul class="pagination justify-content-center">
             {% if request.GET.cpage|add:0 > 1 %}
                 <li class="page-item"><a class="page-link"
@@ -192,8 +191,10 @@
 
         const chrname = document.querySelector('#chrname')
         const chrname1 = document.querySelector('#chrname')
-        const price = document.querySelector('#price')
-        const price1 = document.querySelector('#price1')
+        const idnum = document.querySelector('#idnum')
+        const idnum1 = document.querySelector('#idnum1')
+
+        {#idnum1.value=Number({{ request.session.userid_id }});#}
 
         rd1.addEventListener('click', () => {
             recharge.innerHTML = rd1lb.outerHTML;
@@ -248,9 +249,9 @@
             let bbb = `card${i}`
             eval(aaa).addEventListener('click', () => {
                 name = eval(bbb).firstElementChild.value;
-                cprice = eval(bbb).lastElementChild.value;
+                {#cprice = eval(bbb).lastElementChild.value;#}
                 chrname.value = name
-                price.value = Number(cprice)
+                idnum.value = idnum1.value
                 payq.innerHTML = '구매 하시겠습니까?';
             });
         }
@@ -258,6 +259,7 @@
         payok.addEventListener('click', () => {
             bootstrap.Modal.getInstance('#payModal').hide();
             document.buyfrm.submit();
+            {#location.href="?cpage={{ request.GET.cpage }}"#}
         });
     </script>
 {% endblock %}
