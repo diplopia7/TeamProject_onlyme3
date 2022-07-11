@@ -72,3 +72,23 @@ def buy(request):
 
 def payok(request):
     return render(request, 'payok.html')
+
+
+def userpos(request, perPage=6):
+    form = request.GET.dict()
+    bds = Possession.objects.filter(userid_id=request.session['userid_id'])
+    qry = ''
+
+    pages = ceil(bds.count() / perPage)
+
+    cpage = 1
+    if request.GET.get('cpage') is not None: cpage = form['cpage']
+
+    start = (int(cpage) - 1) * perPage
+    end = start + perPage
+
+    bds = bds[start:end]
+
+    stpgn = int((int(cpage) - 1) / 10) * 10 + 1
+    context = {'bds': bds, 'pages': pages, 'range': range(stpgn, stpgn + 5), 'qry': qry}
+    return render(request, 'pay.html', context)
