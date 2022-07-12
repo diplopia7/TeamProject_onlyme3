@@ -226,11 +226,11 @@
             {% endif %}
             eval(aaa).addEventListener('click', () => {
                 name = eval(bbb).firstElementChild.value;
-                {#cprice = eval(bbb).lastElementChild.value;#}
+                cprice = eval(bbb).lastElementChild.value;
                 chrname.value = name;
                 idnum.value = idnum1.value;
                 cpage.value = {{ request.GET.cpage }};
-                price.value = price1.value;
+                price.value = cprice;
                 payq.innerHTML = '구매 하시겠습니까?';
             });
         }
