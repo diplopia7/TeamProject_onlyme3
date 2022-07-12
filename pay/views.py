@@ -70,8 +70,12 @@ def buy(request):
         mp = Member.objects.filter(userid=request.session['userid'])
 
         if request.session.get('userid'):
-            if mp:
+            if mp.get().cash > int(form['price']):
                 mp.update(cash=F('cash') - form['price'])
+            elif mp.get().cash < int(form['price']):
+                returnPage = 'buyfail.html'
+
+                return render(request, returnPage)
 
 
         possession = Possession(
