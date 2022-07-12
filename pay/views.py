@@ -97,23 +97,35 @@ def payok(request):
 
 
 def userpos(request, perPage=6):
-    form = request.GET.dict()
-    bds = Shop.objects.select_related('userid_id').select_related('cname_id').select_related('cname').select_related('img').select_related('innertrait').\
-        select_related('fighttrait').select_related('skill').filter(possession__userid_id=request.session['userid_id'])
-    qry = ''
+    if request.method == 'GET':
+        form = request.GET.dict()
+        bds = Shop.objects.select_related('userid_id').select_related('cname_id').select_related('cname').select_related('img').select_related('innertrait').\
+            select_related('fighttrait').select_related('skill').filter(possession__userid_id=request.session['userid_id'])
+        qry = ''
 
-    # print(bds)
+        # print(bds)
 
-    pages = ceil(bds.count() / perPage)
+        pages = ceil(bds.count() / perPage)
 
-    cpage = 1
-    if request.GET.get('cpage') is not None: cpage = form['cpage']
+        cpage = 1
+        if request.GET.get('cpage') is not None: cpage = form['cpage']
 
-    start = (int(cpage) - 1) * perPage
-    end = start + perPage
+        start = (int(cpage) - 1) * perPage
+        end = start + perPage
 
-    bds = bds[start:end]
+        bds = bds[start:end]
 
-    stpgn = int((int(cpage) - 1) / 10) * 10 + 1
-    context = {'bds': bds.values(), 'pages': pages, 'range': range(stpgn, stpgn + pages), 'qry': qry}
-    return render(request, 'userpos.html', context)
+        stpgn = int((int(cpage) - 1) / 10) * 10 + 1
+        context = {'bds': bds.values(), 'pages': pages, 'range': range(stpgn, stpgn + pages), 'qry': qry}
+        return render(request, 'userpos.html', context)
+
+    elif request.method == 'POST':
+        form = request.POST.dict()
+        print(form)
+        request.session['innertrait']=form['innertrait']
+        request.session['fighttrait']=form['fighttrait']
+        request.session['skill']=form['skill']
+
+        qry = '/userpos/?cpage=' + form['cpage']
+
+        return redirect(qry)

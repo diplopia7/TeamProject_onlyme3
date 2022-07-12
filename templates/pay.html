@@ -8,56 +8,156 @@
     <link rel="stylesheet" href="{% static '/css/bs5/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <style>
-        #wrapper { display:flex;}
-        #wrapper a {font-size: 20px; font-weight: bold; text-decoration: none;
-        color: white;  }
-        #wrapper a:hover{color:orangered}
-        header {background-image:url('/static/img/background.jpg'); height:140px; width: 100%  }
+        #wrapper {
+            display: flex;
+        }
+
+        #wrapper a {
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        #wrapper a:hover {
+            color: orangered
+        }
+
+        header {
+            background-image: url('/static/img/background.jpg');
+            height: 140px;
+            width: 100%
+        }
 
 
-        a:link {color: black; text-decoration:none}
-        a:visited{color: black; text-decoration:underline}
-        a:hover {color: orangered; text-decoration:none}
-        a:active {color: orangered; text-decoration:none }
+        a:link {
+            color: black;
+            text-decoration: none
+        }
+
+        a:visited {
+            color: black;
+            text-decoration: underline
+        }
+
+        a:hover {
+            color: orangered;
+            text-decoration: none
+        }
+
+        a:active {
+            color: orangered;
+            text-decoration: none
+        }
 
         header img:hover {
-        width: 89%;
-        height: 100%;
-        transform:scale(110%);
-        transition: transform.3s;
-         }
+            width: 89%;
+            height: 100%;
+            transform: scale(110%);
+            transition: transform .3s;
+        }
 
         #qm2 img:hover {
-        width: 102%;
-        height: 100%;
-        transform:scale(110%);
-        transition: transform.3s;
-         }
+            width: 102%;
+            height: 100%;
+            transform: scale(110%);
+            transition: transform .3s;
+        }
 
         #mmenu img:hover {
-        width: 89%;
-        height: 100%;
-        transform:scale(110%);
-        transition: transform.3s;
-         }
+            width: 89%;
+            height: 100%;
+            transform: scale(110%);
+            transition: transform .3s;
+        }
 
-        #logo {width: 515px; height:115px; float:left; margin-top:15px }
-        #gamestart {list-style:none; position:absolute; left:43%; margin-top: 10px; }
-        #gamestart img { width:250px; height: 120px;   }
-        #qm1 { position: absolute; display:flex; left: 84%; margin-top: 15px; height:47px;}
-        #qm2 { position: absolute; display:flex; left: 84%; margin-top: 15px; height:47px;}
-        #qm img { height:45px; position:absolute}
-        #qmenu1 img { margin-top:-1px;}
-        #qmenu2 { margin-left: 150px;}
-        #qmenu3 img { margin-top:-0.5px;}
-        #qmenu4 { margin-left: 24px;}
+        #logo {
+            width: 515px;
+            height: 115px;
+            float: left;
+            margin-top: 15px
+        }
 
-        nav{ width:100%; position:relative;  background: silver; padding: 5px 15px; height:120px;}
-        nav div  { position:relative; margin-left: 3.5%; display:flex; font-weight:bold;
-                list-style: none; margin-top: 8px; margin-bottom: 8px}
-        nav img { height: 75px; position:relative}
-        #mmenu2 { left : 23%;}
-        #mmenu3 { left : 43%; bottom:2px}
+        #gamestart {
+            list-style: none;
+            position: absolute;
+            left: 43%;
+            margin-top: 10px;
+        }
+
+        #gamestart img {
+            width: 250px;
+            height: 120px;
+        }
+
+        #qm1 {
+            position: absolute;
+            display: flex;
+            left: 84%;
+            margin-top: 15px;
+            height: 47px;
+        }
+
+        #qm2 {
+            position: absolute;
+            display: flex;
+            left: 84%;
+            margin-top: 15px;
+            height: 47px;
+        }
+
+        #qm img {
+            height: 45px;
+            position: absolute
+        }
+
+        #qmenu1 img {
+            margin-top: -1px;
+        }
+
+        #qmenu2 {
+            margin-left: 150px;
+        }
+
+        #qmenu3 img {
+            margin-top: -0.5px;
+        }
+
+        #qmenu4 {
+            margin-left: 24px;
+        }
+
+        nav {
+            width: 100%;
+            position: relative;
+            background: silver;
+            padding: 5px 15px;
+            height: 120px;
+        }
+
+        nav div {
+            position: relative;
+            margin-left: 3.5%;
+            display: flex;
+            font-weight: bold;
+            list-style: none;
+            margin-top: 8px;
+            margin-bottom: 8px
+        }
+
+        nav img {
+            height: 75px;
+            position: relative
+        }
+
+        #mmenu2 {
+            left: 23%;
+        }
+
+        #mmenu3 {
+            left: 43%;
+            bottom: 2px
+        }
 
         #chr {
             margin-left: 15px
@@ -79,34 +179,34 @@
             </button>
         </div>
 
-            <div class="d-flex row" id="chr">
-                {% for b in bds %}
-                    <div class="card text-center d-flex" style="width: 18rem;">
-                        <img src="{{ b.img }}" class="card-img-top">
-                        <div class="card-body" id="card{{ b.id }}">
-                            <input type="hidden" id="chrname1" name="chrname1" value="{{ b.id }}">
-                            <span class="card-title h5 fw-bold">{{ b.cname }}</span>
-                            <div class="card-text">내정특기 : {{ b.innertrait }}</div>
-                            <div class="card-text">전투특기 : {{ b.fighttrait }}</div>
-                            <div class="card-text">전술 : {{ b.skill }}</div>
-{#                            {% if p in  %}#}
-                            <button type="button" class="btn btn-danger w-100" id="paybtn{{ b.id }}"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#payModal">
-{#                                <input type="text" value="">#}
-                                <i class="bi bi-coin text-warning"></i><a> {{ b.price }} </a></button>
-{#                            {% endif %}#}
-                            <input type="hidden" id="idnum1" name="idnum1" value="{{ request.session.userid_id }}">
-                            <input type="hidden" id="price1" name="price1" value="{{ b.price }}">
-                        </div>
+        <div class="d-flex row" id="chr">
+            {% for b in bds %}
+                <div class="card text-center d-flex" style="width: 18rem;">
+                    <img src="{{ b.img }}" class="card-img-top">
+                    <div class="card-body" id="card{{ b.id }}">
+                        <input type="hidden" id="chrname1" name="chrname1" value="{{ b.id }}">
+                        <span class="card-title h5 fw-bold">{{ b.cname }}</span>
+                        <div class="card-text">내정특기 : {{ b.innertrait }}</div>
+                        <div class="card-text">전투특기 : {{ b.fighttrait }}</div>
+                        <div class="card-text">전술 : {{ b.skill }}</div>
+                        {#                            {% if p in  %}#}
+                        <button type="button" class="btn btn-danger w-100" id="paybtn{{ b.id }}"
+                                data-bs-toggle="modal"
+                                data-bs-target="#payModal">
+                            {#                                <input type="text" value="">#}
+                            <i class="bi bi-coin text-warning"></i><a> {{ b.price }} </a></button>
+                        {#                            {% endif %}#}
+                        <input type="hidden" id="idnum1" name="idnum1" value="{{ request.session.userid_id }}">
+                        <input type="hidden" id="price1" name="price1" value="{{ b.price }}">
                     </div>
-                {% endfor %}
-            </div>
-{#        </form>#}
+                </div>
+            {% endfor %}
+        </div>
+        {#        </form>#}
         <ul class="pagination justify-content-center">
             {% if request.GET.cpage|add:0 > 1 %}
                 <li class="page-item"><a class="page-link"
-                                         href="?cpage={{ request.GET.cpage|add:-1 }}&{{ qry }}">이전</a>
+                                         href="?cpage={{ request.GET.cpage|add:-1 }}">이전</a>
                 </li>
             {% endif %}
             {% for i in range %}
@@ -214,15 +314,15 @@
             let aaa = `paybtn${i}`
             let bbb = `card${i}`
             {% if request.session.userid %}
-            if (user_have.includes(`${i}`)) {
-                eval(aaa).textContent = '보유 중';
-                eval(aaa).disabled = true;
-            }
-            {% else %}
-            else {
-                eval(aaa).textContent = {{ b.price }}
-                eval(aaa).disabled=false;
-            }
+                if (user_have.includes(`${i}`)) {
+                    eval(aaa).textContent = '보유 중';
+                    eval(aaa).disabled = true;
+                }
+                    {% else %}
+                else {
+                    eval(aaa).textContent = {{ b.price }}
+                        eval(aaa).disabled = false;
+                }
             {% endif %}
             eval(aaa).addEventListener('click', () => {
                 name = eval(bbb).firstElementChild.value;

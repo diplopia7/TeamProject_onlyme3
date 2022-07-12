@@ -181,37 +181,48 @@
 {% block content %}
 
     <div id="main">
-        {#        <div class="text-end" id="charge">#}
-        {#            <button type="button" class="btn btn-danger" id="rechargebtn" data-bs-toggle="modal"#}
-        {#                    data-bs-target="#rechargeModal">충전하기#}
-        {#            </button>#}
-        {#        </div>#}
+        <div class="text-end" id="charge">
+            <button type="button" class="btn btn-danger" id="rechargebtn" data-bs-toggle="modal"
+                    data-bs-target="#rechargeModal">충전하기
+            </button>
+        </div>
         {% if request.session.userid %}
             <div class="d-flex row" id="chr">
                 {% for b in bds %}
                     <div class="card text-center d-flex" style="width: 18rem;">
                         <img src="{{ b.img }}" class="card-img-top">
                         <div class="card-body" id="card{{ b.id }}">
-                            <input type="hidden" id="chrname1" name="chrname1" value="{{ b.id }}">
+                            <input type="text" id="cid1" name="cid1" value="{{ b.id }}">
+                            <input type="text" id="innertrait1" name="innertrait1" value="{{ b.innertrait }}">
+                            <input type="text" id="fighttrait1" name="fighttrait1" value="{{ b.fighttrait }}">
+                            <input type="text" id="skill1" name="skill1" value="{{ b.skill }}">
                             <span class="card-title h5 fw-bold">{{ b.cname }}</span>
                             <div class="card-text">내정특기 : {{ b.innertrait }}</div>
                             <div class="card-text">전투특기 : {{ b.fighttrait }}</div>
                             <div class="card-text">전술 : {{ b.skill }}</div>
-                            <button type="button" class="btn btn-danger w-100" id="paybtn{{ b.id }}"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#payModal"> 선택하기
+                            <button type="button" class="btn btn-danger w-100" id="paybtn{{ b.id }}" value="선택하기">
+                                선택하기
                             </button>
                             <input type="text" id="idnum1" name="idnum1" value="{{ request.session.userid_id }}">
-                            <input type="text" id="idnum1" name="idnum1" value="{{ bds }}">
                         </div>
+                        <form id="posfrm" name="posfrm" method="post">
+                            {% csrf_token %}
+                            <input type="text" id="cid" name="cid" value="">
+                            <input type="text" id="innertrait" name="innertrait" value="">
+                            <input type="text" id="fighttrait" name="fighttrait" value="">
+                            <input type="text" id="skill" name="skill" value="">
+                            <input type="text" id="cpage" name="cpage" value="{{ request.GET.cpage }}">
+                        </form>
                     </div>
                 {% endfor %}
+
             </div>
+
             {#        </form>#}
             <ul class="pagination justify-content-center">
                 {% if request.GET.cpage|add:0 > 1 %}
                     <li class="page-item"><a class="page-link"
-                                             href="?cpage={{ request.GET.cpage|add:-1 }}&{{ qry }}">이전</a>
+                                             href="?cpage={{ request.GET.cpage|add:-1 }}">이전</a>
                     </li>
                 {% endif %}
                 {% for i in range %}
@@ -226,7 +237,7 @@
         {% endif %}
     </div>
     <div class="col-2"></div>
-    {#    {% include 'modal.html' %}#}
+    {% include 'modal.html' %}
 {% endblock %}
 
 
@@ -258,6 +269,11 @@
         const chrname1 = document.querySelector('#chrname')
         const idnum = document.querySelector('#idnum')
         const idnum1 = document.querySelector('#idnum1')
+
+        const innertrait = document.querySelector('#innertrait')
+        const fighttrait = document.querySelector('#fighttrait')
+        const skill = document.querySelector('#skill')
+        const cid = document.querySelector('#cid')
 
         {#idnum1.value=Number({{ request.session.userid_id }});#}
 
@@ -313,11 +329,19 @@
             let aaa = `paybtn${i}`
             let bbb = `card${i}`
             eval(aaa).addEventListener('click', () => {
-                name = eval(bbb).firstElementChild.value;
-                {#cprice = eval(bbb).lastElementChild.value;#}
-                chrname.value = name
-                idnum.value = idnum1.value
-                payq.innerHTML = '구매 하시겠습니까?';
+                cid.value = eval(bbb).children[0].value
+                innertrait.value = eval(bbb).children[1].value
+                fighttrait.value = eval(bbb).children[2].value
+                skill.value = eval(bbb).children[3].value
+                if (eval(bbb).children[8].value == '선택 해제') {
+                    eval(bbb).children[8].textContent = '선택하기';
+                    eval(bbb).children[8].value = '선택하기'
+                    eval(bbb).children[8].disabled = false
+                } else if (eval(bbb).children[8].value == '선택하기') {
+                    eval(bbb).children[8].textContent = '선택 해제';
+                    eval(bbb).children[8].value = '선택 해제';
+                    eval(bbb).children[8].disabled = true
+                }
             });
         }
 
