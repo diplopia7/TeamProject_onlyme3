@@ -78,6 +78,7 @@ def buy(request):
             cname_id=form['chrname'],
             userid_id=form['idnum'],
         )
+
         possession.save()
 
         qry = '/pay/?cpage=' + form['cpage']
