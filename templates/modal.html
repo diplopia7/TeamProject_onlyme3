@@ -6,9 +6,9 @@
           <form action="{% url 'buy' %}" name="buyfrm" id="buyfrm" method="post">
             {% csrf_token %}
         <h5 class="modal-title" id="payModalLabel">구매</h5>
-          <input type="text" id="chrname" name="chrname">
-          <input type="text" id="idnum" name="idnum">
-              <input type="text" id="cpage" name="cpage">
+          <input type="hidden" id="chrname" name="chrname">
+          <input type="hidden" id="idnum" name="idnum">
+              <input type="hidden" id="cpage" name="cpage">
           </form>
       </div>
       <div class="modal-body">

@@ -96,7 +96,7 @@
 {#                                <input type="text" value="">#}
                                 <i class="bi bi-coin text-warning"></i><a> {{ b.price }} </a></button>
 {#                            {% endif %}#}
-                            <input type="text" id="idnum1" name="idnum1" value="{{ request.session.userid_id }}">
+                            <input type="hidden" id="idnum1" name="idnum1" value="{{ request.session.userid_id }}">
                         </div>
                     </div>
                 {% endfor %}
