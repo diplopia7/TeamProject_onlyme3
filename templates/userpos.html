@@ -215,6 +215,11 @@
         const cid = document.querySelector('#cid')
         const paybtn = document.getElementsByName('paybtn');
 
+        const cid1 = document.getElementsByName('cid1')
+        const innertrait1 = document.getElementsByName('innertrait1')
+        const fighttrait1 = document.getElementsByName('fighttrait1')
+        const skill1 = document.getElementsByName('skill1')
+
         rd1.addEventListener('click', () => {
             recharge.innerHTML = rd1lb.outerHTML;
             payokbtn.disabled = false;
@@ -245,7 +250,7 @@
         {#        alert('로그인 후 이용 바랍니다!');#}
         {#        location.href = '/login';#}
         {#    {% endif %}#}
-        {#});#}
+
 
         payokbtn.addEventListener('click', () => {
             const name = document.querySelector('#name')
@@ -263,75 +268,28 @@
             }
         });
 
-        function test() {
-            const obj = document.getElementsByName('paybtn');
+            function test() {
+                const obj = document.getElementsByName('paybtn');
 
-            for (let i = 0; i < obj.length; i++) {
-                obj[i].checked = false;
+                for (let i = 0; i < obj.length; i++) {
+                    obj[i].checked = false;
+                }
             }
-        }
 
-        rechargebtn.addEventListener('click', () => {
-            test();
-        });
+            rechargebtn.addEventListener('click', () => {
+                test();
+            });
 
-        {#        {% for b in bds %}#}
-        {#        if ({{ b.id }} == '1') {#}
-        {#            eval('card1').children[8].addEventListener('click', () => {#}
-        {#                cid.value = eval(card1).children[0].value#}
-        {#                innertrait.value = eval(card1).children[1].value#}
-        {#                fighttrait.value = eval(card1).children[2].value#}
-        {#                skill.value = eval(card1).children[3].value#}
-        {#                if (eval(card1).children[8].value == '선택 해제') {#}
-        {#                    eval(card1).children[8].textContent = '선택하기';#}
-        {#                    eval(card1).children[8].value = '선택하기'#}
-        {#                } else {#}
-        {#                    eval(card1).children[8].textContent = '선택 해제';#}
-        {#                    eval(card1).children[8].value = '선택 해제';#}
-        {#                    document.posfrm.submit()#}
-        {#                }#}
-        {#            })#}
-        {#        }#}
-        {#        else if ({{b.id}}=='2') {#}
-        {#            eval('card2').children[8].addEventListener('click', () => {#}
-        {#                cid.value = eval(card2).children[0].value#}
-        {#                innertrait.value = eval(card2).children[1].value#}
-        {#                fighttrait.value = eval(card2).children[2].value#}
-        {#                skill.value = eval(card2).children[3].value#}
-        {#                if (eval(card2).children[8].value == '선택 해제') {#}
-        {#                    eval(card2).children[8].textContent = '선택하기';#}
-        {#                    eval(card2).children[8].value = '선택하기'#}
-        {#                } else {#}
-        {#                    eval(card2).children[8].textContent = '선택 해제';#}
-        {#                    eval(card2).children[8].value = '선택 해제';#}
-        {#                    document.posfrm.submit()#}
-        {#                }#}
-        {#            })#}
-        {#        }#}
-        {#        else if ({{b.id}}=='4') {#}
-        {#            eval('card4').children[8].addEventListener('click', () => {#}
-        {#                cid.value = eval(card4).children[0].value#}
-        {#                innertrait.value = eval(card4).children[1].value#}
-        {#                fighttrait.value = eval(card4).children[2].value#}
-        {#                skill.value = eval(card4).children[3].value#}
-        {#                if (eval(card4).children[8].value == '선택 해제') {#}
-        {#                    eval(card4).children[8].textContent = '선택하기';#}
-        {#                    eval(card4).children[8].value = '선택하기'#}
-        {#                } else {#}
-        {#                    eval(card4).children[8].textContent = '선택 해제';#}
-        {#                    eval(card4).children[8].value = '선택 해제';#}
-        {#                    document.posfrm.submit()#}
-        {#                }#}
-        {#            })#}
-        {#        }#}
-        {#        {% endfor %}#}
-
-        for (i = 6 * ({{ request.GET.cpage }}-1); i <= 6 * {{ request.GET.cpage }}; ++i) {
+        for (i = 0; i <= 25; ++i) {
             paybtn[i].addEventListener('click', () => {
-                alert('hello')
-            })
-        }
-
+                alert(cid1[0].value)
+                cid.value = cid1[0].value
+                innertrait.value = innertrait1[0].value
+                fighttrait.value = fighttrait1[0].value
+                skill.value = skill1[0].value
+                {#document.posfrm.submit()#}
+                }
+            )}
 
         payok.addEventListener('click', () => {
             bootstrap.Modal.getInstance('#payModal').hide();
