@@ -8,56 +8,156 @@
     <link rel="stylesheet" href="{% static '/css/bs5/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <style>
-        #wrapper { display:flex;}
-        #wrapper a {font-size: 20px; font-weight: bold; text-decoration: none;
-        color: white;  }
-        #wrapper a:hover{color:orangered}
-        header {background-image:url('/static/img/background.jpg'); height:140px; width: 100%  }
+        #wrapper {
+            display: flex;
+        }
+
+        #wrapper a {
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        #wrapper a:hover {
+            color: orangered
+        }
+
+        header {
+            background-image: url('/static/img/background.jpg');
+            height: 140px;
+            width: 100%
+        }
 
 
-        a:link {color: black; text-decoration:none}
-        a:visited{color: black; text-decoration:underline}
-        a:hover {color: orangered; text-decoration:none}
-        a:active {color: orangered; text-decoration:none }
+        a:link {
+            color: black;
+            text-decoration: none
+        }
+
+        a:visited {
+            color: black;
+            text-decoration: underline
+        }
+
+        a:hover {
+            color: orangered;
+            text-decoration: none
+        }
+
+        a:active {
+            color: orangered;
+            text-decoration: none
+        }
 
         header img:hover {
-        width: 89%;
-        height: 100%;
-        transform:scale(110%);
-        transition: transform.3s;
-         }
+            width: 89%;
+            height: 100%;
+            transform: scale(110%);
+            transition: transform .3s;
+        }
 
         #qm2 img:hover {
-        width: 102%;
-        height: 100%;
-        transform:scale(110%);
-        transition: transform.3s;
-         }
+            width: 102%;
+            height: 100%;
+            transform: scale(110%);
+            transition: transform .3s;
+        }
 
         #mmenu img:hover {
-        width: 89%;
-        height: 100%;
-        transform:scale(110%);
-        transition: transform.3s;
-         }
+            width: 89%;
+            height: 100%;
+            transform: scale(110%);
+            transition: transform .3s;
+        }
 
-        #logo {width: 515px; height:115px; float:left; margin-top:15px }
-        #gamestart {list-style:none; position:absolute; left:43%; margin-top: 10px; }
-        #gamestart img { width:250px; height: 120px;   }
-        #qm1 { position: absolute; display:flex; left: 84%; margin-top: 15px; height:47px;}
-        #qm2 { position: absolute; display:flex; left: 84%; margin-top: 15px; height:47px;}
-        #qm img { height:45px; position:absolute}
-        #qmenu1 img { margin-top:-1px;}
-        #qmenu2 { margin-left: 150px;}
-        #qmenu3 img { margin-top:-0.5px;}
-        #qmenu4 { margin-left: 24px;}
+        #logo {
+            width: 515px;
+            height: 115px;
+            float: left;
+            margin-top: 15px
+        }
 
-        nav{ width:100%; position:relative;  background: silver; padding: 5px 15px; height:120px;}
-        nav div  { position:relative; margin-left: 3.5%; display:flex; font-weight:bold;
-                list-style: none; margin-top: 8px; margin-bottom: 8px}
-        nav img { height: 75px; position:relative}
-        #mmenu2 { left : 23%;}
-        #mmenu3 { left : 43%; bottom:2px}
+        #gamestart {
+            list-style: none;
+            position: absolute;
+            left: 43%;
+            margin-top: 10px;
+        }
+
+        #gamestart img {
+            width: 250px;
+            height: 120px;
+        }
+
+        #qm1 {
+            position: absolute;
+            display: flex;
+            left: 84%;
+            margin-top: 15px;
+            height: 47px;
+        }
+
+        #qm2 {
+            position: absolute;
+            display: flex;
+            left: 84%;
+            margin-top: 15px;
+            height: 47px;
+        }
+
+        #qm img {
+            height: 45px;
+            position: absolute
+        }
+
+        #qmenu1 img {
+            margin-top: -1px;
+        }
+
+        #qmenu2 {
+            margin-left: 150px;
+        }
+
+        #qmenu3 img {
+            margin-top: -0.5px;
+        }
+
+        #qmenu4 {
+            margin-left: 24px;
+        }
+
+        nav {
+            width: 100%;
+            position: relative;
+            background: silver;
+            padding: 5px 15px;
+            height: 120px;
+        }
+
+        nav div {
+            position: relative;
+            margin-left: 3.5%;
+            display: flex;
+            font-weight: bold;
+            list-style: none;
+            margin-top: 8px;
+            margin-bottom: 8px
+        }
+
+        nav img {
+            height: 75px;
+            position: relative
+        }
+
+        #mmenu2 {
+            left: 23%;
+        }
+
+        #mmenu3 {
+            left: 43%;
+            bottom: 2px
+        }
 
         #chr {
             margin-left: 15px
@@ -67,18 +167,27 @@
             margin-top: 10px;
             margin-right: 10px
         }
+
+        #errorpos h1 {
+            font-weight: bold;
+            font-size: 50px;
+            {#border: 1px solid black;#}
+            text-align: center;
+            position: relative;
+            top:350px
+        }
     </style>
 {% endblock %}
 
 {% block content %}
 
     <div id="main">
-        <div class="text-end" id="charge">
-            <button type="button" class="btn btn-danger" id="rechargebtn" data-bs-toggle="modal"
-                    data-bs-target="#rechargeModal">충전하기
-            </button>
-        </div>
-
+        {#        <div class="text-end" id="charge">#}
+        {#            <button type="button" class="btn btn-danger" id="rechargebtn" data-bs-toggle="modal"#}
+        {#                    data-bs-target="#rechargeModal">충전하기#}
+        {#            </button>#}
+        {#        </div>#}
+        {% if request.session.userid %}
             <div class="d-flex row" id="chr">
                 {% for b in bds %}
                     <div class="card text-center d-flex" style="width: 18rem;">
@@ -91,30 +200,34 @@
                             <div class="card-text">전술 : {{ b.skill }}</div>
                             <button type="button" class="btn btn-danger w-100" id="paybtn{{ b.id }}"
                                     data-bs-toggle="modal"
-                                    data-bs-target="#payModal">
-                                <i class="bi bi-coin text-warning"></i><a>  {{ b.price }} </a></button>
+                                    data-bs-target="#payModal"> 선택하기
+                            </button>
                             <input type="text" id="idnum1" name="idnum1" value="{{ request.session.userid_id }}">
+{#                            <input type="text" id="idnum1" name="idnum1" value="{{ bds }}">#}
                         </div>
                     </div>
                 {% endfor %}
             </div>
-{#        </form>#}
-        <ul class="pagination justify-content-center">
-            {% if request.GET.cpage|add:0 > 1 %}
-                <li class="page-item"><a class="page-link"
-                                         href="?cpage={{ request.GET.cpage|add:-1 }}&{{ qry }}">이전</a>
-                </li>
-            {% endif %}
-            {% for i in range %}
-                <li class="page-item"><a class="page-link" href="?cpage={{ i }}">{{ i }}</a></li>
-            {% endfor %}
-            {% if request.GET.cpage|add:0 < pages %}
-                <li class="page-item"><a class="page-link" href="?cpage={{ request.GET.cpage|add:1 }}">다음</a></li>
-            {% endif %}
-        </ul>
+            {#        </form>#}
+            <ul class="pagination justify-content-center">
+                {% if request.GET.cpage|add:0 > 1 %}
+                    <li class="page-item"><a class="page-link"
+                                             href="?cpage={{ request.GET.cpage|add:-1 }}&{{ qry }}">이전</a>
+                    </li>
+                {% endif %}
+                {% for i in range %}
+                    <li class="page-item"><a class="page-link" href="?cpage={{ i }}">{{ i }}</a></li>
+                {% endfor %}
+                {% if request.GET.cpage|add:0 < pages %}
+                    <li class="page-item"><a class="page-link" href="?cpage={{ request.GET.cpage|add:1 }}">다음</a></li>
+                {% endif %}
+            </ul>
+        {% elif not requests.session.userid %}
+            <div id="errorpos"><h1>로그인을 하시면 보유한 캐릭터가 나옵니다.</h1></div>
+        {% endif %}
     </div>
     <div class="col-2"></div>
-    {% include 'modal.html' %}
+    {#    {% include 'modal.html' %}#}
 {% endblock %}
 
 
@@ -207,7 +320,8 @@
                 idnum.value = idnum1.value
                 payq.innerHTML = '구매 하시겠습니까?';
             });
-        };
+        }
+        ;
 
         payok.addEventListener('click', () => {
             bootstrap.Modal.getInstance('#payModal').hide();
