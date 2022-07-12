@@ -124,9 +124,7 @@
 
     <div id="main">
         <div class="text-end" id="charge">
-            <button type="button" class="btn btn-danger" id="rechargebtn" data-bs-toggle="modal"
-                    data-bs-target="#rechargeModal">충전하기
-            </button>
+            <button type="reset" class="btn btn-danger" name="rechargebtn" id="rechargebtn">충전하기</button>
         </div>
         {% if request.session.userid %}
             <div class="d-flex row" id="chr">
@@ -142,12 +140,11 @@
                             <div class="card-text">내정특기 : {{ b.innertrait }}</div>
                             <div class="card-text">전투특기 : {{ b.fighttrait }}</div>
                             <div class="card-text">전술 : {{ b.skill }}</div>
-                            <button type="button" class="btn btn-danger w-100" id="paybtn{{ b.id }}" value="선택하기">
-                                선택하기
-                            </button>
+                            <input type="radio" class="btn-check" name="paybtn" id="paybtn{{ b.id }}"
+                                   value="선택하기">
+                            <label class="btn btn-outline-danger w-100" for="paybtn{{ b.id }}">선택하기</label>
                             <input type="text" id="idnum1" name="idnum1" value="{{ request.session.userid_id }}">
                         </div>
-
                     </div>
                 {% endfor %}
                 <form id="posfrm" name="posfrm" method="post">
@@ -188,7 +185,6 @@
     <script>
         const payok = document.querySelector('#payok');
         const payq = document.querySelector('#payq');
-        const paybtn = document.querySelector('#paybtn')
         const rechargebtn = document.querySelector('#rechargebtn');
 
         const payokbtn = document.querySelector('#payokbtn');
@@ -217,10 +213,11 @@
         const fighttrait = document.querySelector('#fighttrait')
         const skill = document.querySelector('#skill')
         const cid = document.querySelector('#cid')
+        const paybtn = document.getElementsByName('paybtn');
 
-{#        {% for b in bds %}#}
-{#        alert('card{{ b.id }}')#}
-{#        {% endfor %}#}
+        {#        {% for b in bds %}#}
+        {#        alert('card{{ b.id }}')#}
+        {#        {% endfor %}#}
 
         {#idnum1.value=Number({{ request.session.userid_id }});#}
 
@@ -272,75 +269,68 @@
             }
         });
 
-        {#for (i = 1 + 6 * ({{ request.GET.cpage }}-1); i <= 6 * ({{ request.GET.cpage }}); ++i) {#}
-        {#    let aaa = `paybtn${i}`#}
-        {#    let bbb = `card${i}`#}
-        {#    if (eval(aaa)==paybtn{{ b.id }} && eval(bbb)==card{{ b.id }}) {#}
-        {#        eval(aaa).addEventListener('click', () => {#}
-        {#            cid.value = eval(bbb).children[0].value#}
-        {#            innertrait.value = eval(bbb).children[1].value#}
-        {#            fighttrait.value = eval(bbb).children[2].value#}
-        {#            skill.value = eval(bbb).children[3].value#}
-        {#            if (eval(bbb).children[8].value == '선택 해제') {#}
-        {#                eval(bbb).children[8].textContent = '선택하기';#}
-        {#                eval(bbb).children[8].value = '선택하기'#}
-        {#            } else {#}
-        {#                eval(bbb).children[8].textContent = '선택 해제';#}
-        {#                eval(bbb).children[8].value = '선택 해제';#}
-        {#document.posfrm.submit()#}
-        {#            }#}
-        {#        });#}
-        {#    }#}
-        {% for b in bds %}
-        if ({{ b.id }} == '1') {
-            eval('card1').children[8].addEventListener('click', () => {
-                cid.value = eval(card1).children[0].value
-                innertrait.value = eval(card1).children[1].value
-                fighttrait.value = eval(card1).children[2].value
-                skill.value = eval(card1).children[3].value
-                if (eval(card1).children[8].value == '선택 해제') {
-                    eval(card1).children[8].textContent = '선택하기';
-                    eval(card1).children[8].value = '선택하기'
-                } else {
-                    eval(card1).children[8].textContent = '선택 해제';
-                    eval(card1).children[8].value = '선택 해제';
-                    document.posfrm.submit()
-                }
-            })
+        function test() {
+            const obj = document.getElementsByName('paybtn');
+
+            for (let i = 0; i < obj.length; i++) {
+                obj[i].checked = false;
+            }
         }
-        else if ({{b.id}}=='2') {
-            eval('card2').children[8].addEventListener('click', () => {
-                cid.value = eval(card2).children[0].value
-                innertrait.value = eval(card2).children[1].value
-                fighttrait.value = eval(card2).children[2].value
-                skill.value = eval(card2).children[3].value
-                if (eval(card2).children[8].value == '선택 해제') {
-                    eval(card2).children[8].textContent = '선택하기';
-                    eval(card2).children[8].value = '선택하기'
-                } else {
-                    eval(card2).children[8].textContent = '선택 해제';
-                    eval(card2).children[8].value = '선택 해제';
-                    document.posfrm.submit()
-                }
-            })
-        }
-        else if ({{b.id}}=='4') {
-            eval('card4').children[8].addEventListener('click', () => {
-                cid.value = eval(card4).children[0].value
-                innertrait.value = eval(card4).children[1].value
-                fighttrait.value = eval(card4).children[2].value
-                skill.value = eval(card4).children[3].value
-                if (eval(card4).children[8].value == '선택 해제') {
-                    eval(card4).children[8].textContent = '선택하기';
-                    eval(card4).children[8].value = '선택하기'
-                } else {
-                    eval(card4).children[8].textContent = '선택 해제';
-                    eval(card4).children[8].value = '선택 해제';
-                    document.posfrm.submit()
-                }
-            })
-        }
-        {% endfor %}
+
+        rechargebtn.addEventListener('click', () => {
+            test();
+        });
+
+        {#        {% for b in bds %}#}
+        {#        if ({{ b.id }} == '1') {#}
+        {#            eval('card1').children[8].addEventListener('click', () => {#}
+        {#                cid.value = eval(card1).children[0].value#}
+        {#                innertrait.value = eval(card1).children[1].value#}
+        {#                fighttrait.value = eval(card1).children[2].value#}
+        {#                skill.value = eval(card1).children[3].value#}
+        {#                if (eval(card1).children[8].value == '선택 해제') {#}
+        {#                    eval(card1).children[8].textContent = '선택하기';#}
+        {#                    eval(card1).children[8].value = '선택하기'#}
+        {#                } else {#}
+        {#                    eval(card1).children[8].textContent = '선택 해제';#}
+        {#                    eval(card1).children[8].value = '선택 해제';#}
+        {#                    document.posfrm.submit()#}
+        {#                }#}
+        {#            })#}
+        {#        }#}
+        {#        else if ({{b.id}}=='2') {#}
+        {#            eval('card2').children[8].addEventListener('click', () => {#}
+        {#                cid.value = eval(card2).children[0].value#}
+        {#                innertrait.value = eval(card2).children[1].value#}
+        {#                fighttrait.value = eval(card2).children[2].value#}
+        {#                skill.value = eval(card2).children[3].value#}
+        {#                if (eval(card2).children[8].value == '선택 해제') {#}
+        {#                    eval(card2).children[8].textContent = '선택하기';#}
+        {#                    eval(card2).children[8].value = '선택하기'#}
+        {#                } else {#}
+        {#                    eval(card2).children[8].textContent = '선택 해제';#}
+        {#                    eval(card2).children[8].value = '선택 해제';#}
+        {#                    document.posfrm.submit()#}
+        {#                }#}
+        {#            })#}
+        {#        }#}
+        {#        else if ({{b.id}}=='4') {#}
+        {#            eval('card4').children[8].addEventListener('click', () => {#}
+        {#                cid.value = eval(card4).children[0].value#}
+        {#                innertrait.value = eval(card4).children[1].value#}
+        {#                fighttrait.value = eval(card4).children[2].value#}
+        {#                skill.value = eval(card4).children[3].value#}
+        {#                if (eval(card4).children[8].value == '선택 해제') {#}
+        {#                    eval(card4).children[8].textContent = '선택하기';#}
+        {#                    eval(card4).children[8].value = '선택하기'#}
+        {#                } else {#}
+        {#                    eval(card4).children[8].textContent = '선택 해제';#}
+        {#                    eval(card4).children[8].value = '선택 해제';#}
+        {#                    document.posfrm.submit()#}
+        {#                }#}
+        {#            })#}
+        {#        }#}
+        {#        {% endfor %}#}
 
 
         payok.addEventListener('click', () => {
