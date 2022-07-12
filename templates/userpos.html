@@ -124,7 +124,7 @@
 
     <div id="main">
         <div class="text-end" id="charge">
-            <button type="reset" class="btn btn-danger" name="rechargebtn" id="rechargebtn">충전하기</button>
+            <button type="button" class="btn btn-danger" name="rechargebtn" id="rechargebtn">충전하기</button>
         </div>
         {% if request.session.userid %}
             <div class="d-flex row" id="chr">
@@ -215,12 +215,6 @@
         const cid = document.querySelector('#cid')
         const paybtn = document.getElementsByName('paybtn');
 
-        {#        {% for b in bds %}#}
-        {#        alert('card{{ b.id }}')#}
-        {#        {% endfor %}#}
-
-        {#idnum1.value=Number({{ request.session.userid_id }});#}
-
         rd1.addEventListener('click', () => {
             recharge.innerHTML = rd1lb.outerHTML;
             payokbtn.disabled = false;
@@ -246,12 +240,12 @@
             payokbtn.disabled = false;
         });
 
-        rechargebtn.addEventListener('click', () => {
-            {% if not request.session.userid %}
-                alert('로그인 후 이용 바랍니다!');
-                location.href = '/login';
-            {% endif %}
-        });
+        {#rechargebtn.addEventListener('click', () => {#}
+        {#    {% if not request.session.userid %}#}
+        {#        alert('로그인 후 이용 바랍니다!');#}
+        {#        location.href = '/login';#}
+        {#    {% endif %}#}
+        {#});#}
 
         payokbtn.addEventListener('click', () => {
             const name = document.querySelector('#name')
@@ -331,6 +325,12 @@
         {#            })#}
         {#        }#}
         {#        {% endfor %}#}
+
+        for (i = 6 * ({{ request.GET.cpage }}-1); i <= 6 * {{ request.GET.cpage }}; ++i) {
+            paybtn[i].addEventListener('click', () => {
+                alert('hello')
+            })
+        }
 
 
         payok.addEventListener('click', () => {
