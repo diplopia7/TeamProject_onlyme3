@@ -210,10 +210,17 @@
         for (i = 1 + 6 * ({{ request.GET.cpage }}-1); i <= 6 * ({{ request.GET.cpage }}); ++i) {
             let aaa = `paybtn${i}`
             let bbb = `card${i}`
+            {% if request.session.userid %}
             if (user_have.includes(`${i}`)) {
-                eval(aaa).textContent = '보유';
+                eval(aaa).textContent = '보유 중';
                 eval(aaa).disabled = true;
             }
+            {% else %}
+            else {
+                eval(aaa).textContent = {{ b.price }}
+                eval(aaa).disabled=false;
+            }
+            {% endif %}
             eval(aaa).addEventListener('click', () => {
                 name = eval(bbb).firstElementChild.value;
                 {#cprice = eval(bbb).lastElementChild.value;#}
