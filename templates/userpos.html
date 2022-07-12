@@ -284,16 +284,16 @@
                 skill.value = ''
             });
 
-        for (i = 0; i <= 25; ++i) {
-            paybtn[i].addEventListener('click', () => {
-                alert(cid1[0].value)
+        {#for (i = 0; i <= 6; ++i) {#}
+            paybtn[0].addEventListener('click', () => {
+                alert(`paybtn[0]`)
                 cid.value = cid1[0].value
                 innertrait.value = innertrait1[0].value
                 fighttrait.value = fighttrait1[0].value
                 skill.value = skill1[0].value
                 {#document.posfrm.submit()#}
                 }
-            )}
+            )
 
         payok.addEventListener('click', () => {
             bootstrap.Modal.getInstance('#payModal').hide();
