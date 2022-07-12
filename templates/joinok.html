@@ -3,9 +3,16 @@
 
 {% block style %}
     <style>
-        #wrapper { display:flex;}
-        #wrapper a {font-size: 20px; font-weight: bold; text-decoration: none;
-        color: white;  }
+        #wrapper {
+            display:flex;
+        }
+
+        #wrapper a {
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
         #wrapper a:hover{color:orangered}
         header {background-image:url('/static/img/background.jpg'); height:140px; width: 100%  }
 
@@ -54,10 +61,43 @@
         #mmenu2 { left : 23%;}
         #mmenu3 { left : 43%; bottom:2px}
 
-        #joform { display: table; margin-left: auto; margin-right: auto; margin-top:10%; position:relative; }
-        #jobtn { margin-left:25px; margin-top:20px }
+        .body img{
+            position:absolute;
+            width:100%;
+            height: 855px;
+        }
 
-        .error{position:relative; left:150px; color:red; font-weight: bold}
+        .container {
+            position: relative;
+            display: table;
+            transform: translate(0,20%);
+            width: 20%;
+            margin: auto;
+            background-color: rgba(0.1, 0.1, 0.2, 0.2);
+            color: white;
+            padding: 30px;
+            box-shadow: 0 2px 8px 2px #555;
+        }
+
+        #jomsg {
+            width:750px;
+            background-color: lightblue;
+            background-color: rgba(0,0,0,0.5);
+            text-align: center;
+            font-weight: bold;
+        }
+
+        #jobtn {
+            margin-left:60px;
+            margin-top:20px
+        }
+
+        .error {
+            position:relative;
+            left:150px;
+            color:red;
+            font-weight: bold
+        }
     </style>
 {% endblock %}
 
@@ -65,25 +105,27 @@
 {% if request.session.userid %}
     <script>location.href='/';</script>
 {% endif %}
-
-<h2>회원가입</h2>
-<div id="joform">
-<form name="joinok" method="post" id="joinok">
-    <div id='jomsg' style="width:700px; background-color: lightblue; text-align: center">
-        <br>
-        <h2>{{ form.name }} 님</h2>
-       <h2>회원가입을 환영합니다!</h2>
-        <h3>게임 플레이 및 다양한 서비스를 이용하실 수 있습니다.</h3>
-        <h3>지금바로 전장으로 가보시죠!</h3>
-        <br>
+<div class="body">
+<img src="/static/img/joinok.jpg" alt="joinokbg">
+</div>
+    <div id="joform" class="container">
+        <form name="joinok" method="post" id="joinok">
+            <div id='jomsg'>
+                <br>
+                <h2>{{ form.name }} 님</h2>
+                <h2>회원가입을 환영합니다!</h2>
+                <h3>게임 플레이 및 다양한 서비스를 이용하실 수 있습니다.</h3>
+                <h3>지금바로 전장으로 가보시죠!</h3>
+                <br>
+            </div>
+            <div id="jobtn">
+                <p class="button" style="margin-left: 200px">
+                    <a href="/login"><img src="/static/img/login.gif" alt="로그인" /></a>
+                    <a href="/"><img src="/static/img/movemain.gif" alt="메인으로 이동" /></a>
+                </p>
+            </div>
+        </form>
     </div>
-    <div id="jobtn">
-        <p class="button" style="margin-left: 200px">
-            <a href="/login"><img src="/static/img/login.gif" alt="로그인" /></a>
-            <a href="/"><img src="/static/img/movemain.gif" alt="메인으로 이동" /></a>
-        </p>
-    </div>
-</form>
 </div>
 {% endblock %}
 
