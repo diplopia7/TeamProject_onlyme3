@@ -1,109 +1,16 @@
-{% extends 'project.html' %}
+{% extends 'layout/base.html' %}
 
 {% block title %}스토리 선택형 삼국지 TCG{% endblock %}
 {% load static %}
 {% block style %}
     <style>
-        header {
-            background-image:url('/static/img/background.jpg');
-            height:140px;
-            width: 100%
-        }
-
-        .hover figure img {
-            -webkit-transition: .3s ease-in-out;
-            transition: .3s ease-in-out
-        }
-
-        .hover figure:hover img {
-            opacity: .6
-        }
-
-        #logo {
-            width: 515px;
-            height:115px;
-            float:left;
-            margin-top:15px
-        }
-
-        .gamestart {
-            list-style:none;
-            position:absolute;
-            left:44%;
-            margin-top: 10px
-        }
-
-        .gamestart img {
-            width:250px;
-            height: 120px;
-            border-radius: 50px
-        }
-
-        #qm1, #qm2 {
-            position: absolute;
-            display:flex;
-            left: 84%;
-            margin-top: 15px;
-            height:47px
-        }
-
-        #qm img {
-            height:45px;
-            position:absolute
-        }
-
-        #qmenu1 img {
-            margin-top:-1px
-        }
-
-        #qmenu2 {
-            margin-left: 150px
-        }
-
-        #qmenu3 img {
-            margin-top:-0.5px
-        }
-
-        #qmenu4 {
-            margin-left: 24px
-        }
-
-        nav {
-            width:100%;
-            position:relative;
-            background-image: url('/static/img/navbg.png');
-            height:120px
-        }
-
-        nav div {
-            position:relative;
-            margin-left: 3.5%;
-            display:flex;
-            margin-top: 8px;
-            margin-bottom: 8px
-        }
-
-        nav img {
-            height: 75px;
-            position:relative
-        }
-
-        #mmenu2 {
-            left : 23%
-        }
-
-        #mmenu3 {
-            left : 43%;
-            bottom:2px
-        }
-
         a {
             text-decoration: none;
-            color: brown
+            color: brown;
         }
 
         a:hover {
-            color: red
+            color: red;
         }
 
         #gamename {
@@ -114,7 +21,7 @@
             z-index: 1;
             text-align: center;
             top: 80px;
-            left: 65px
+            left: 65px;
         }
 
         #gameplay {
@@ -123,7 +30,7 @@
             z-index: 1;
             text-align: center;
             bottom: 150px;
-            left: 450px
+            left: 450px;
         }
 
         #gamedescription {
@@ -133,7 +40,7 @@
             z-index: 1;
             text-align: center;
             top: 350px;
-            left: 580px
+            left: 580px;
         }
 
         #quit {
@@ -143,138 +50,137 @@
             z-index: 1;
             text-align: center;
             top: 450px;
-            left: 630px
+            left: 630px;
         }
 
         .cardfield {
             border: 3px solid rgb(68, 67, 67);
             width: 80px;
-            height: 116px
+            height: 116px;
         }
 
         .cardfield img {
         {#position: relative;#}
         }
 
-        .stat {
+        .cardfield p {
             position: absolute;
             background-color: rgba(255, 255, 255, 50%);
             top: -50px;
             width: 80px;
             text-align: center;
-            text-decoration: bold
         }
 
         #field1 {
             position: absolute;
             z-index: 1;
             left: 300px;
-            top: 200px
+            top: 200px;
         }
 
         #field2 {
             position: absolute;
             z-index: 1;
             left: 500px;
-            top: 200px
+            top: 200px;
         }
 
         #field3 {
             position: absolute;
             z-index: 1;
             left: 700px;
-            top: 200px
+            top: 200px;
         }
 
         #field4 {
             position: absolute;
             z-index: 1;
             left: 900px;
-            top: 200px
+            top: 200px;
         }
 
         #field5 {
             position: absolute;
             z-index: 1;
             left: 400px;
-            top: 50px
+            top: 50px;
         }
 
         #field6 {
             position: absolute;
             z-index: 1;
             left: 600px;
-            top: 50px
+            top: 50px;
         }
 
         #field7 {
             position: absolute;
             z-index: 1;
             left: 800px;
-            top: 50px
+            top: 50px;
         }
 
         #field8 {
             position: absolute;
             z-index: 1;
             left: 300px;
-            top: 380px
+            top: 380px;
         }
 
         #field9 {
             position: absolute;
             z-index: 1;
             left: 500px;
-            top: 380px
+            top: 380px;
         }
 
         #field10 {
             position: absolute;
             z-index: 1;
             left: 700px;
-            top: 380px
+            top: 380px;
         }
 
         #field11 {
             position: absolute;
             z-index: 1;
             left: 900px;
-            top: 380px
+            top: 380px;
         }
 
         #field12 {
             position: absolute;
             z-index: 1;
             left: 400px;
-            top: 530px
+            top: 530px;
         }
 
         #field13 {
             position: absolute;
             z-index: 1;
             left: 600px;
-            top: 530px
+            top: 530px;
         }
 
         #field14 {
             position: absolute;
             z-index: 1;
             left: 800px;
-            top: 530px
+            top: 530px;
         }
 
         #field15 {
             position: absolute;
             z-index: 1;
             left: 150px;
-            top: 200px
+            top: 200px;
         }
 
         #field16 {
             position: absolute;
             z-index: 1;
             left: 1060px;
-            top: 380px
+            top: 380px;
         }
 
         #playerstatus {
@@ -286,7 +192,7 @@
             bottom: 5px;
             font-size: 30px;
             background-color: rgb(86, 94, 19);
-            color: white
+            color: white;
         }
 
         #enemystatus {
@@ -295,8 +201,8 @@
             height: 200px;
             position: absolute;
             z-index: 1;
-            right: 0;
-            top: 0;
+            right: 0px;
+            top: 0px;
             font-size: 30px;
             background-color: rgb(86, 94, 19);
             color: white
@@ -307,14 +213,14 @@
             position: absolute;
             z-index: 1;
             right: 50px;
-            bottom: 250px
+            bottom: 250px;
         }
 
         .button {
             font-size: 20px;
             padding: 5px;
             margin: 5px;
-            width: 100px
+            width: 100px;
         }
 
         #playercard {
@@ -322,14 +228,14 @@
             z-index: 1;
             /* border: 1px solid black; */
             bottom: 15px;
-            left: 500px
+            left: 500px;
         }
 
         #enemycard {
             position: absolute;
             z-index: 1;
             top: 15px;
-            left: 5px
+            left: 5px;
         }
 
         #cardbtn, #cardbtn2, #normallocation, #magiclocation {
@@ -339,32 +245,46 @@
             left: 500px;
             top: 350px;
             background-color: darkgrey;
-            display: none
+            display: none;
         }
+
+        .attack_enemy {
+            border: 3px solid red;
+        }
+
+        .attack_mode {
+            border: 3px solid blue;
+        }
+
+        .cardfield img {
+            z-index: 99;
+        }
+
+
     </style>
 {% endblock %}
 {% block content %}
     <div id="main_menu" style="position:absolute; z-index:0">
         <img src="{% static 'resources/img/background/background3.jpg' %}" width="1500" height="840" alt>
         <div id="cardfield1">
-            <div id="field1" class="cardfield"><p class="stat"></p></div>
-            <div id="field2" class="cardfield"><p class="stat"></p></div>
-            <div id="field3" class="cardfield"><p class="stat"></p></div>
-            <div id="field4" class="cardfield"><p class="stat"></p></div>
-            <div id="field5" class="cardfield"><p class="stat"></p></div>
-            <div id="field6" class="cardfield"><p class="stat"></p></div>
-            <div id="field7" class="cardfield"><p class="stat"></p></div>
-            <div id="field15" class="cardfield"></div>
+            <div id="field1" class="cardfield"></div>
+            <div id="field2" class="cardfield"></div>
+            <div id="field3" class="cardfield"></div>
+            <div id="field4" class="cardfield"></div>
+            <div id="field5" class="cardfield"></div>
+            <div id="field6" class="cardfield"></div>
+            <div id="field7" class="cardfield"></div>
+{#            <div id="field15" class="cardfield"></div>#}
         </div>
         <div id="cardfield2">
-            <div id="field8" class="cardfield"><p class="stat"></p></div>
-            <div id="field9" class="cardfield"><p class="stat"></p></div>
-            <div id="field10" class="cardfield"><p class="stat"></p></div>
-            <div id="field11" class="cardfield"><p class="stat"></p></div>
-            <div id="field12" class="cardfield"><p class="stat"></p></div>
-            <div id="field13" class="cardfield"><p class="stat"></p></div>
-            <div id="field14" class="cardfield"><p class="stat"></p></div>
-            <div id="field16" class="cardfield"></div>
+            <div id="field8" class="cardfield"></div>
+            <div id="field9" class="cardfield"></div>
+            <div id="field10" class="cardfield"></div>
+            <div id="field11" class="cardfield"></div>
+            <div id="field12" class="cardfield"></div>
+            <div id="field13" class="cardfield"></div>
+            <div id="field14" class="cardfield"></div>
+{#            <div id="field16" class="cardfield"></div>#}
         </div>
         <div id="playerstatus">
             <div style="margin-top:10px; margin-left:10px">플레이어</div>
@@ -383,12 +303,12 @@
             <br>
             <button id="draw" type="button" class="button">드로우</button>
             <br>
-            <button id="grave" type="button" class="button">무덤효과</button>
-            <br>
+            {#            <button id="grave" type="button" class="button">무덤효과</button>#}
+            {#            <br>#}
             <button id="fight" type="button" class="button">전투</button>
             <br>
-            <button id="skill" type="button" class="button">전술스킬</button>
-            <br>
+            {#            <button id="skill" type="button" class="button">전술스킬</button>#}
+            {#            <br>#}
         </div>
         <div id="playercard"></div>
         <div id="enemycard"></div>
@@ -417,95 +337,123 @@
 {% block jscript %}
 
     <script>
-        let hp1 = 100
-        let hp2 = 100
-        playerhp.textContent = hp1
-        enemyhp.textContent = hp2
+        let hp1 = 100;
+        let hp2 = 100;
+        playerhp.textContent = hp1;
+        enemyhp.textContent = hp2;
+        let loc_attack_card;
+        let loc_attacked_card;
+
+        let turn = 'player';
 
         let endturn = document.getElementById('endturn');
         let skill = document.getElementById('skill');
         let fight = document.getElementById('fight');
 
         endturn.disabled = true;
-        skill.disabled = true;
+        {#skill.disabled = true;#}
+        console.log('at start disable fight button');
         fight.disabled = true;
+
+        let double_attack_player = 0;
+        let half_attack_player = 0;
+        let double_attack_enemy = 0;
+        let half_attack_enemy = 0;
+
+        let grave = [];
+
+
+        let buff_main = {
+            'field1': 0,
+            'field2': 0,
+            'field3': 0,
+            'field4': 0,
+            'field8': 0,
+            'field9': 0,
+            'field10': 0,
+            'field11': 0
+        };
+
+        // 메인 필드
+        let main_field = {};
 
         let card_list = [
             '{% static "/resources/img/card/resize/back.png" %}',
             '{% static "/resources/img/card/resize/ace_of_clubs.png" %}',
             '{% static "/resources/img/card/resize/ace_of_diamonds.png" %}',
-            '{% static "/resources/img/card/resize/ace_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/ace_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/ace_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/2_of_clubs.png" %}',
             '{% static "/resources/img/card/resize/2_of_diamonds.png" %}',
-            '{% static "/resources/img/card/resize/2_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/2_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/2_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/3_of_clubs.png" %}',
             '{% static "/resources/img/card/resize/3_of_diamonds.png" %}',
-            '{% static "/resources/img/card/resize/3_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/3_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/3_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/4_of_clubs.png" %}',
             '{% static "/resources/img/card/resize/4_of_diamonds.png" %}',
-            '{% static "/resources/img/card/resize/4_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/4_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/4_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/5_of_clubs.png" %}',
             '{% static "/resources/img/card/resize/5_of_diamonds.png" %}',
-            '{% static "/resources/img/card/resize/5_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/5_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/5_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/6_of_clubs.png" %}',
             '{% static "/resources/img/card/resize/6_of_diamonds.png" %}',
-            '{% static "/resources/img/card/resize/6_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/6_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/6_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/7_of_clubs.png" %}',
             '{% static "/resources/img/card/resize/7_of_diamonds.png" %}',
-            '{% static "/resources/img/card/resize/7_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/7_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/7_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/8_of_clubs.png" %}',
             '{% static "/resources/img/card/resize/8_of_diamonds.png" %}',
-            '{% static "/resources/img/card/resize/8_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/8_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/8_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/9_of_clubs.png" %}',
             '{% static "/resources/img/card/resize/9_of_diamonds.png" %}',
-            '{% static "/resources/img/card/resize/9_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/9_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/9_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/10_of_clubs.png" %}',
             '{% static "/resources/img/card/resize/10_of_diamonds.png" %}',
-            '{% static "/resources/img/card/resize/10_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/10_of_spades.png" %}',
+            '{% static "/resources/img/card/resize/10_of_hearts.png" %}',
             '{% static "/resources/img/card/resize/jack_of_clubs2.png" %}',
             '{% static "/resources/img/card/resize/jack_of_diamonds2.png" %}',
-            '{% static "/resources/img/card/resize/jack_of_hearts2.png" %}',
             '{% static "/resources/img/card/resize/jack_of_spades2.png" %}',
+            '{% static "/resources/img/card/resize/jack_of_hearts2.png" %}',
             '{% static "/resources/img/card/resize/queen_of_clubs2.png" %}',
             '{% static "/resources/img/card/resize/queen_of_diamonds2.png" %}',
-            '{% static "/resources/img/card/resize/queen_of_hearts2.png" %}',
             '{% static "/resources/img/card/resize/queen_of_spades2.png" %}',
+            '{% static "/resources/img/card/resize/queen_of_hearts2.png" %}',
             '{% static "/resources/img/card/resize/king_of_clubs2.png" %}',
             '{% static "/resources/img/card/resize/king_of_diamonds2.png" %}',
-            '{% static "/resources/img/card/resize/king_of_hearts2.png" %}',
             '{% static "/resources/img/card/resize/king_of_spades2.png" %}',
+            '{% static "/resources/img/card/resize/king_of_hearts2.png" %}',
             '{% static "/resources/img/card/resize/black_joker.png" %}',
-            '{% static "/resources/img/card/resize/red_joker.png" %}']
+            '{% static "/resources/img/card/resize/red_joker.png" %}'];
 
-
-        let Acardback = '{% static "/resources/img/card/resize/back.png" %}'
-
-
+        // 섞섞
         function shuffle(array) {
-            array.sort(() => Math.random() - 0.5)
+            array.sort(() => Math.random() - 0.5);
         }
 
-        // 배열에 요소가 둘 이상 있으면 마지막 값을 제거하는 함수
+        // 배열 청소
         let clear_field = (array) => {
             while (array.hasChildNodes()) {
-                if (array.children.length === 1) break;
                 array.removeChild(array.lastElementChild);
             }
         }
 
         // 턴종료 누르면 상대턴 시작
         endturn?.addEventListener('click', () => {
+            turn = 'enemy';
             enemy_turn();
+            endturn.disabled = true;
+            draw.disabled = false;
+            fight.innerText = '전투';
+            playercard.style.pointerEvents = 'auto';
         });
 
         let fight_available = false;
@@ -513,25 +461,22 @@
         fight?.addEventListener('click', () => {
             if (!fight_mode) {
                 fight_mode = true;
-                fight.innerText = '취소'
+                fight.innerText = '취소';
                 draw.disabled = true;
                 playercard.style.pointerEvents = 'none';
                 card_location();
             } else {
                 fight_mode = false;
-                fight.innerText = '전투'
+                fight.innerText = '전투';
                 draw.disabled = false;
                 playercard.style.pointerEvents = 'auto';
             }
         });
 
-        // 기본 스탯 판단 함수 (마법카드와 조커는 공백)
+        // 기본 스탯 판단 함수
         const card_stat_basic = (cardid) => {
             let stat = Math.floor((cardid - 1) / 4) + 1;
             switch (stat) {
-                case 1:
-                    stat = 'Ace';
-                    break;
                 case 11:
                     stat = 'jack';
                     break;
@@ -542,12 +487,12 @@
                     stat = 'king';
                     break;
                 case 14:
-                    stat = 'joker';
+                    stat = 10000;
                     break;
                 default:
                     break;
             }
-            {#if (cardid === 4) stat = 11;#}
+            if (cardid === 3) stat = 11;
             return stat;
         };
         // 기본 모양 판단 함수
@@ -555,7 +500,7 @@
             let shape;
             switch (cardid % 4) {
                 case 0:
-                    shape = 'spade';
+                    shape = 'heart';
                     break;
                 case 1:
                     shape = 'club';
@@ -564,7 +509,7 @@
                     shape = 'diamond';
                     break;
                 case 3:
-                    shape = 'heart';
+                    shape = 'spade';
                     break;
             }
             if (cardid === 53) shape = 'black';
@@ -606,26 +551,19 @@
             draw_card(enemy_deck, main_deck)
         }
 
-        // 메인 필드
-        let main_field = {}
-
 
         playercard = document.getElementById('playercard');
         enemycard = document.getElementById('enemycard');
 
 
-        let magic_card = 0
-        let cardid = 0
-        let isattack = 1000
-        let isfront = 100
+        let magic_card = 0;
+        let cardid = 0;
+        let isattack = 1000;
+        let isfront = 100;
 
-        let enemy_turn = () => {
+        const enemy_turn = () => {
             console.log('enemy_turn start');
             console.log(enemy_hand);
-            endturn.disabled = true;
-            draw.disabled = false;
-            if (fight_available) fight.disabled = false;
-            playercard.style.pointerEvents = 'auto';
             if (!enemy_hand[0]) {
                 // 손이 텅 비었으면 무조건 드로우
                 console.log('enemy_hand is empty');
@@ -674,35 +612,44 @@
                         break;
                 }
             }
-
-        }
+            card_location();
+            turn = 'player';
+        };
 
         // 동전 던지기
-        let rnd = () => {
+        const rnd = () => {
             return Math.floor(Math.random() * 2) === 1;
         };
 
         // 상대편 드로우
-        let enemy_draw = () => {
+        const enemy_draw = () => {
             console.log("enemy_draw");
             draw_card(enemy_hand, enemy_deck);
             let a = document.createElement('img');
             a.src = card_list[0];
             enemycard.appendChild(a);
+            if (player_deck === []) win_game('enemy');
+            else if (enemy_deck === []) win_game('player');
         };
         // 노말카드 배치용
-        let enemy_choose_card_normal = (cardid) => {
+        const enemy_choose_card_normal = (cardid) => {
             console.log("enemy_choose_card_normal");
             let field = enemy_choose_field(cardid);
             let isattack = 1000;
             let isfront = 100;
             if (rnd()) isattack = 0;
             if (rnd()) isfront = 0;
-            let card_info = +isattack + isfront + cardid;
+            // 필드에 공격카드 없으면 무조건 공격배치
+            if (!is_attack_card(main_field['field1']) &&
+                !is_attack_card(main_field['field2']) &&
+                !is_attack_card(main_field['field3']) &&
+                !is_attack_card(main_field['field4'])) isattack = 1000;
+            let card_info = set_stat(cardid) + isattack + isfront + cardid;
             enemycard.removeChild(enemycard.lastElementChild);
             enemy_set_card(card_info, field);
         }
-        let enemy_choose_card_magic = (cardid) => {
+        // 마법카드 배치용
+        const enemy_choose_card_magic = (cardid) => {
             console.log("enemy_choose_card_magic");
             let field = enemy_choose_field(cardid);
             let magic_card = 10000;
@@ -710,11 +657,11 @@
             let isfront = 100;
             let card_info = magic_card + isattack + isfront + cardid;
             enemycard.removeChild(enemycard.lastElementChild);
-            enemy_set_card(card_info, field);
+            if (active_magic_card(cardid, 'enemy')) enemy_set_card(card_info, field);
         }
 
         // 카드 놓을 장소 고르기 (무작위)
-        let enemy_choose_field = (cardid) => {
+        const enemy_choose_field = (cardid) => {
             console.log(`enemy_choose_field`);
             let field = [];
             if (!ismagic(cardid)) {
@@ -731,7 +678,7 @@
             else return field[Math.floor(Math.random() * field.length)];
         };
         // 카드정보와 필드정보를 받아 메인필드에 삽입
-        let enemy_set_card = (card, field) => {
+        const enemy_set_card = (card, field) => {
             console.log(`enemy_set_card, card: ${card}, field: ${field}`);
             switch (field) {
                 case 1:
@@ -760,22 +707,57 @@
             card_location();
         };
 
+        // 적 공격 함수
+        const enemy_attack_card = () => {
+            console.log(`enemey try attack`);
+            let attack_available_enemey = []
+            for (let i = 1; i <= 4; ++i) {
+                if (main_field[`field${i}`] % 10000 >= 1000) {
+                    attack_available_enemey.push(i);
+                }
+            }
+            console.log(attack_available_enemey);
+            if (attack_available_enemey === []) {
+                // 공격 가능한 카드가 없으면 그냥 드로우
+                console.log(`attack not available`);
+                enemy_draw();
+            } else {
+                console.log(`attack field1: field${attack_available_enemey[0]}`);
+                console.log(`attack field2: field${attack_available_enemey[1]}`);
+                console.log(`attack field3: field${attack_available_enemey[2]}`);
+                console.log(`attack field4: field${attack_available_enemey[3]}`);
+                let rnd_attacker = Math.floor(Math.random() * attack_available_enemey.length)
+                let field_id = attack_available_enemey[rnd_attacker];
+                let attack_card = main_field[`field${field_id}`];
+                alert(`field${field_id}의 ${attack_card}에게 공격받고 있다!`);
+                if (attack_card % 1000 < 100) {
+                    main_field[`field${field_id}`] += 100;
+                }
+                loc_attack_card = `field${field_id}`;
+                loc_attacked_card = `field${field_id + 7}`;
+                if (main_field[loc_attacked_card]) card_attack('enemy');
+                else if (stat_now(loc_attack_card) === 'joker') {
+                    console.log(`joker can't attack directly`);
+                    enemy_draw();
+                } else {
+                    let damage = Number(stat_now(loc_attack_card))
+                    attack_directly('enemy', damage);
+                }
+            }
 
-        let enemy_attack_card = () => {
-            alert('공격받고 있다!');
         };
 
 
         // 카드 배치 함수
         // (배치구역, 카드번호)
-        let set_card = (place, cardid3) => {
+        const set_card = (place, cardid3) => {
             console.log(`set_card: ${cardid3}`);
 
             let a = document.createElement('img');
             a.src = card_list[cardid3];
             eval(place).appendChild(a);
         };
-        let set_card_rotate = (place, cardid3) => {
+        const set_card_rotate = (place, cardid3) => {
             console.log(`set_card_rotate: ${cardid3}`);
 
             let a = document.createElement('img');
@@ -787,7 +769,7 @@
 
         // 손에 카드 넣기
         // checkhand(손, 장소)
-        let checkhand = (hand, place) => {
+        const checkhand = (hand, place) => {
             while (place.hasChildNodes()) {
                 place.removeChild(place.firstChild);
             }
@@ -811,7 +793,7 @@
 
 
         //첫 턴 자동 함수
-        let first_turn = () => {
+        const first_turn = () => {
             // 처음 4장씩 드로우
             for (let i = 0; i < 4; ++i) {
                 draw_card(player_hand, player_deck);
@@ -824,7 +806,7 @@
 
 
         // 마법카드 판단 함수
-        let ismagic = (cardid3) => {
+        const ismagic = (cardid3) => {
             return cardid3 >= 41 && cardid3 <= 52;
         };
 
@@ -847,38 +829,44 @@
         // 상대 턴 진행
         const loc1f = () => {
             normallocation.style.display = 'none';
-            main_field['field8'] = magic_card + isattack + isfront + cardid;
+            main_field['field8'] = set_stat(cardid) + isattack + isfront + cardid;
             turn_finish();
         };
         const loc2f = () => {
             normallocation.style.display = 'none';
-            main_field['field9'] = magic_card + isattack + isfront + cardid;
+            main_field['field9'] = set_stat(cardid) + isattack + isfront + cardid;
             turn_finish();
         };
         const loc3f = () => {
             normallocation.style.display = 'none';
-            main_field['field10'] = magic_card + isattack + isfront + cardid;
+            main_field['field10'] = set_stat(cardid) + isattack + isfront + cardid;
             turn_finish();
         };
         const loc4f = () => {
             normallocation.style.display = 'none';
-            main_field['field11'] = magic_card + isattack + isfront + cardid;
+            main_field['field11'] = set_stat(cardid) + isattack + isfront + cardid;
             turn_finish();
         };
         const loc5f = () => {
             magiclocation.style.display = 'none';
-            main_field['field12'] = magic_card + isattack + isfront + cardid;
+            if (active_magic_card(cardid, 'player')) main_field['field12'] = magic_card + isattack + isfront + cardid;
             turn_finish();
         };
         const loc6f = () => {
             magiclocation.style.display = 'none';
-            main_field['field13'] = magic_card + isattack + isfront + cardid;
+            if (active_magic_card(cardid, 'player')) main_field['field13'] = magic_card + isattack + isfront + cardid;
             turn_finish();
         };
         const loc7f = () => {
             magiclocation.style.display = 'none';
-            main_field['field14'] = magic_card + isattack + isfront + cardid;
+            if (active_magic_card(cardid, 'player')) main_field['field14'] = magic_card + isattack + isfront + cardid;
             turn_finish();
+        };
+
+        const set_stat = (cardid) => {
+            let card_stat = 0;
+            if (!ismagic(cardid)) card_stat = card_stat_basic(cardid) * 100000;
+            return card_stat;
         };
 
 
@@ -887,9 +875,9 @@
         draw.addEventListener("click", () => {
             draw_card(player_hand, player_deck);
             checkhand(player_hand, playercard);
-            endturn.disabled = false;
-            draw.disabled = true;
-            playercard.style.pointerEvents = 'none';
+            if (player_deck === []) win_game('enemy');
+            else if (enemy_deck === []) win_game('player');
+            turn_finish();
         });
 
         // 앞뒤판단 - 공격방향
@@ -904,7 +892,7 @@
         };
         // 앞뒤판단 - 수비방향
         const defencef = () => {
-            isattack = 0
+            isattack = 0;
             attackbtn.removeChild(attackbtn.lastElementChild);
             defencebtn.removeChild(defencebtn.lastElementChild);
             cardbtn.style.display = 'none';
@@ -922,7 +910,7 @@
         };
         // 뒷방향 배치지정
         const backf = () => {
-            isfront = 0
+            isfront = 0;
             frontbtn.removeChild(frontbtn.lastElementChild);
             backbtn.removeChild(backbtn.lastElementChild);
             cardbtn2.style.display = 'none';
@@ -931,9 +919,9 @@
         // 손 안의 카드의 위치와 카드의 변수값을 받아 실행되는 함수
         let active01 = (handid, cardid3) => {
             cardid = cardid3;
-            magic_card = 0
-            isattack = 1000
-            isfront = 100
+            magic_card = 0;
+            isattack = 1000;
+            isfront = 100;
             console.log(`receive active01: ${handid}, ${cardid}`);
             // 마법카드 여부 확인
             if (ismagic(cardid)) magic_card = 10000;
@@ -963,23 +951,31 @@
             loc5.addEventListener('click', loc5f);
             loc6.addEventListener('click', loc6f);
             loc7.addEventListener('click', loc7f);
-            if (main_field['field8']) loc1.disabled = true;
-            if (main_field['field9']) loc2.disabled = true;
-            if (main_field['field10']) loc3.disabled = true;
-            if (main_field['field11']) loc4.disabled = true;
-            if (main_field['field12']) loc5.disabled = true;
-            if (main_field['field13']) loc6.disabled = true;
-            if (main_field['field14']) loc7.disabled = true;
+            loc1.disabled = !!main_field['field8'];
+            loc2.disabled = !!main_field['field9'];
+            loc3.disabled = !!main_field['field10'];
+            loc4.disabled = !!main_field['field11'];
+            loc5.disabled = !!main_field['field12'];
+            loc6.disabled = !!main_field['field13'];
+            loc7.disabled = !!main_field['field14'];
         };
         // 최종 배치 함수
         // loc1 = 11150 === 1번 자리에 있는 마법카드, 공격배치, 앞면인 50번 카드
         // EventListener, 필드 전역 일괄 청소 후 카드 배치 실행
         // main_field에서 모든 필드의 카드 정보를 받아 배치
         // 가장 일 많이 하는 녀석
-        let card_location_loc = '';
         let card_location = () => {
+            console.log(`========${turn}'s turn========`);
+            console.log(`double_attack_player:${double_attack_player}`);
+            console.log(`double_attack_enemy:${double_attack_enemy}`);
+            console.log(`half_attack_player:${half_attack_player}`);
+            console.log(`half_attack_enemy:${half_attack_enemy}`);
             console.log('card_location');
             console.log(main_field);
+
+            check_buff_number();
+            console.log(buff_main);
+
             defencebtn.removeEventListener("click", attackf);
             defencebtn.removeEventListener("click", defencef);
             frontbtn.removeEventListener('click', frontf);
@@ -1009,29 +1005,53 @@
                 let card = main_field[loc];
                 let card_info = card % 10000;
                 let cardid = card_info % 100;
-                let cardstat = `${card_stat_basic(cardid)} ${card_shape_basic(cardid)}`
+                let cardstat = card_stat_basic(cardid);
                 switch ((card_info - cardid) / 100) {
                     case 0:
-                        set_card_rotate(loc, 0)
-                        if (isplayer_normal(loc)) eval(loc).firstElementChild.innerText = cardstat;
+                        set_card_rotate(loc, 0);
+                        display_stat(loc, cardstat);
+                        if (isenemy_normal(loc)) {
+                            eval(loc).lastElementChild.style.display = 'none'
+                        }
                         break;
                     case 1:
                         set_card_rotate(loc, cardid)
-                        eval(loc).firstElementChild.innerText = cardstat;
+                        display_stat(loc, cardstat);
                         break;
                     case 10:
-                        set_card(loc, 0)
-                        if (isplayer_normal(loc)) {
+                        set_card(loc, 0);
+                        display_stat(loc, cardstat);
+                        if (isenemy_normal(loc)) {
+                            eval(loc).lastElementChild.style.display = 'none'
+                        } else if (isplayer_normal(loc)) {
                             fight_available = true;
-                            eval(loc).firstElementChild.innerText = cardstat;
-                            card_location_loc = loc;
-                            if (fight_mode) eval(loc).lastElementChild.addEventListener('click', to_front);
+                            temp = () => {
+                                to_front(loc);
+                            }
+                            if (fight_mode) eval(loc).firstElementChild.addEventListener('click', temp);
                         }
                         break;
                     case 11:
-                        set_card(loc, cardid)
-                        eval(loc).firstElementChild.innerText = cardstat;
-                        if (isplayer_normal(loc)) fight_available = true;
+                        set_card(loc, cardid);
+                        display_stat(loc, cardstat);
+                        if (isplayer_normal(loc)) {
+                            fight_available = true;
+                            let loc_enemy = loc.slice(0, 5) + String(Number(loc.slice(5)) - 7);
+                            temp = () => {
+                                to_fight(loc, loc_enemy);
+                            }
+                            temp_over = () => {
+                                to_fight_mouseover(loc, loc_enemy);
+                            }
+                            temp_out = () => {
+                                to_fight_mouseout(loc, loc_enemy);
+                            }
+                            if (fight_mode && !(eval(loc).lastElementChild.innerText === 'joker' && !(main_field[loc_enemy]))) {
+                                eval(loc).firstElementChild.addEventListener('click', temp);
+                                eval(loc).firstElementChild.addEventListener('mouseover', temp_over);
+                                eval(loc).firstElementChild.addEventListener('mouseout', temp_out);
+                            }
+                        }
                         break;
                     default:
                         alert(`${loc}에 ${card_info}의 카드가 들어옴`);
@@ -1039,6 +1059,52 @@
 
 
             }
+            // 전투 가능/불가능 판단해서 전투버튼 활성화/비활성화
+            fight.disabled = !fight_available;
+        };
+
+        // 스텟 표시 함수
+        const display_stat = (place, cardstat) => {
+            let a = document.createElement('p');
+            if (cardstat === 10000) a.innerText = 'joker';
+            else if (isplayer_normal(place)) {
+                if (buff_main[place] === 2) {
+                    cardstat = cardstat * 2;
+                } else if (buff_main[place] === 3) {
+                    cardstat = cardstat ** 3;
+                } else if (buff_main[place] === 4) {
+                    cardstat = cardstat ** 4;
+                }
+                if (double_attack_player)
+                    for (let i = 0; i < double_attack_player; ++i) {
+                        cardstat = cardstat * 2;
+                    }
+                if (half_attack_player)
+                    for (let i = 0; i < half_attack_player; ++i) {
+                        cardstat = cardstat / 2;
+                    }
+                cardstat -= cardstat % 1;
+                a.innerText = cardstat;
+            } else if (isenemy_normal(place)) {
+                if (buff_main[place] === 2) {
+                    cardstat = cardstat * 2;
+                } else if (buff_main[place] === 3) {
+                    cardstat = cardstat ** 3;
+                } else if (buff_main[place] === 4) {
+                    cardstat = cardstat ** 4;
+                }
+                if (double_attack_enemy)
+                    for (let i = 0; i < double_attack_enemy; ++i) {
+                        cardstat = cardstat * 2;
+                    }
+                if (half_attack_enemy)
+                    for (let i = 0; i < half_attack_enemy; ++i) {
+                        cardstat = cardstat / 2;
+                    }
+                cardstat -= cardstat % 1;
+                a.innerText = cardstat;
+            } else a.innerText = cardstat;
+            eval(place).appendChild(a);
         };
 
         const isplayer_normal = (loc) => {
@@ -1047,25 +1113,370 @@
         const isplayer_magic = (loc) => {
             return loc === 'field12' || loc === 'field13' || loc === 'field14';
         };
-
-        // 뒷면카드 뒤집기
-        const to_front = () => {
-            main_field[card_location_loc] += 100;
-            eval(card_location_loc).lastElementChild.removeEventListener('click', to_attack);
-            turn_finish();
+        const isenemy_normal = (loc) => {
+            return loc === 'field1' || loc === 'field2' || loc === 'field3' || loc === 'field4';
         };
 
-        // 플레이어 턴 종료
-        // 일단 되는대로 다 초기화 하자
-        const turn_finish = () => {
+        // 뒷면카드 뒤집기
+        const to_front = (loc) => {
+            main_field[loc] += 100;
+            if (field8.firstElementChild) field8.firstElementChild.removeEventListener('click', temp);
+            if (field9.firstElementChild) field9.firstElementChild.removeEventListener('click', temp);
+            if (field10.firstElementChild) field10.firstElementChild.removeEventListener('click', temp);
+            if (field11.firstElementChild) field11.firstElementChild.removeEventListener('click', temp);
+            fight.disabled = true;
+            endturn.disabled = false;
             card_location();
+        };
+
+
+        const to_fight_mouseover = (loc, loc_enemy) => {
+            eval(loc).className += ' attack_mode';
+            eval(loc_enemy).className += ' attack_enemy';
+        };
+
+        const to_fight_mouseout = (loc, loc_enemy) => {
+            eval(loc).className = 'cardfield';
+            eval(loc_enemy).className = 'cardfield';
+        };
+
+
+        // 카드 공격
+        const to_fight = (loc, loc_enemy) => {
+            eval(loc).firstElementChild.removeEventListener('click', temp);
+            eval(loc).firstElementChild.removeEventListener('mouseover', temp_over);
+            eval(loc).firstElementChild.removeEventListener('mouseout', temp_out);
+            let attack_stat = stat_now(loc);
+            let loc_e = eval(loc_enemy);
+            eval(loc).className = 'cardfield';
+            loc_e.className = 'cardfield';
+
+            if (main_field[loc_enemy]) {
+                loc_attack_card = loc;
+                loc_attacked_card = loc_enemy;
+                card_attack('player');
+            } else {
+                attack_directly('player', attack_stat)
+                turn_finish();
+            }
+            fight.disabled = true;
+        };
+
+
+        // 플레이어 턴 종료
+        // 턴 종료 버튼만 누를 수 있음
+        const turn_finish = () => {
             endturn.disabled = false;
             draw.disabled = true;
             fight_mode = false;
-            fight.disabled = false;
+            playercard.style.pointerEvents = 'none';
+            card_location();
+            fight.disabled = true;
             fight.innerText = '전투'
-            playercard.style.pointerEvents = 'auto';
         };
+
+        const stat_now = (field) => {
+            return eval(field).lastElementChild.innerText;
+        };
+
+        // 공격 실행
+        const card_attack = (turn) => {
+            let attack_stat = stat_now(loc_attack_card);
+            let attacked_stat = stat_now(loc_attacked_card);
+            let attack_card = main_field[loc_attacked_card] % 10000 >= 1000;
+            let attack_card_id = main_field[loc_attack_card] % 100;
+            let attacked_card_id = main_field[loc_attacked_card] % 100;
+
+            console.log(`${main_field[loc_attack_card]} attack ${main_field[loc_attacked_card]}`);
+            console.log(`${attack_stat} attack ${attacked_stat}`);
+            if (attack_card_id >= 53) {
+                console.log(`joker attack ${attacked_stat}`);
+                if (card_color_basic(attack_card_id) === card_color_basic(attacked_card_id))
+                    attacked_stat = -1;
+                else attacked_stat = 1;
+            } else if (attacked_card_id >= 53) {
+                if (card_color_basic(attack_card_id) === card_color_basic(attacked_card_id))
+                    attacked_stat = 1;
+                else attacked_stat = -1;
+            } else {
+                attacked_stat -= attack_stat;
+            }
+
+            if (main_field[loc_attacked_card] % 1000 < 100) main_field[loc_attacked_card] += 100;
+            if (attacked_stat < 0) {
+                delete_card(loc_attacked_card);
+                if (attack_card_id <= 53 && attacked_card_id <= 53  // 두 카드 전부 조커가 아니어야 직접 데미지
+                    && attacked_card_id >= 4  // 맞는 카드가 에이스가 아니어야 직접 데미지
+                    && attack_card)
+                    attack_directly(turn, attacked_stat * -1);
+            } else if (attacked_stat > 0) {
+                delete_card(loc_attack_card);
+                if (attack_card_id <= 53 && attacked_card_id <= 53  // 두 카드 전부 조커가 아니어야 직접 데미지
+                    && attack_card_id >= 4  // 공격하는 카드가 에이스가 아니어야 직접 데미지
+                    && attack_card)
+                    attack_directly(turn, attacked_stat);
+            } else {
+                // 같을 경우 모양에 따라 판단함 (직접데미지는 없음)
+                let attack_card_shape = attack_card_id % 4;
+                let attacked_card_shape = attacked_card_id % 4;
+
+                if (attack_card_shape + 1 === attacked_card_shape ||
+                    (attack_card_shape === 3 && attacked_card_shape === 0)) delete_card(loc_attacked_card);
+                else if (attack_card_shape - 1 === attacked_card_shape ||
+                    (attack_card_shape === 0 && attacked_card_shape === 3)) delete_card(loc_attack_card);
+            }
+            turn_finish();
+        };
+
+        // 왜 delete는 eval을 먹지 않아 나를 괴롭게 하는가?
+        const delete_card = (card_loc) => {
+            buff_main[card_loc] = 0;
+            switch (card_loc) {
+                case 'field1':
+                    delete main_field.field1;
+                    break;
+                case 'field2':
+                    delete main_field.field2;
+                    break;
+                case 'field3':
+                    delete main_field.field3;
+                    break;
+                case 'field4':
+                    delete main_field.field4;
+                    break;
+                case 'field8':
+                    delete main_field.field8;
+                    break;
+                case 'field9':
+                    delete main_field.field9;
+                    break;
+                case 'field10':
+                    delete main_field.field10;
+                    break;
+                case 'field11':
+                    delete main_field.field11;
+                    break;
+            }
+        }
+
+        // 마법카드 효과
+        const active_magic_card = (cardid, turn) => {
+            console.log(`${turn}'s turn magic card: ${cardid}`)
+            switch (turn) {
+                case 'player':
+                    let field5_stat = String(card_stat_basic(main_field['field5'] % 100));
+                    let field6_stat = String(card_stat_basic(main_field['field6'] % 100));
+                    let field7_stat = String(card_stat_basic(main_field['field7'] % 100));
+                    switch (card_stat_basic(cardid)) {
+                        case 'jack':
+                            if (field5_stat === 'jack') {
+                                double_attack_enemy -= 1;
+                                delete main_field.field5;
+                                return false;
+                            } else if (field6_stat === 'jack') {
+                                double_attack_enemy -= 1;
+                                delete main_field.field6;
+                                return false;
+                            } else if (field7_stat === 'jack') {
+                                double_attack_enemy -= 1;
+                                delete main_field.field7;
+                                return false;
+                            } else {
+                                double_attack_player += 1;
+                                return true;
+                            }
+                        case 'queen':
+                            if (field5_stat === 'queen') {
+                                half_attack_player -= 1;
+                                delete main_field.field5;
+                                return false;
+                            } else if (field6_stat === 'queen') {
+                                half_attack_player -= 1;
+                                delete main_field.field6;
+                                return false;
+                            } else if (field7_stat === 'queen') {
+                                half_attack_player -= 1;
+                                delete main_field.field7;
+                                return false;
+                            } else {
+                                half_attack_enemy += 1;
+                                return true;
+                            }
+                        case 'king':
+                            if (field5_stat === 'king') {
+                                double_attack_enemy -= 1;
+                                half_attack_player -= 1;
+                                delete main_field.field5;
+                                return false;
+                            } else if (field6_stat === 'king') {
+                                double_attack_enemy -= 1;
+                                half_attack_player -= 1;
+                                delete main_field.field6;
+                                return false;
+                            } else if (field7_stat === 'king') {
+                                double_attack_enemy -= 1;
+                                half_attack_player -= 1;
+                                delete main_field.field7;
+                                return false;
+                            } else {
+                                double_attack_player += 1;
+                                half_attack_enemy += 1;
+                                return true;
+                            }
+                    }
+                    break;
+                case 'enemy':
+                    let field12_stat = String(card_stat_basic(main_field['field12'] % 100));
+                    let field13_stat = String(card_stat_basic(main_field['field13'] % 100));
+                    let field14_stat = String(card_stat_basic(main_field['field14'] % 100));
+                    switch (card_stat_basic(cardid)) {
+                        case 'jack':
+                            if (field12_stat === 'jack') {
+                                double_attack_player -= 1;
+                                delete main_field.field12;
+                                return false;
+                            } else if (field13_stat === 'jack') {
+                                double_attack_player -= 1;
+                                delete main_field.field13;
+                                return false;
+                            } else if (field14_stat === 'jack') {
+                                double_attack_player -= 1;
+                                delete main_field.field14;
+                                return false;
+                            } else {
+                                double_attack_enemy += 1;
+                                return true;
+                            }
+                        case 'queen':
+                            if (field12_stat === 'queen') {
+                                half_attack_enemy -= 1;
+                                delete main_field.field12;
+                                return false;
+                            } else if (field13_stat === 'queen') {
+                                half_attack_enemy -= 1;
+                                delete main_field.field13;
+                                return false;
+                            } else if (field14_stat === 'queen') {
+                                half_attack_enemy -= 1;
+                                delete main_field.field14;
+                                return false;
+                            } else {
+                                half_attack_player += 1;
+                                return true;
+                            }
+                        case 'king':
+                            if (field12_stat === 'king') {
+                                double_attack_player -= 1;
+                                half_attack_enemy -= 1;
+                                delete main_field.field12;
+                                return false;
+                            } else if (field13_stat === 'king') {
+                                double_attack_player -= 1;
+                                half_attack_enemy -= 1;
+                                delete main_field.field13;
+                                return false;
+                            } else if (field14_stat === 'king') {
+                                double_attack_player -= 1;
+                                half_attack_enemy -= 1;
+                                delete main_field.field14;
+                                return false;
+                            } else {
+                                double_attack_enemy += 1;
+                                half_attack_player += 1;
+                                return true;
+                            }
+                    }
+                    break;
+            }
+        };
+
+        // 카드정보를 받아 마법/공격/앞 여부를 확인하는 함수들
+        // 진작에 만들걸
+        const is_magic_card = (card) => {
+            return card % 100000 > 10000;
+        };
+        const is_attack_card = (card) => {
+            return card % 10000 > 1000;
+        };
+        const is_front_card = (card) => {
+            return card % 1000 > 100;
+        };
+
+        // 직접 피해 함수
+        const attack_directly = (player, damage) => {
+            alert(`${player}: 명치에 ${damage}딜!`);
+            switch (player) {
+                case 'player':
+                    hp2 -= damage;
+                    enemyhp.textContent = hp2;
+                    if (hp2 <= 0) win_game('player');
+                    break;
+                case 'enemy':
+                    hp1 -= damage;
+                    playerhp.textContent = hp1;
+                    if (hp1 <= 0) win_game('enemy');
+                    break;
+            }
+        };
+        // 게임종료, 승패출력
+        const win_game = (winner) => {
+            switch (winner) {
+                case 'player':
+                    alert('승리');
+                    break;
+                case 'enemy':
+                    alert('패배');
+                    break;
+            }
+        };
+
+        // 같은 숫자 버프 부여 (패시브)
+        const check_buff_number = () => {
+            let player_field = [];
+            if (is_front_card(main_field['field8'])) player_field.push(card_stat_basic(main_field['field8'] % 100));
+            else player_field.push(0);
+            if (is_front_card(main_field['field9'])) player_field.push(card_stat_basic(main_field['field9'] % 100));
+            else player_field.push(0);
+            if (is_front_card(main_field['field10'])) player_field.push(card_stat_basic(main_field['field10'] % 100));
+            else player_field.push(0);
+            if (is_front_card(main_field['field11'])) player_field.push(card_stat_basic(main_field['field11'] % 100));
+            else player_field.push(0);
+
+
+            for (let i = 0; i < 4; ++i) {
+                if (!(player_field[i] === 0)) {
+                    let buff_type = player_field.filter(e => player_field[i] === e).length;
+                    if (buff_type > 1) {
+                        if (buff_main[`field${i + 8}`] < buff_type) buff_main[`field${i + 8}`] = buff_type;
+                    }
+                }
+            }
+            let enemy_field = [];
+            if (is_front_card(main_field['field1'])) enemy_field.push(card_stat_basic(main_field['field1'] % 100));
+            else enemy_field.push(0);
+            if (is_front_card(main_field['field2'])) enemy_field.push(card_stat_basic(main_field['field2'] % 100));
+            else enemy_field.push(0);
+            if (is_front_card(main_field['field3'])) enemy_field.push(card_stat_basic(main_field['field3'] % 100));
+            else enemy_field.push(0);
+            if (is_front_card(main_field['field4'])) enemy_field.push(card_stat_basic(main_field['field4'] % 100));
+            else enemy_field.push(0);
+
+
+            for (let i = 0; i < 4; ++i) {
+                if (!(enemy_field[i] === 0)) {
+                    let buff_type = enemy_field.filter(e => enemy_field[i] === e).length;
+                    if (buff_type > 1) {
+                        if (buff_main[`field${i}`] < buff_type) buff_main[`field${i}`] = buff_type;
+                    }
+                }
+            }
+        };
+
+        // 같은 모양 버프 부여 (엑티브)
+        const check_buff_shape = () =>{
+
+        };
+
 
     </script>
 {% endblock %}
