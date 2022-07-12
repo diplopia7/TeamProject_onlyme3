@@ -205,16 +205,17 @@
                             </button>
                             <input type="text" id="idnum1" name="idnum1" value="{{ request.session.userid_id }}">
                         </div>
-                        <form id="posfrm" name="posfrm" method="post">
-                            {% csrf_token %}
-                            <input type="text" id="cid" name="cid" value="">
-                            <input type="text" id="innertrait" name="innertrait" value="">
-                            <input type="text" id="fighttrait" name="fighttrait" value="">
-                            <input type="text" id="skill" name="skill" value="">
-                            <input type="text" id="cpage" name="cpage" value="{{ request.GET.cpage }}">
-                        </form>
+
                     </div>
                 {% endfor %}
+                <form id="posfrm" name="posfrm" method="post">
+                    {% csrf_token %}
+                    <input type="text" id="cid" name="cid" value="">
+                    <input type="text" id="innertrait" name="innertrait" value="">
+                    <input type="text" id="fighttrait" name="fighttrait" value="">
+                    <input type="text" id="skill" name="skill" value="">
+                    <input type="text" id="cpage" name="cpage" value="{{ request.GET.cpage }}">
+                </form>
 
             </div>
 
@@ -325,24 +326,46 @@
             }
         });
 
+        {#for (i = 1 + 6 * ({{ request.GET.cpage }}-1); i <= 6 * ({{ request.GET.cpage }}); ++i) {#}
+        {#    let aaa = `paybtn${i}`#}
+        {#    let bbb = `card${i}`#}
+        {#    if (eval(aaa)==paybtn{{ b.id }} && eval(bbb)==card{{ b.id }}) {#}
+        {#        eval(aaa).addEventListener('click', () => {#}
+        {#            cid.value = eval(bbb).children[0].value#}
+        {#            innertrait.value = eval(bbb).children[1].value#}
+        {#            fighttrait.value = eval(bbb).children[2].value#}
+        {#            skill.value = eval(bbb).children[3].value#}
+        {#            if (eval(bbb).children[8].value == '선택 해제') {#}
+        {#                eval(bbb).children[8].textContent = '선택하기';#}
+        {#                eval(bbb).children[8].value = '선택하기'#}
+        {#            } else {#}
+        {#                eval(bbb).children[8].textContent = '선택 해제';#}
+        {#                eval(bbb).children[8].value = '선택 해제';#}
+        {#document.posfrm.submit()#}
+        {#            }#}
+        {#        });#}
+        {#    }#}
         for (i = 1 + 6 * ({{ request.GET.cpage }}-1); i <= 6 * ({{ request.GET.cpage }}); ++i) {
-            let aaa = `paybtn${i}`
-            let bbb = `card${i}`
-            eval(aaa).addEventListener('click', () => {
-                cid.value = eval(bbb).children[0].value
-                innertrait.value = eval(bbb).children[1].value
-                fighttrait.value = eval(bbb).children[2].value
-                skill.value = eval(bbb).children[3].value
-                if (eval(bbb).children[8].value == '선택 해제') {
-                    eval(bbb).children[8].textContent = '선택하기';
-                    eval(bbb).children[8].value = '선택하기'
-                    eval(bbb).children[8].disabled = false
-                } else if (eval(bbb).children[8].value == '선택하기') {
-                    eval(bbb).children[8].textContent = '선택 해제';
-                    eval(bbb).children[8].value = '선택 해제';
-                    eval(bbb).children[8].disabled = true
-                }
-            });
+            let bbb=`card${i}`
+            switch (bbb) {
+                case 'card2'
+            }
+            if (bbb == 'card2') {
+                eval(bbb).children[8].addEventListener('click', () => {
+                    cid.value = eval(bbb).children[0].value
+                    innertrait.value = eval(bbb).children[1].value
+                    fighttrait.value = eval(bbb).children[2].value
+                    skill.value = eval(bbb).children[3].value
+                    if (eval(bbb).children[8].value == '선택 해제') {
+                        eval(bbb).children[8].textContent = '선택하기';
+                        eval(bbb).children[8].value = '선택하기'
+                    } else {
+                        eval(bbb).children[8].textContent = '선택 해제';
+                        eval(bbb).children[8].value = '선택 해제';
+                        document.posfrm.submit()
+                    }
+                })
+            }
         }
 
 
