@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <style>
         header {
-            background-image:url('/static/img/background.jpg');
-            height:140px;
+            background-image: url('/static/img/background.jpg');
+            height: 140px;
             width: 100%
         }
 
@@ -25,39 +25,39 @@
 
         #logo {
             width: 515px;
-            height:115px;
-            float:left;
-            margin-top:15px
+            height: 115px;
+            float: left;
+            margin-top: 15px
         }
 
         .gamestart {
-            list-style:none;
-            position:absolute;
-            left:44%;
+            list-style: none;
+            position: absolute;
+            left: 44%;
             margin-top: 10px
         }
 
         .gamestart img {
-            width:250px;
+            width: 250px;
             height: 120px;
             border-radius: 50px
         }
 
         #qm1, #qm2 {
             position: absolute;
-            display:flex;
+            display: flex;
             left: 84%;
             margin-top: 15px;
-            height:47px
+            height: 47px
         }
 
         #qm img {
-            height:45px;
-            position:absolute
+            height: 45px;
+            position: absolute
         }
 
         #qmenu1 img {
-            margin-top:-1px
+            margin-top: -1px
         }
 
         #qmenu2 {
@@ -65,7 +65,7 @@
         }
 
         #qmenu3 img {
-            margin-top:-0.5px
+            margin-top: -0.5px
         }
 
         #qmenu4 {
@@ -73,32 +73,32 @@
         }
 
         nav {
-            width:100%;
-            position:relative;
+            width: 100%;
+            position: relative;
             background-image: url('/static/img/navbg.png');
-            height:120px
+            height: 120px
         }
 
         nav div {
-            position:relative;
+            position: relative;
             margin-left: 3.5%;
-            display:flex;
+            display: flex;
             margin-top: 8px;
             margin-bottom: 8px
         }
 
         nav img {
             height: 75px;
-            position:relative
+            position: relative
         }
 
         #mmenu2 {
-            left : 23%
+            left: 23%
         }
 
         #mmenu3 {
-            left : 43%;
-            bottom:2px
+            left: 43%;
+            bottom: 2px
         }
 
         #chr {
@@ -252,29 +252,68 @@
             }
         });
 
-        for (i = 1 + 6 * ({{ request.GET.cpage }}-1); i <= 6 * ({{ request.GET.cpage }}); ++i) {
-            let aaa = `paybtn${i}`
-            let bbb = `card${i}`
-            {% if request.session.userid %}
-                if (user_have.includes(`${i}`)) {
-                    eval(aaa).textContent = '보유 중';
-                    eval(aaa).disabled = true;
-                }
-                    {% else %}
-                else {
-                    eval(aaa).textContent = {{ b.price }}
-                        eval(aaa).disabled = false;
-                }
-            {% endif %}
-            eval(aaa).addEventListener('click', () => {
-                name = eval(bbb).firstElementChild.value;
-                cprice = eval(bbb).lastElementChild.value;
-                chrname.value = name;
-                idnum.value = idnum1.value;
-                cpage.value = {{ request.GET.cpage }};
-                price.value = cprice;
-                payq.innerHTML = '구매 하시겠습니까?';
-            });
+        {#for (i = 1 + 6 * ({{ request.GET.cpage }}-1); i <= 6 * {{ request.GET.cpage }}; ++i) {#}
+        {#    let aaa = `paybtn${i}`#}
+        {#    let bbb = `card${i}`#}
+        {#    {% if request.session.userid %}#}
+        {#        if (user_have.includes(`${i}`)) {#}
+        {#            alert(i)#}
+        {#            eval(aaa).textContent = '보유 중';#}
+        {#            eval(aaa).disabled = true;#}
+        {#        }#}
+        {#            {% else %}#}
+        {#        else {#}
+        {#            eval(aaa).textContent = {{ b.price }}#}
+        {#                eval(aaa).disabled = false;#}
+        {#        }#}
+        {#    {% endif %}#}
+        for (i = 1 + 6 * ({{ request.GET.cpage }}-1); i <= 6 * {{ request.GET.cpage }}; ++i) {
+            if (i <= 24) {
+                let aaa = `paybtn${i}`
+                let bbb = `card${i}`
+                {% if request.session.userid %}
+                    if (user_have.includes(`${i}`)) {
+                        eval(aaa).textContent = '보유 중';
+                        eval(aaa).disabled = true;
+                    }
+                {% else %}
+                    else {
+                        eval(aaa).textContent = {{ b.price }}
+                            eval(aaa).disabled = false;
+                    }
+                {% endif %}
+                eval(aaa).addEventListener('click', () => {
+                    name = eval(bbb).firstElementChild.value;
+                    cprice = eval(bbb).lastElementChild.value;
+                    chrname.value = name;
+                    idnum.value = idnum1.value;
+                    cpage.value = {{ request.GET.cpage }};
+                    price.value = cprice;
+                    payq.innerHTML = '구매 하시겠습니까?';
+                });
+            } else if(i==25){
+                {% if request.session.userid %}
+                    if (user_have.includes(`${i}`)) {
+                        eval('paybtn25').textContent = '보유 중';
+                        eval('paybtn25').disabled = true;
+                    }
+                {% else %}
+                    else {
+                        eval('paybtn25').textContent = {{ b.price }}
+                            eval('paybtn25').disabled = false;
+                    }
+                {% endif %}
+                eval('paybtn25').addEventListener('click', () => {
+                    name = eval('card25').firstElementChild.value;
+                    cprice = eval('card25').lastElementChild.value;
+                    chrname.value = name;
+                    idnum.value = idnum1.value;
+                    cpage.value = {{ request.GET.cpage }};
+                    price.value = cprice;
+                    payq.innerHTML = '구매 하시겠습니까?';
+                });
+            }
+
         }
 
         payok.addEventListener('click', () => {
