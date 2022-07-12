@@ -97,6 +97,7 @@
                                 <i class="bi bi-coin text-warning"></i><a> {{ b.price }} </a></button>
 {#                            {% endif %}#}
                             <input type="hidden" id="idnum1" name="idnum1" value="{{ request.session.userid_id }}">
+                            <input type="hidden" id="price1" name="price1" value="{{ b.price }}">
                         </div>
                     </div>
                 {% endfor %}
@@ -145,11 +146,13 @@
         const rechargemodal = document.querySelector('#rechargeModal');
         const paymodal = document.querySelector('#payModal');
 
-        const chrname = document.querySelector('#chrname')
-        const chrname1 = document.querySelector('#chrname')
-        const idnum = document.querySelector('#idnum')
-        const idnum1 = document.querySelector('#idnum1')
-        const cpage = document.querySelector('#cpage')
+        const chrname = document.querySelector('#chrname');
+        const chrname1 = document.querySelector('#chrname');
+        const idnum = document.querySelector('#idnum');
+        const idnum1 = document.querySelector('#idnum1');
+        const cpage = document.querySelector('#cpage');
+        const price = document.querySelector('#price');
+        const price1 = document.querySelector('#price1');
 
         {#idnum1.value=Number({{ request.session.userid_id }});#}
 
@@ -227,6 +230,7 @@
                 chrname.value = name;
                 idnum.value = idnum1.value;
                 cpage.value = {{ request.GET.cpage }};
+                price.value = price1.value;
                 payq.innerHTML = '구매 하시겠습니까?';
             });
         }

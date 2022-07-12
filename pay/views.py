@@ -61,12 +61,18 @@ def pay(request, perPage=6):
 
 def buy(request):
     if request.method == 'GET':
-        # p = Possession.objects.all()
-        # context={'p':p}
-        # return (request, 'pay.html', context)
         pass
+
     elif request.method == 'POST':
+        returnPage = ''
         form = request.POST.dict()
+
+        mp = Member.objects.filter(userid=request.session['userid'])
+
+        if request.session.get('userid'):
+            if mp:
+                mp.update(cash=F('cash') - form['price'])
+
 
         possession = Possession(
             cname_id=form['chrname'],
@@ -90,6 +96,8 @@ def userpos(request, perPage=6):
     bds = Possession.objects.filter(userid_id=request.session['userid_id'])
     qry = ''
 
+    # print(bds)
+
     pages = ceil(bds.count() / perPage)
 
     cpage = 1
@@ -102,4 +110,4 @@ def userpos(request, perPage=6):
 
     stpgn = int((int(cpage) - 1) / 10) * 10 + 1
     context = {'bds': bds, 'pages': pages, 'range': range(stpgn, stpgn + pages), 'qry': qry}
-    return render(request, 'pay.html', context)
+    return render(request, 'userpos.html', context)
