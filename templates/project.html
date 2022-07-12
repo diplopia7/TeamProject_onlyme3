@@ -22,13 +22,6 @@
         a:hover {color: orangered; text-decoration:none}
         a:active {color: orangered; text-decoration:none }
 
-        .logo img:hover {
-            width: 89%;
-            height: 100%;
-            transform:scale(110%);
-            transition: transform.3s;
-         }
-
         .hover figure img {
             -webkit-transition: .3s ease-in-out;
             transition: .3s ease-in-out;
@@ -57,15 +50,13 @@
         #mmenu3 { left : 43%; bottom:2px}
 
         video { max-width:100%;}
-
-
         </style>
     {% endblock %}
 </head>
     <header>
     <div id="wrapper" class="hover">
         <div class="logo">
-            <a href="/"><img id='logo' src="/static/img/logo.png" alt="logo"></a>
+            <figure><a href="/"><img id='logo' src="/static/img/logo.png" alt="logo"></a></figure>
         </div>
         <div class="gamestart">
             <figure><a href="/main_menu"><img src="/static/img/gamestart.png" alt="gamestart" class="img"></a></figure>
