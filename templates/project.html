@@ -22,30 +22,25 @@
         a:hover {color: orangered; text-decoration:none}
         a:active {color: orangered; text-decoration:none }
 
-        header img:hover {
-        width: 89%;
-        height: 100%;
-        transform:scale(110%);
-        transition: transform.3s;
+        .logo img:hover {
+            width: 89%;
+            height: 100%;
+            transform:scale(110%);
+            transition: transform.3s;
          }
 
-        #qm2 img:hover {
-        width: 102%;
-        height: 100%;
-        transform:scale(110%);
-        transition: transform.3s;
-         }
+        .hover figure img {
+            -webkit-transition: .3s ease-in-out;
+            transition: .3s ease-in-out;
+        }
 
-        #mmenu img:hover {
-        width: 89%;
-        height: 100%;
-        transform:scale(110%);
-        transition: transform.3s;
-         }
+        .hover figure:hover img {
+            opacity: .6;
+        }
 
         #logo {width: 515px; height:115px; float:left; margin-top:15px }
-        #gamestart {list-style:none; position:absolute; left:43%; margin-top: 10px; }
-        #gamestart img { width:250px; height: 120px;   }
+        .gamestart {list-style:none; position:absolute; left:44%; margin-top: 10px; }
+        .gamestart img { width:250px; height: 120px;   }
         #qm1 { position: absolute; display:flex; left: 84%; margin-top: 15px; height:47px;}
         #qm2 { position: absolute; display:flex; left: 84%; margin-top: 15px; height:47px;}
         #qm img { height:45px; position:absolute}
@@ -55,7 +50,6 @@
         #qmenu4 { margin-left: 24px;}
 
         nav{ width:100%; position:relative;  background: silver; padding: 5px 15px; height:120px;}
-        {#nav {background-image:url('/static/img/background.jpg'); height:140px; width: 100%  }#}
         nav div  { position:relative; margin-left: 3.5%; display:flex; font-weight:bold;
                 list-style: none; margin-top: 8px; margin-bottom: 8px}
         nav img { height: 75px; position:relative}
@@ -69,27 +63,31 @@
     {% endblock %}
 </head>
     <header>
-    <div id="wrapper">
-         <h1><a href="/"><img id='logo' src="/static/img/logo.png" alt="logo"></a></h1>
-             <ul id="gamestart" ><a href="/main_menu"><img src="/static/img/gamestart.png" alt="gamestart" class="img"></a></ul>
+    <div id="wrapper" class="hover">
+        <div class="logo">
+            <a href="/"><img id='logo' src="/static/img/logo.png" alt="logo"></a>
+        </div>
+        <div class="gamestart">
+            <figure><a href="/main_menu"><img src="/static/img/gamestart.png" alt="gamestart" class="img"></a></figure>
+        </div>
             {% if not request.session.userid %}
             <div id="qm">
                 <div class='qm1' id="qm1">
                     <div id="qmenu1">
-                        <a href="/login"><img src="/static/img/login.png" alt="login"></a>
+                        <figure><a href="/login"><img src="/static/img/login.png" alt="login"></a></figure>
                     </div>
                     <div id="qmenu2">
-                        <a href="/join"><img src="/static/img/join.png" alt="join"></a>
+                        <figure><a href="/join"><img src="/static/img/join.png" alt="join"></a></figure>
                     </div>
                 </div>
                     {% endif %}
                     {% if request.session.userid %}
                 <div class="qm2" id="qm2">
                     <div id="qmenu3">
-                        <a href="/logout"><img src="/static/img/logout.png" alt="logout"></a>
+                        <figure><a href="/logout"><img src="/static/img/logout.png" alt="logout"></a></figure>
                     </div>
                     <div id="qmenu4">
-                        <a href="/myinfo"><img src="/static/img/myinfo.png" alt="myinfo"></a>
+                        <figure><a href="/myinfo"><img src="/static/img/myinfo.png" alt="myinfo"></a></figure>
                     </div>
                 </div>
             </div>
@@ -98,15 +96,15 @@
     </header>
 
         <nav>
-           <div id="mmenu">
+           <div id="mmenu" class="hover">
                 <div id="mmenu1">
-                    <a href="/game_info"><img src="/static/img/gameintro.png" alt="gameinfo"></a>
+                    <figure><a href="/game_info"><img src="/static/img/gameintro.png" alt="gameinfo"></a></figure>
                 </div>
                 <div id="mmenu2">
-                    <a href="/pay/?cpage=1"><img src="/static/img/shop.png" alt="pay"></a>
+                    <figure><a href="/pay/?cpage=1"><img src="/static/img/shop.png" alt="pay"></a></figure>
                 </div>
                 <div id="mmenu3">
-                    <a href="/userpos/?cpage=1"><img src="/static/img/userpos.png" alt="userpos"></a>
+                    <figure><a href="/userpos/?cpage=1"><img src="/static/img/userpos.png" alt="userpos"></a></figure>
                 </div>
            </div>
         </nav>
