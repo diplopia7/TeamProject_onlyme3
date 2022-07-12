@@ -1,85 +1,155 @@
 {% extends 'project.html' %}
 {% block style %}
     <style>
-        #wrapper { display:flex;}
-        #wrapper a {font-size: 20px; font-weight: bold; text-decoration: none;
-        color: white;  }
-        #wrapper a:hover{color:orangered}
-        header {background-image:url('/static/img/background.jpg'); height:140px; width: 100%  }
+        header {
+            background-image:url('/static/img/background.jpg');
+            height:140px;
+            width: 100%
+        }
 
+        .hover figure img {
+            -webkit-transition: .3s ease-in-out;
+            transition: .3s ease-in-out
+        }
 
-        a:link {color: black; text-decoration:none}
-        a:visited{color: black; text-decoration:underline}
-        a:hover {color: orangered; text-decoration:none}
-        a:active {color: orangered; text-decoration:none }
+        .hover figure:hover img {
+            opacity: .6
+        }
 
-        header img:hover {
-        width: 89%;
-        height: 100%;
-        transform:scale(110%);
-        transition: transform.3s;
-         }
+        #logo {
+            width: 515px;
+            height:115px;
+            float:left;
+            margin-top:15px
+        }
 
-        #qm2 img:hover {
-        width: 102%;
-        height: 100%;
-        transform:scale(110%);
-        transition: transform.3s;
-         }
+        .gamestart {
+            list-style:none;
+            position:absolute;
+            left:44%;
+            margin-top: 10px
+        }
 
-        #mmenu img:hover {
-        width: 89%;
-        height: 100%;
-        transform:scale(110%);
-        transition: transform.3s;
-         }
+        .gamestart img {
+            width:250px;
+            height: 120px;
+            border-radius: 50px
+        }
 
-        #logo {width: 515px; height:115px; float:left; margin-top:15px }
-        #gamestart {list-style:none; position:absolute; left:43%; margin-top: 10px; }
-        #gamestart img { width:250px; height: 120px;   }
-        #qm1 { position: absolute; display:flex; left: 84%; margin-top: 15px; height:47px;}
-        #qm2 { position: absolute; display:flex; left: 84%; margin-top: 15px; height:47px;}
-        #qm img { height:45px; position:absolute}
-        #qmenu1 img { margin-top:-1px;}
-        #qmenu2 { margin-left: 150px;}
-        #qmenu3 img { margin-top:-0.5px;}
-        #qmenu4 { margin-left: 24px;}
+        #qm1, #qm2 {
+            position: absolute;
+            display:flex;
+            left: 84%;
+            margin-top: 15px;
+            height:47px
+        }
 
-        nav{ width:100%; position:relative;  background: silver; padding: 5px 15px; height:120px;}
-        nav div  { position:relative; margin-left: 3.5%; display:flex; font-weight:bold;
-                list-style: none; margin-top: 8px; margin-bottom: 8px}
-        nav img { height: 75px; position:relative}
-        #mmenu2 { left : 23%;}
-        #mmenu3 { left : 43%; bottom:2px}
+        #qm img {
+            height:45px;
+            position:absolute
+        }
+
+        #qmenu1 img {
+            margin-top:-1px
+        }
+
+        #qmenu2 {
+            margin-left: 150px
+        }
+
+        #qmenu3 img {
+            margin-top:-0.5px
+        }
+
+        #qmenu4 {
+            margin-left: 24px
+        }
+
+        nav {
+            width:100%;
+            position:relative;
+            background-image: url('/static/img/navbg.png');
+            height:120px
+        }
+
+        nav div {
+            position:relative;
+            margin-left: 3.5%;
+            display:flex;
+            margin-top: 8px;
+            margin-bottom: 8px
+        }
+
+        nav img {
+            height: 75px;
+            position:relative
+        }
+
+        #mmenu2 {
+            left : 23%
+        }
+
+        #mmenu3 {
+            left : 43%;
+            bottom:2px
+        }
+
         #gamename {
-            color:red; font-size:50px; font-weight: bold; position:absolute;
-            z-index: 1; text-align: center; top:150px; left:605px;
-            text-shadow: 1px 0 black, 0 1px black, 1px 0 black, 0 1px black;
+            color:red;
+            font-size:50px;
+            font-weight: bold;
+            position:absolute;
+            z-index: 1;
+            text-align: center;
+            top:150px;
+            left:605px;
+            text-shadow: 1px 0 black, 0 1px black, 1px 0 black, 0 1px black
         }
         #gameplay {
-            color:white; font-size:40px;position: absolute;
-            z-index: 1; text-align: center; top:380px; left:700px;
+            color:white;
+            font-size:40px;
+            position: absolute;
+            z-index: 1;
+            text-align: center;
+            top:380px;
+            left:700px
         }
-        #gameplay a{
-            color:white; text-decoration: none;
-            text-shadow: 2px 0 black, 0 2px black, 2px 0 black, 0 2px black;
+
+        #gameplay a {
+            color:white;
+            text-decoration: none;
+            text-shadow: 2px 0 black, 0 2px black, 2px 0 black, 0 2px black
         }
-        #gameplay a:hover{color:orange}
-        #quit{
-            color:white; font-size:40px;position: absolute;
-            z-index: 1; text-align: center; top:550px; left:750px;
-        }
-        #quit a{
-            color:white; text-decoration: none;
-            text-shadow: 2px 0 black, 0 2px black, 2px 0 black, 0 2px black;
-        }
-        #quit a:hover{
+
+        #gameplay a:hover {
             color:orange
         }
-        #main_menu{
-            position: relative; left:200px;
+
+        #quit {
+            color:white;
+            font-size:40px;
+            position: absolute;
+            z-index: 1;
+            text-align: center;
+            top:550px;
+            left:750px
+        }
+
+        #quit a {
+            color:white;
+            text-decoration: none;
+            text-shadow: 2px 0 black, 0 2px black, 2px 0 black, 0 2px black
+        }
+
+        #quit a:hover {
+            color:orange
+        }
+
+        #main_menu {
+            position: relative;
+            left:200px;
             width:1500px;
-            height:840px;
+            height:840px
         }
     </style>
 {% endblock %}

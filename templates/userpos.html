@@ -8,155 +8,97 @@
     <link rel="stylesheet" href="{% static '/css/bs5/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <style>
-        #wrapper {
-            display: flex;
-        }
-
-        #wrapper a {
-            font-size: 20px;
-            font-weight: bold;
-            text-decoration: none;
-            color: white;
-        }
-
-        #wrapper a:hover {
-            color: orangered
-        }
-
         header {
-            background-image: url('/static/img/background.jpg');
-            height: 140px;
+            background-image:url('/static/img/background.jpg');
+            height:140px;
             width: 100%
         }
 
-
-        a:link {
-            color: black;
-            text-decoration: none
+        .hover figure img {
+            -webkit-transition: .3s ease-in-out;
+            transition: .3s ease-in-out
         }
 
-        a:visited {
-            color: black;
-            text-decoration: underline
-        }
-
-        a:hover {
-            color: orangered;
-            text-decoration: none
-        }
-
-        a:active {
-            color: orangered;
-            text-decoration: none
-        }
-
-        header img:hover {
-            width: 89%;
-            height: 100%;
-            transform: scale(110%);
-            transition: transform .3s;
-        }
-
-        #qm2 img:hover {
-            width: 102%;
-            height: 100%;
-            transform: scale(110%);
-            transition: transform .3s;
-        }
-
-        #mmenu img:hover {
-            width: 89%;
-            height: 100%;
-            transform: scale(110%);
-            transition: transform .3s;
+        .hover figure:hover img {
+            opacity: .6
         }
 
         #logo {
             width: 515px;
-            height: 115px;
-            float: left;
-            margin-top: 15px
+            height:115px;
+            float:left;
+            margin-top:15px
         }
 
-        #gamestart {
-            list-style: none;
-            position: absolute;
-            left: 43%;
-            margin-top: 10px;
+        .gamestart {
+            list-style:none;
+            position:absolute;
+            left:44%;
+            margin-top: 10px
         }
 
-        #gamestart img {
-            width: 250px;
+        .gamestart img {
+            width:250px;
             height: 120px;
+            border-radius: 50px
         }
 
-        #qm1 {
+        #qm1, #qm2 {
             position: absolute;
-            display: flex;
+            display:flex;
             left: 84%;
             margin-top: 15px;
-            height: 47px;
-        }
-
-        #qm2 {
-            position: absolute;
-            display: flex;
-            left: 84%;
-            margin-top: 15px;
-            height: 47px;
+            height:47px
         }
 
         #qm img {
-            height: 45px;
-            position: absolute
+            height:45px;
+            position:absolute
         }
 
         #qmenu1 img {
-            margin-top: -1px;
+            margin-top:-1px
         }
 
         #qmenu2 {
-            margin-left: 150px;
+            margin-left: 150px
         }
 
         #qmenu3 img {
-            margin-top: -0.5px;
+            margin-top:-0.5px
         }
 
         #qmenu4 {
-            margin-left: 24px;
+            margin-left: 24px
         }
 
         nav {
-            width: 100%;
-            position: relative;
-            background: silver;
-            padding: 5px 15px;
-            height: 120px;
+            width:100%;
+            position:relative;
+            background-image: url('/static/img/navbg.png');
+            height:120px
         }
 
         nav div {
-            position: relative;
+            position:relative;
             margin-left: 3.5%;
-            display: flex;
-            font-weight: bold;
-            list-style: none;
+            display:flex;
             margin-top: 8px;
             margin-bottom: 8px
         }
 
         nav img {
             height: 75px;
-            position: relative
+            position:relative
         }
 
         #mmenu2 {
-            left: 23%;
+            left : 23%
         }
 
         #mmenu3 {
-            left: 43%;
-            bottom: 2px
+            left : 43%;
+            bottom:2px
         }
 
         #chr {

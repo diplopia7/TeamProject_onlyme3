@@ -1,56 +1,98 @@
 {% extends 'project.html' %}
 {% block style %}
     <style>
-        #wrapper { display:flex;}
-        #wrapper a {font-size: 20px; font-weight: bold; text-decoration: none;
-        color: white;  }
-        #wrapper a:hover{color:orangered}
-        header {background-image:url('/static/img/background.jpg'); height:140px; width: 100%  }
+        header {
+            background-image:url('/static/img/background.jpg');
+            height:140px;
+            width: 100%
+        }
 
+        .hover figure img {
+            -webkit-transition: .3s ease-in-out;
+            transition: .3s ease-in-out
+        }
 
-        a:link {color: black; text-decoration:none}
-        a:visited{color: black; text-decoration:underline}
-        a:hover {color: orangered; text-decoration:none}
-        a:active {color: orangered; text-decoration:none }
+        .hover figure:hover img {
+            opacity: .6
+        }
 
-        header img:hover {
-        width: 89%;
-        height: 100%;
-        transform:scale(110%);
-        transition: transform.3s;
-         }
+        #logo {
+            width: 515px;
+            height:115px;
+            float:left;
+            margin-top:15px
+        }
 
-        #qm2 img:hover {
-        width: 102%;
-        height: 100%;
-        transform:scale(110%);
-        transition: transform.3s;
-         }
+        .gamestart {
+            list-style:none;
+            position:absolute;
+            left:44%;
+            margin-top: 10px
+        }
 
-        #mmenu img:hover {
-        width: 89%;
-        height: 100%;
-        transform:scale(110%);
-        transition: transform.3s;
-         }
+        .gamestart img {
+            width:250px;
+            height: 120px;
+            border-radius: 50px
+        }
 
-        #logo {width: 515px; height:115px; float:left; margin-top:15px }
-        #gamestart {list-style:none; position:absolute; left:43%; margin-top: 10px; }
-        #gamestart img { width:250px; height: 120px;   }
-        #qm1 { position: absolute; display:flex; left: 84%; margin-top: 15px; height:47px;}
-        #qm2 { position: absolute; display:flex; left: 84%; margin-top: 15px; height:47px;}
-        #qm img { height:45px; position:absolute}
-        #qmenu1 img { margin-top:-1px;}
-        #qmenu2 { margin-left: 150px;}
-        #qmenu3 img { margin-top:-0.5px;}
-        #qmenu4 { margin-left: 24px;}
+        #qm1, #qm2 {
+            position: absolute;
+            display:flex;
+            left: 84%;
+            margin-top: 15px;
+            height:47px
+        }
 
-        nav{ width:100%; position:relative;  background: silver; padding: 5px 15px; height:120px;}
-        nav div  { position:relative; margin-left: 3.5%; display:flex; font-weight:bold;
-                list-style: none; margin-top: 8px; margin-bottom: 8px}
-        nav img { height: 75px; position:relative}
-        #mmenu2 { left : 23%;}
-        #mmenu3 { left : 43%; bottom:2px}
+        #qm img {
+            height:45px;
+            position:absolute
+        }
+
+        #qmenu1 img {
+            margin-top:-1px
+        }
+
+        #qmenu2 {
+            margin-left: 150px
+        }
+
+        #qmenu3 img {
+            margin-top:-0.5px
+        }
+
+        #qmenu4 {
+            margin-left: 24px
+        }
+
+        nav {
+            width:100%;
+            position:relative;
+            background-image: url('/static/img/navbg.png');
+            height:120px
+        }
+
+        nav div {
+            position:relative;
+            margin-left: 3.5%;
+            display:flex;
+            margin-top: 8px;
+            margin-bottom: 8px
+        }
+
+        nav img {
+            height: 75px;
+            position:relative
+        }
+
+        #mmenu2 {
+            left : 23%
+        }
+
+        #mmenu3 {
+            left : 43%;
+            bottom:2px
+        }
 
         #main_menu {
             position: relative;
@@ -60,20 +102,20 @@
             background-color: black;
             color: white;
             font-size: 30px;
-            text-align: center;
+            text-align: center
         }
 
         .button {
             font-size: 20px;
             padding: 5px;
             width: 100px;
-            margin: 10px;
+            margin: 10px
         }
 
         #menu {
             position: absolute;
             top: 200px;
-            left: 15px;
+            left: 15px
         }
 
         #resources {
@@ -87,7 +129,7 @@
             padding: 10px;
             width: 1200px;
             text-align: left;
-            font-weight: bold;
+            font-weight: bold
         }
 
         #next {
@@ -95,7 +137,7 @@
             z-index: 1;
             right: 20px;
             bottom: 30px;
-            display: none;
+            display: none
         }
 
         #turn {
@@ -107,7 +149,7 @@
             bottom: 50px;
             left: 30px;
             padding: 10px;
-            font-weight: bold;
+            font-weight: bold
         }
 
         #chrstat {
@@ -121,7 +163,7 @@
             left: 530px;
             padding: 20px;
             height:53%;
-            font-weight: bold;
+            font-weight: bold
         }
 
         #portrait {
@@ -130,8 +172,6 @@
             right: 350px;
             top: 195px
         }
-
-
     </style>
 {% endblock %}
 {% block content %}
