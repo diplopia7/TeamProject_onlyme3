@@ -101,5 +101,5 @@ def userpos(request, perPage=6):
     bds = bds[start:end]
 
     stpgn = int((int(cpage) - 1) / 10) * 10 + 1
-    context = {'bds': bds, 'pages': pages, 'range': range(stpgn, stpgn + 5), 'qry': qry}
+    context = {'bds': bds, 'pages': pages, 'range': range(stpgn, stpgn + pages), 'qry': qry}
     return render(request, 'pay.html', context)
