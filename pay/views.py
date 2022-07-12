@@ -94,7 +94,8 @@ def payok(request):
 
 def userpos(request, perPage=6):
     form = request.GET.dict()
-    bds = Possession.objects.filter(userid_id=request.session['userid_id'])
+    bds = Shop.objects.select_related('userid_id').select_related('cname_id').select_related('cname').select_related('img').select_related('innertrait').\
+        select_related('fighttrait').select_related('skill').filter(possession__userid_id=request.session['userid_id'])
     qry = ''
 
     # print(bds)
@@ -110,5 +111,5 @@ def userpos(request, perPage=6):
     bds = bds[start:end]
 
     stpgn = int((int(cpage) - 1) / 10) * 10 + 1
-    context = {'bds': bds, 'pages': pages, 'range': range(stpgn, stpgn + pages), 'qry': qry}
+    context = {'bds': bds.values(), 'pages': pages, 'range': range(stpgn, stpgn + pages), 'qry': qry}
     return render(request, 'userpos.html', context)
