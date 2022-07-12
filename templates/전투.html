@@ -4,64 +4,105 @@
 {% load static %}
 {% block style %}
     <style>
-        #wrapper { display:flex;}
-        #wrapper a {font-size: 20px; font-weight: bold; text-decoration: none;
-        color: white;  }
-        #wrapper a:hover{color:orangered}
-        header {background-image:url('/static/img/background.jpg'); height:140px; width: 100%  }
+        header {
+            background-image:url('/static/img/background.jpg');
+            height:140px;
+            width: 100%
+        }
 
+        .hover figure img {
+            -webkit-transition: .3s ease-in-out;
+            transition: .3s ease-in-out
+        }
 
-        a:link {color: black; text-decoration:none}
-        a:visited{color: black; text-decoration:underline}
-        a:hover {color: orangered; text-decoration:none}
-        a:active {color: orangered; text-decoration:none }
+        .hover figure:hover img {
+            opacity: .6
+        }
 
-        header img:hover {
-        width: 89%;
-        height: 100%;
-        transform:scale(110%);
-        transition: transform.3s;
-         }
+        #logo {
+            width: 515px;
+            height:115px;
+            float:left;
+            margin-top:15px
+        }
 
-        #qm2 img:hover {
-        width: 102%;
-        height: 100%;
-        transform:scale(110%);
-        transition: transform.3s;
-         }
+        .gamestart {
+            list-style:none;
+            position:absolute;
+            left:44%;
+            margin-top: 10px
+        }
 
-        #mmenu img:hover {
-        width: 89%;
-        height: 100%;
-        transform:scale(110%);
-        transition: transform.3s;
-         }
+        .gamestart img {
+            width:250px;
+            height: 120px
+        }
 
-        #logo {width: 515px; height:115px; float:left; margin-top:15px }
-        #gamestart {list-style:none; position:absolute; left:43%; margin-top: 10px; }
-        #gamestart img { width:250px; height: 120px;   }
-        #qm1 { position: absolute; display:flex; left: 84%; margin-top: 15px; height:47px;}
-        #qm2 { position: absolute; display:flex; left: 84%; margin-top: 15px; height:47px;}
-        #qm img { height:45px; position:absolute}
-        #qmenu1 img { margin-top:-1px;}
-        #qmenu2 { margin-left: 150px;}
-        #qmenu3 img { margin-top:-0.5px;}
-        #qmenu4 { margin-left: 24px;}
+        #qm1, #qm2 {
+            position: absolute;
+            display:flex;
+            left: 84%;
+            margin-top: 15px;
+            height:47px
+        }
 
-        nav{ width:100%; position:relative;  background: silver; padding: 5px 15px; height:120px;}
-        nav div  { position:relative; margin-left: 3.5%; display:flex; font-weight:bold;
-                list-style: none; margin-top: 8px; margin-bottom: 8px}
-        nav img { height: 75px; position:relative}
-        #mmenu2 { left : 23%;}
-        #mmenu3 { left : 43%; bottom:2px}
+        #qm img {
+            height:45px;
+            position:absolute
+        }
+
+        #qmenu1 img {
+            margin-top:-1px
+        }
+
+        #qmenu2 {
+            margin-left: 150px
+        }
+
+        #qmenu3 img {
+            margin-top:-0.5px
+        }
+
+        #qmenu4 {
+            margin-left: 24px
+        }
+
+        nav {
+            width:100%;
+            position:relative;
+            background: silver;
+            height:120px
+        }
+
+        nav div {
+            position:relative;
+            margin-left: 3.5%;
+            display:flex;
+            margin-top: 8px;
+            margin-bottom: 8px
+        }
+
+        nav img {
+            height: 75px;
+            position:relative
+        }
+
+        #mmenu2 {
+            left : 23%
+        }
+
+        #mmenu3 {
+            left : 43%;
+            bottom:2px
+        }
 
         a {
             text-decoration: none;
-            color: brown;
+            color: brown
         }
 
         a:hover {
-            color: red;
+            color: red
         }
 
         #gamename {
@@ -72,7 +113,7 @@
             z-index: 1;
             text-align: center;
             top: 80px;
-            left: 65px;
+            left: 65px
         }
 
         #gameplay {
@@ -81,7 +122,7 @@
             z-index: 1;
             text-align: center;
             bottom: 150px;
-            left: 450px;
+            left: 450px
         }
 
         #gamedescription {
@@ -91,7 +132,7 @@
             z-index: 1;
             text-align: center;
             top: 350px;
-            left: 580px;
+            left: 580px
         }
 
         #quit {
@@ -101,13 +142,13 @@
             z-index: 1;
             text-align: center;
             top: 450px;
-            left: 630px;
+            left: 630px
         }
 
         .cardfield {
             border: 3px solid rgb(68, 67, 67);
             width: 80px;
-            height: 116px;
+            height: 116px
         }
 
         .cardfield img {
@@ -120,119 +161,119 @@
             top: -50px;
             width: 80px;
             text-align: center;
-            text-decoration: bold;
+            text-decoration: bold
         }
 
         #field1 {
             position: absolute;
             z-index: 1;
             left: 300px;
-            top: 200px;
+            top: 200px
         }
 
         #field2 {
             position: absolute;
             z-index: 1;
             left: 500px;
-            top: 200px;
+            top: 200px
         }
 
         #field3 {
             position: absolute;
             z-index: 1;
             left: 700px;
-            top: 200px;
+            top: 200px
         }
 
         #field4 {
             position: absolute;
             z-index: 1;
             left: 900px;
-            top: 200px;
+            top: 200px
         }
 
         #field5 {
             position: absolute;
             z-index: 1;
             left: 400px;
-            top: 50px;
+            top: 50px
         }
 
         #field6 {
             position: absolute;
             z-index: 1;
             left: 600px;
-            top: 50px;
+            top: 50px
         }
 
         #field7 {
             position: absolute;
             z-index: 1;
             left: 800px;
-            top: 50px;
+            top: 50px
         }
 
         #field8 {
             position: absolute;
             z-index: 1;
             left: 300px;
-            top: 380px;
+            top: 380px
         }
 
         #field9 {
             position: absolute;
             z-index: 1;
             left: 500px;
-            top: 380px;
+            top: 380px
         }
 
         #field10 {
             position: absolute;
             z-index: 1;
             left: 700px;
-            top: 380px;
+            top: 380px
         }
 
         #field11 {
             position: absolute;
             z-index: 1;
             left: 900px;
-            top: 380px;
+            top: 380px
         }
 
         #field12 {
             position: absolute;
             z-index: 1;
             left: 400px;
-            top: 530px;
+            top: 530px
         }
 
         #field13 {
             position: absolute;
             z-index: 1;
             left: 600px;
-            top: 530px;
+            top: 530px
         }
 
         #field14 {
             position: absolute;
             z-index: 1;
             left: 800px;
-            top: 530px;
+            top: 530px
         }
 
         #field15 {
             position: absolute;
             z-index: 1;
             left: 150px;
-            top: 200px;
+            top: 200px
         }
 
         #field16 {
             position: absolute;
             z-index: 1;
             left: 1060px;
-            top: 380px;
+            top: 380px
         }
 
         #playerstatus {
@@ -244,7 +285,7 @@
             bottom: 5px;
             font-size: 30px;
             background-color: rgb(86, 94, 19);
-            color: white;
+            color: white
         }
 
         #enemystatus {
@@ -253,8 +294,8 @@
             height: 200px;
             position: absolute;
             z-index: 1;
-            right: 0px;
-            top: 0px;
+            right: 0;
+            top: 0;
             font-size: 30px;
             background-color: rgb(86, 94, 19);
             color: white
@@ -265,14 +306,14 @@
             position: absolute;
             z-index: 1;
             right: 50px;
-            bottom: 250px;
+            bottom: 250px
         }
 
         .button {
             font-size: 20px;
             padding: 5px;
             margin: 5px;
-            width: 100px;
+            width: 100px
         }
 
         #playercard {
@@ -280,14 +321,14 @@
             z-index: 1;
             /* border: 1px solid black; */
             bottom: 15px;
-            left: 500px;
+            left: 500px
         }
 
         #enemycard {
             position: absolute;
             z-index: 1;
             top: 15px;
-            left: 5px;
+            left: 5px
         }
 
         #cardbtn, #cardbtn2, #normallocation, #magiclocation {
@@ -297,10 +338,8 @@
             left: 500px;
             top: 350px;
             background-color: darkgrey;
-            display: none;
+            display: none
         }
-
-
     </style>
 {% endblock %}
 {% block content %}
