@@ -122,10 +122,11 @@ def userpos(request, perPage=6):
     elif request.method == 'POST':
         form = request.POST.dict()
         request.session['cname'] = form['cname']
+        request.session['cimg'] = form['cimg']
+        request.session['cid'] = form['cid']
         request.session['innertrait'] = form['innertrait']
         request.session['fighttrait'] = form['fighttrait']
         request.session['skill'] = form['skill']
-        request.session['portrait'] = form['cimg']
         print(form)
 
 
