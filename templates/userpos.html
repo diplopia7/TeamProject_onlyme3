@@ -132,6 +132,7 @@
                     <div class="card text-center d-flex" style="width: 18rem;">
                         <img src="{{ b.img }}" class="card-img-top">
                         <div class="card-body" id="card{{ b.id }}">
+                            <input type="text" id="cname1" name="cname1" value="{{ b.cname }}">
                             <input type="text" id="cid1" name="cid1" value="{{ b.id }}">
                             <input type="text" id="innertrait1" name="innertrait1" value="{{ b.innertrait }}">
                             <input type="text" id="fighttrait1" name="fighttrait1" value="{{ b.fighttrait }}">
@@ -147,8 +148,10 @@
                         </div>
                     </div>
                 {% endfor %}
+                <div>선택한 캐릭터 : <span id="selectchr"></span></div>
                 <form id="posfrm" name="posfrm" method="post">
                     {% csrf_token %}
+                    <input type="text" id="cname" name="cname" value="">
                     <input type="text" id="cid" name="cid" value="">
                     <input type="text" id="innertrait" name="innertrait" value="">
                     <input type="text" id="fighttrait" name="fighttrait" value="">
@@ -213,12 +216,17 @@
         const fighttrait = document.querySelector('#fighttrait')
         const skill = document.querySelector('#skill')
         const cid = document.querySelector('#cid')
-        const paybtn = document.getElementsByName('paybtn');
+        const cname = document.querySelector('#cname');
+        const selectchr = document.querySelector('#selectchr');
 
+        const paybtn = document.getElementsByName('paybtn');
+        const cname1 = document.getElementsByName('cname1');
         const cid1 = document.getElementsByName('cid1')
         const innertrait1 = document.getElementsByName('innertrait1')
         const fighttrait1 = document.getElementsByName('fighttrait1')
         const skill1 = document.getElementsByName('skill1')
+
+        const frm = document.posfrm;
 
         rd1.addEventListener('click', () => {
             recharge.innerHTML = rd1lb.outerHTML;
@@ -268,32 +276,34 @@
             }
         });
 
-            function test() {
-                const obj = document.getElementsByName('paybtn');
+        function test() {
+            const obj = document.getElementsByName('paybtn');
 
-                for (let i = 0; i < obj.length; i++) {
-                    obj[i].checked = false;
-                }
+            for (let i = 0; i < obj.length; i++) {
+                obj[i].checked = false;
             }
+        }
 
-            rechargebtn.addEventListener('click', () => {
-                test();
-                cid.value = ''
-                innertrait.value = ''
-                fighttrait.value = ''
-                skill.value = ''
+        rechargebtn.addEventListener('click', () => {
+            test();
+            cname.value = '';
+            cid.value = '';
+            innertrait.value = '';
+            fighttrait.value = '';
+            skill.value = '';
+            selectchr.textContent = '';
+        });
+
+        for (let i = 0; i <= 25; i++) {
+            paybtn[i].addEventListener('click', () => {
+                cname.value = cname1[i].value;
+                cid.value = cid1[i].value;
+                innertrait.value = innertrait1[i].value;
+                fighttrait.value = fighttrait1[i].value;
+                skill.value = skill1[i].value;
+                frm.submit();
             });
-
-        {#for (i = 0; i <= 6; ++i) {#}
-            paybtn[0].addEventListener('click', () => {
-                alert(`paybtn[0]`)
-                cid.value = cid1[0].value
-                innertrait.value = innertrait1[0].value
-                fighttrait.value = fighttrait1[0].value
-                skill.value = skill1[0].value
-                {#document.posfrm.submit()#}
-                }
-            )
+        }
 
         payok.addEventListener('click', () => {
             bootstrap.Modal.getInstance('#payModal').hide();

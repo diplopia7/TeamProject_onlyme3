@@ -70,7 +70,7 @@ def buy(request):
         mp = Member.objects.filter(userid=request.session['userid'])
 
         if request.session.get('userid'):
-            if mp.get().cash > int(form['price']):
+            if mp.get().cash >= int(form['price']):
                 mp.update(cash=F('cash') - form['price'])
             elif mp.get().cash < int(form['price']):
                 returnPage = 'buyfail.html'
@@ -122,9 +122,6 @@ def userpos(request, perPage=6):
     elif request.method == 'POST':
         form = request.POST.dict()
         print(form)
-        request.session['innertrait']=form['innertrait']
-        request.session['fighttrait']=form['fighttrait']
-        request.session['skill']=form['skill']
 
         qry = '/userpos/?cpage=' + form['cpage']
 
