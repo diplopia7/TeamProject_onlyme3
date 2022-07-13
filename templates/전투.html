@@ -274,7 +274,7 @@
             <div id="field5" class="cardfield"></div>
             <div id="field6" class="cardfield"></div>
             <div id="field7" class="cardfield"></div>
-{#            <div id="field15" class="cardfield"></div>#}
+            {#            <div id="field15" class="cardfield"></div>#}
         </div>
         <div id="cardfield2">
             <div id="field8" class="cardfield"></div>
@@ -284,7 +284,7 @@
             <div id="field12" class="cardfield"></div>
             <div id="field13" class="cardfield"></div>
             <div id="field14" class="cardfield"></div>
-{#            <div id="field16" class="cardfield"></div>#}
+            {#            <div id="field16" class="cardfield"></div>#}
         </div>
         <div id="playerstatus">
             <div style="margin-top:10px; margin-left:10px">플레이어</div>
@@ -363,7 +363,18 @@
         let grave = [];
 
 
-        let buff_main = {
+        let buff_pair = {
+            'field1': 0,
+            'field2': 0,
+            'field3': 0,
+            'field4': 0,
+            'field8': 0,
+            'field9': 0,
+            'field10': 0,
+            'field11': 0
+        };
+
+        let buff_straight = {
             'field1': 0,
             'field2': 0,
             'field3': 0,
@@ -448,8 +459,8 @@
 
         // 턴종료 누르면 상대턴 시작
         endturn?.addEventListener('click', () => {
-            turn = 'enemy';
-            enemy_turn();
+            {#turn = 'enemy';#}
+            {#enemy_turn();#}
             endturn.disabled = true;
             draw.disabled = false;
             fight.innerText = '전투';
@@ -494,6 +505,9 @@
             }
             if (cardid === 3) stat = 11;
             return stat;
+        };
+        const card_num = (cardid) => {
+            return Math.floor((cardid - 1) / 4) + 1;
         };
         // 기본 모양 판단 함수
         const card_shape_basic = (cardid) => {
@@ -795,7 +809,7 @@
         //첫 턴 자동 함수
         const first_turn = () => {
             // 처음 4장씩 드로우
-            for (let i = 0; i < 4; ++i) {
+            for (let i = 0; i < 10; ++i) {
                 draw_card(player_hand, player_deck);
                 enemy_draw();
             }
@@ -974,7 +988,8 @@
             console.log(main_field);
 
             check_buff_number();
-            console.log(buff_main);
+            console.log(buff_pair);
+            console.log(buff_straight);
 
             defencebtn.removeEventListener("click", attackf);
             defencebtn.removeEventListener("click", defencef);
@@ -1068,11 +1083,12 @@
             let a = document.createElement('p');
             if (cardstat === 10000) a.innerText = 'joker';
             else if (isplayer_normal(place)) {
-                if (buff_main[place] === 2) {
+                if (buff_straight[place] !== 0) cardstat = buff_straight[place];
+                if (buff_pair[place] === 2) {
                     cardstat = cardstat * 2;
-                } else if (buff_main[place] === 3) {
+                } else if (buff_pair[place] === 3) {
                     cardstat = cardstat ** 3;
-                } else if (buff_main[place] === 4) {
+                } else if (buff_pair[place] === 4) {
                     cardstat = cardstat ** 4;
                 }
                 if (double_attack_player)
@@ -1086,11 +1102,12 @@
                 cardstat -= cardstat % 1;
                 a.innerText = cardstat;
             } else if (isenemy_normal(place)) {
-                if (buff_main[place] === 2) {
+                if (buff_straight[place] !== 0) cardstat = buff_straight[place];
+                if (buff_pair[place] === 2) {
                     cardstat = cardstat * 2;
-                } else if (buff_main[place] === 3) {
+                } else if (buff_pair[place] === 3) {
                     cardstat = cardstat ** 3;
-                } else if (buff_main[place] === 4) {
+                } else if (buff_pair[place] === 4) {
                     cardstat = cardstat ** 4;
                 }
                 if (double_attack_enemy)
@@ -1230,7 +1247,7 @@
 
         // 왜 delete는 eval을 먹지 않아 나를 괴롭게 하는가?
         const delete_card = (card_loc) => {
-            buff_main[card_loc] = 0;
+            buff_pair[card_loc] = 0;
             switch (card_loc) {
                 case 'field1':
                     delete main_field.field1;
@@ -1433,47 +1450,150 @@
         // 같은 숫자 버프 부여 (패시브)
         const check_buff_number = () => {
             let player_field = [];
-            if (is_front_card(main_field['field8'])) player_field.push(card_stat_basic(main_field['field8'] % 100));
+            if (is_front_card(main_field['field8'])) player_field.push(card_num(main_field['field8'] % 100));
             else player_field.push(0);
-            if (is_front_card(main_field['field9'])) player_field.push(card_stat_basic(main_field['field9'] % 100));
+            if (is_front_card(main_field['field9'])) player_field.push(card_num(main_field['field9'] % 100));
             else player_field.push(0);
-            if (is_front_card(main_field['field10'])) player_field.push(card_stat_basic(main_field['field10'] % 100));
+            if (is_front_card(main_field['field10'])) player_field.push(card_num(main_field['field10'] % 100));
             else player_field.push(0);
-            if (is_front_card(main_field['field11'])) player_field.push(card_stat_basic(main_field['field11'] % 100));
+            if (is_front_card(main_field['field11'])) player_field.push(card_num(main_field['field11'] % 100));
             else player_field.push(0);
 
 
+            let check_straight = [];
+
+            // 동일값 확인
             for (let i = 0; i < 4; ++i) {
                 if (!(player_field[i] === 0)) {
+                    check_straight.push(player_field[i]);
                     let buff_type = player_field.filter(e => player_field[i] === e).length;
                     if (buff_type > 1) {
-                        if (buff_main[`field${i + 8}`] < buff_type) buff_main[`field${i + 8}`] = buff_type;
+                        if (buff_pair[`field${i + 8}`] < buff_type) buff_pair[`field${i + 8}`] = buff_type;
                     }
                 }
             }
+
+            // 순차배열 확인
+            if (check_straight.length >= 3) {
+                let temp = 0;
+                let is_straight = true;
+                let non_straight;
+                check_straight.sort((a, b) => a - b);
+                const set = new Set(check_straight);
+                let check_straight2 = [...set];
+                let stat = check_straight2[0];
+                for (let i = 1; i < check_straight2.length; ++i) {
+                    if (check_straight2[i - 1] + 1 === check_straight2[i]) {
+                        stat += check_straight2[i];
+                    } else {
+                        if (!(temp === 0)) is_straight = false;
+                        temp = i;
+                    }
+                }
+                buff_straight['field8'] = 0;
+                buff_straight['field9'] = 0;
+                buff_straight['field10'] = 0;
+                buff_straight['field11'] = 0;
+                if (is_straight) {
+                    if (check_straight.length === 4 && temp === 0) {
+                        buff_straight['field8'] = stat;
+                        buff_straight['field9'] = stat;
+                        buff_straight['field10'] = stat;
+                        buff_straight['field11'] = stat;
+                    } else if (check_straight2.length === 3 && temp === 0) {
+                        buff_straight['field8'] = stat;
+                        buff_straight['field9'] = stat;
+                        buff_straight['field10'] = stat;
+                        buff_straight['field11'] = stat;
+                        non_straight = `field${player_field.indexOf(0) + 8}`;
+                        if (non_straight !== 'field7') buff_straight[non_straight] = 0;
+                    } else if (check_straight2.length === 4 && temp === 1) {
+                        buff_straight['field8'] = stat;
+                        buff_straight['field9'] = stat;
+                        buff_straight['field10'] = stat;
+                        buff_straight['field11'] = stat;
+                        non_straight = `field${player_field.indexOf(check_straight[0]) + 8}`;
+                        if (non_straight !== 'field7') buff_straight[non_straight] = 0;
+                    } else if (check_straight2.length === 4 && temp === 3) {
+                        buff_straight['field8'] = stat;
+                        buff_straight['field9'] = stat;
+                        buff_straight['field10'] = stat;
+                        buff_straight['field11'] = stat;
+                        non_straight = `field${player_field.indexOf(check_straight[3]) + 8}`;
+                        if (non_straight !== 'field7') buff_straight[non_straight] = 0;
+                    }
+                }
+            }
+
+
             let enemy_field = [];
-            if (is_front_card(main_field['field1'])) enemy_field.push(card_stat_basic(main_field['field1'] % 100));
+            if (is_front_card(main_field['field1'])) enemy_field.push(card_num(main_field['field1'] % 100));
             else enemy_field.push(0);
-            if (is_front_card(main_field['field2'])) enemy_field.push(card_stat_basic(main_field['field2'] % 100));
+            if (is_front_card(main_field['field2'])) enemy_field.push(card_num(main_field['field2'] % 100));
             else enemy_field.push(0);
-            if (is_front_card(main_field['field3'])) enemy_field.push(card_stat_basic(main_field['field3'] % 100));
+            if (is_front_card(main_field['field3'])) enemy_field.push(card_num(main_field['field3'] % 100));
             else enemy_field.push(0);
-            if (is_front_card(main_field['field4'])) enemy_field.push(card_stat_basic(main_field['field4'] % 100));
+            if (is_front_card(main_field['field4'])) enemy_field.push(card_num(main_field['field4'] % 100));
             else enemy_field.push(0);
 
-
+            // 동일값 확인
             for (let i = 0; i < 4; ++i) {
                 if (!(enemy_field[i] === 0)) {
+                    check_straight.push(player_field[i]);
                     let buff_type = enemy_field.filter(e => enemy_field[i] === e).length;
                     if (buff_type > 1) {
-                        if (buff_main[`field${i}`] < buff_type) buff_main[`field${i}`] = buff_type;
+                        if (buff_pair[`field${i + 1}`] < buff_type) buff_pair[`field${i + 1}`] = buff_type;
+                    }
+                }
+            }
+
+            check_straight = [];
+            // 순차배열 확인
+            if (check_straight.length >= 3) {
+                let temp = 0;
+                let is_straight = true;
+                let non_straight;
+                check_straight.sort((a, b) => a - b);
+                const set = new Set(check_straight);
+                let check_straight2 = [...set];
+                let stat = check_straight2[0];
+                for (let i = 1; i < check_straight2.length; ++i) {
+                    if (check_straight2[i - 1] + 1 === check_straight2[i]) {
+                        stat += check_straight2[i];
+                    } else {
+                        if (!(temp === 0)) is_straight = false;
+                        temp = i;
+                    }
+                }
+                const buff_enemy = (num) => {
+                    buff_straight['field1'] = num;
+                    buff_straight['field2'] = num;
+                    buff_straight['field3'] = num;
+                    buff_straight['field4'] = num;
+                };
+                buff_enemy(0);
+                if (is_straight) {
+                    if (check_straight.length === 4 && temp === 0) {
+                        buff_enemy(stat);
+                    } else if (check_straight2.length === 3 && temp === 0) {
+                        buff_enemy(stat);
+                        non_straight = `field${player_field.indexOf(0) + 8}`;
+                        if (non_straight !== 'field0') buff_straight[non_straight] = 0;
+                    } else if (check_straight2.length === 4 && temp === 1) {
+                        buff_enemy(stat);
+                        non_straight = `field${player_field.indexOf(check_straight[0]) + 1}`;
+                        if (non_straight !== 'field0') buff_straight[non_straight] = 0;
+                    } else if (check_straight2.length === 4 && temp === 3) {
+                        buff_enemy(stat);
+                        non_straight = `field${player_field.indexOf(check_straight[3]) + 1}`;
+                        if (non_straight !== 'field0') buff_straight[non_straight] = 0;
                     }
                 }
             }
         };
 
         // 같은 모양 버프 부여 (엑티브)
-        const check_buff_shape = () =>{
+        const check_buff_shape = () => {
 
         };
 
