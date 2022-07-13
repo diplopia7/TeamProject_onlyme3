@@ -288,9 +288,9 @@
         </div>
         <div id="playerstatus">
             <div style="margin-top:10px; margin-left:10px">플레이어</div>
-            <div style="margin-left:10px">체력 : <span id="playerhp"></span> 전술 : <span id="player전술"></span></div>
-            <div style="margin-left:10px">통솔 : <span id="player통솔"></span> 지력: <span id="player지력"></span></div>
-            <div style="margin-left:10px">무력 : <span id="player무력"></span> 정치: <span id="player정치"></span></div>
+            <div style="margin-left:10px">체력 : <span id="playerhp"></span> 전술 : <span id="player전술">100</span></div>
+            <div style="margin-left:10px">통솔 : <span id="player통솔">100</span> 지력: <span id="player지력">100</span></div>
+            <div style="margin-left:10px">무력 : <span id="player무력">100</span> 정치: <span id="player정치">100</span></div>
         </div>
         <div id="enemystatus">
             <div style="margin-top:10px; margin-left:10px">적군</div>
@@ -307,8 +307,8 @@
             {#            <br>#}
             <button id="fight" type="button" class="button">전투</button>
             <br>
-            {#            <button id="skill" type="button" class="button">전술스킬</button>#}
-            {#            <br>#}
+            <button id="skill" type="button" class="button">전술스킬</button>
+            <br>
         </div>
         <div id="playercard"></div>
         <div id="enemycard"></div>
@@ -406,8 +406,33 @@
             'field10': 0,
             'field11': 0
         };
+
         let color_available_player = true;
         let color_available_enemy = true;
+
+        let user_special_add_stat = {
+            'field1': 0,
+            'field2': 0,
+            'field3': 0,
+            'field4': 0,
+            'field8': 0,
+            'field9': 0,
+            'field10': 0,
+            'field11': 0
+        };
+        let user_special_multiply_stat = {
+            'field1': 1,
+            'field2': 1,
+            'field3': 1,
+            'field4': 1,
+            'field8': 1,
+            'field9': 1,
+            'field10': 1,
+            'field11': 1
+        };
+        let user_skill_count = 0;
+        let skill_available = true;
+        let user_additional_turn = 0;
 
         // 메인 필드
         let main_field = {};
@@ -484,8 +509,15 @@
 
         // 턴종료 누르면 상대턴 시작
         endturn?.addEventListener('click', () => {
-            turn = 'enemy';
-            enemy_turn();
+            if (user_additional_turn) {
+                user_additional_turn--;
+                if (!user_additional_turn) endturn.innerText = '턴 종료'
+            } else {
+                turn = 'enemy';
+                enemy_turn();
+                if (skill_available) skill.disabled = false;
+            }
+            card_location();
             endturn.disabled = true;
             draw.disabled = false;
             fight.innerText = '전투';
@@ -866,37 +898,37 @@
         const loc1f = () => {
             normallocation.style.display = 'none';
             main_field['field8'] = set_stat(cardid) + isattack + isfront + cardid;
-            turn_finish();
+            finish_turn();
         };
         const loc2f = () => {
             normallocation.style.display = 'none';
             main_field['field9'] = set_stat(cardid) + isattack + isfront + cardid;
-            turn_finish();
+            finish_turn();
         };
         const loc3f = () => {
             normallocation.style.display = 'none';
             main_field['field10'] = set_stat(cardid) + isattack + isfront + cardid;
-            turn_finish();
+            finish_turn();
         };
         const loc4f = () => {
             normallocation.style.display = 'none';
             main_field['field11'] = set_stat(cardid) + isattack + isfront + cardid;
-            turn_finish();
+            finish_turn();
         };
         const loc5f = () => {
             magiclocation.style.display = 'none';
             if (active_magic_card(cardid, 'player')) main_field['field12'] = magic_card + isattack + isfront + cardid;
-            turn_finish();
+            finish_turn();
         };
         const loc6f = () => {
             magiclocation.style.display = 'none';
             if (active_magic_card(cardid, 'player')) main_field['field13'] = magic_card + isattack + isfront + cardid;
-            turn_finish();
+            finish_turn();
         };
         const loc7f = () => {
             magiclocation.style.display = 'none';
             if (active_magic_card(cardid, 'player')) main_field['field14'] = magic_card + isattack + isfront + cardid;
-            turn_finish();
+            finish_turn();
         };
 
         const set_stat = (cardid) => {
@@ -913,7 +945,7 @@
             checkhand(player_hand, playercard);
             if (player_deck === []) win_game('enemy');
             else if (enemy_deck === []) win_game('player');
-            turn_finish();
+            finish_turn();
         });
 
         // 앞뒤판단 - 공격방향
@@ -1117,6 +1149,10 @@
                 } else if (buff_pair[place] === 4) {
                     cardstat = cardstat ** 4;
                 }
+
+                cardstat += user_special_add_stat[place];
+                cardstat = cardstat * user_special_multiply_stat[place];
+
                 if (double_attack_player)
                     for (let i = 0; i < double_attack_player; ++i) {
                         cardstat = cardstat * 2;
@@ -1208,7 +1244,7 @@
                 card_attack('player');
             } else {
                 attack_directly('player', attack_stat)
-                turn_finish();
+                finish_turn();
             }
             fight.disabled = true;
         };
@@ -1216,14 +1252,16 @@
 
         // 플레이어 턴 종료
         // 턴 종료 버튼만 누를 수 있음
-        const turn_finish = () => {
+        const finish_turn = () => {
             endturn.disabled = false;
             draw.disabled = true;
             fight_mode = false;
             playercard.style.pointerEvents = 'none';
+            skill.disabled = true;
             card_location();
             fight.disabled = true;
             fight.innerText = '전투'
+            if (user_additional_turn) endturn.innerText = `추가 턴 (${user_additional_turn})`
         };
 
         const stat_now = (field) => {
@@ -1276,7 +1314,7 @@
                 else if (attack_card_shape - 1 === attacked_card_shape ||
                     (attack_card_shape === 0 && attacked_card_shape === 3)) delete_card_normal(loc_attack_card);
             }
-            turn_finish();
+            finish_turn();
         };
 
         // 일반 카드 제거
@@ -1285,6 +1323,8 @@
             buff_pair[card_loc] = 0;
             debuff_shape[card_loc] = 0;
             active_shape[card_loc] = 0;
+            user_special_add_stat[card_loc] = 0;
+            user_special_multiply_stat[card_loc] = 1;
             switch (card_loc) {
                 case 'field1':
                     delete main_field.field1;
@@ -1784,6 +1824,93 @@
                     if (main_field['field14']) delete_card_magic('field14');
                     color_available_enemy = false;
                 }
+            }
+        }
+
+        // 전술스킬 발동 버튼
+        skill.addEventListener('click', () => {
+            let skill_name = `복병`
+            user_skill_count++;
+            if (user_skill(skill_name)) alert(`${skill_name} 발동`);
+            else alert(`${skill_name} 발동실패`);
+            card_location();
+            finish_turn();
+        });
+
+        // 전술스킬 발동 함수
+        const user_skill = (skill_name) => {
+            let user = 'player';
+            switch (skill_name) {
+                case '공격강화':
+                    if (is_attack_card(main_field['field8'])) user_special_add_stat['field8']++;
+                    if (is_attack_card(main_field['field9'])) user_special_add_stat['field9']++;
+                    if (is_attack_card(main_field['field10'])) user_special_add_stat['field10']++;
+                    if (is_attack_card(main_field['field11'])) user_special_add_stat['field11']++;
+                    skill.innerText = `강화 ${user_skill_count}회`;
+                    if (user_skill_count === 5) skill_available = false;
+                    return true;
+                case '방어강화':
+                    if (!is_attack_card(main_field['field8'])) user_special_add_stat['field8']++;
+                    if (!is_attack_card(main_field['field9'])) user_special_add_stat['field9']++;
+                    if (!is_attack_card(main_field['field10'])) user_special_add_stat['field10']++;
+                    if (!is_attack_card(main_field['field11'])) user_special_add_stat['field11']++;
+                    skill.innerText = `강화 ${user_skill_count}회`;
+                    if (user_skill_count === 5) skill_available = false;
+                    return true;
+                case '매복지독':
+                    let dice = Math.floor(Math.random() * 99) + 1;
+                    let player_int = document.getElementById('player지력').innerText;
+                    if (player_int > dice) {
+                        attack_directly(user, dice);
+                        attack_directly('enemy', 10);
+                        return true;
+                    } else return false;
+                case '속공':
+                    if (main_field['field8']) user_special_add_stat['field8'] = user_special_add_stat['field8'] * 0.5;
+                    if (main_field['field9']) user_special_add_stat['field9'] = user_special_add_stat['field9'] * 0.5;
+                    if (main_field['field10']) user_special_add_stat['field10'] = user_special_add_stat['field10'] * 0.5;
+                    if (main_field['field11']) user_special_add_stat['field11'] = user_special_add_stat['field11'] * 0.5;
+                    user_additional_turn = 2;
+                    return true;
+                case '복병':
+                    let magic_card_in_deck = player_deck.filter(ismagic);
+                    return true;
+                case '복병신속':
+                    break;
+                case '노당익장':
+                    break;
+                case '맹공':
+                    break;
+                case '공방일체':
+                    break;
+                case '강용':
+                    break;
+                case '철벽':
+                    break;
+                case '강습':
+                    break;
+                case '운체풍신':
+                    break;
+                case '위무지강':
+                    break;
+                case '방호':
+                    break;
+                case '의용병':
+                    break;
+                case '팔진도':
+                    break;
+                case '용의 지혜':
+                    break;
+                case '대타격':
+                    break;
+                case '화계':
+                    break;
+                case '신화계':
+                    break;
+                case '인중여포':
+                    break;
+                default:
+                    return false
             }
         }
 
