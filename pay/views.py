@@ -121,7 +121,13 @@ def userpos(request, perPage=6):
 
     elif request.method == 'POST':
         form = request.POST.dict()
+        request.session['cname'] = form['cname']
+        request.session['innertrait'] = form['innertrait']
+        request.session['fighttrait'] = form['fighttrait']
+        request.session['skill'] = form['skill']
+        request.session['portrait'] = form['cimg']
         print(form)
+
 
         qry = '/userpos/?cpage=' + form['cpage']
 

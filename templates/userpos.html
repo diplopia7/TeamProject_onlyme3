@@ -133,6 +133,7 @@
                         <img src="{{ b.img }}" class="card-img-top">
                         <div class="card-body" id="card{{ b.id }}">
                             <input type="text" id="cname1" name="cname1" value="{{ b.cname }}">
+                            <input type="text" id="cimg1" name="cimg1" value="{{ b.img }}">
                             <input type="text" id="cid1" name="cid1" value="{{ b.id }}">
                             <input type="text" id="innertrait1" name="innertrait1" value="{{ b.innertrait }}">
                             <input type="text" id="fighttrait1" name="fighttrait1" value="{{ b.fighttrait }}">
@@ -148,11 +149,12 @@
                         </div>
                     </div>
                 {% endfor %}
-                <div>선택한 캐릭터 : <span id="selectchr"></span></div>
+                <div>선택한 캐릭터 : {{ cname }}</div>
                 <form id="posfrm" name="posfrm" method="post">
                     {% csrf_token %}
                     <input type="text" id="cname" name="cname" value="">
                     <input type="text" id="cid" name="cid" value="">
+                    <input type="text" id="cimg" name="cimg" value="">
                     <input type="text" id="innertrait" name="innertrait" value="">
                     <input type="text" id="fighttrait" name="fighttrait" value="">
                     <input type="text" id="skill" name="skill" value="">
@@ -218,6 +220,7 @@
         const cid = document.querySelector('#cid')
         const cname = document.querySelector('#cname');
         const selectchr = document.querySelector('#selectchr');
+        const cimg1 = document.querySelector('#cimg1');
 
         const paybtn = document.getElementsByName('paybtn');
         const cname1 = document.getElementsByName('cname1');
@@ -225,6 +228,7 @@
         const innertrait1 = document.getElementsByName('innertrait1')
         const fighttrait1 = document.getElementsByName('fighttrait1')
         const skill1 = document.getElementsByName('skill1')
+        const cimg = document.getElementsByName('cimg');
 
         const frm = document.posfrm;
 
@@ -287,6 +291,7 @@
         rechargebtn.addEventListener('click', () => {
             test();
             cname.value = '';
+            cimg.value = '';
             cid.value = '';
             innertrait.value = '';
             fighttrait.value = '';
@@ -297,10 +302,12 @@
         for (let i = 0; i <= 25; i++) {
             paybtn[i].addEventListener('click', () => {
                 cname.value = cname1[i].value;
+                cimg.value = cimg1[i].value;
                 cid.value = cid1[i].value;
                 innertrait.value = innertrait1[i].value;
                 fighttrait.value = fighttrait1[i].value;
                 skill.value = skill1[i].value;
+                selectchr.textContent = cname.value;
                 frm.submit();
             });
         }
