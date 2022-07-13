@@ -158,7 +158,7 @@
                     </div>
                 {% endfor %}
                 <div id='cchr' class="pagination justify-content-lg-start">선택한 캐릭터 :
-                    <span id="sele ctchr"><b>&nbsp;{{ request.session.cname }}</b></span>
+                    <span id="selectchr"><b>&nbsp;{{ request.session.cname }}</b></span>
                     <button type="button" class="btn btn-danger" name="rechargebtn" id="rechargebtn">선택 해제</button>
                 </div>
                 <form id="posfrm" name="posfrm" method="post">
@@ -171,9 +171,7 @@
                     <input type="hidden" id="skill" name="skill" value="{{ request.session.skill }}">
                     <input type="hidden" id="cpage" name="cpage" value="{{ request.GET.cpage }}">
                 </form>
-
             </div>
-
             {#        </form>#}
             <ul class="pagination justify-content-center">
                 {% if request.GET.cpage|add:0 > 1 %}
@@ -201,7 +199,7 @@
     <script>
         const payok = document.querySelector('#payok');
         const payq = document.querySelector('#payq');
-        const nocheckbtn = document.querySelector('#nocheckbtn');
+        const rechargebtn = document.querySelector('#rechargebtn');
 
         const payokbtn = document.querySelector('#payokbtn');
         const rd1 = document.querySelector('#inlineRadio1');
@@ -299,7 +297,7 @@
             }
         }
 
-        nocheckbtn.addEventListener('click', () => {
+        rechargebtn.addEventListener('click', () => {
             test();
             cname.value = '';
             cid.value = '';
