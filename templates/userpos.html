@@ -124,7 +124,7 @@
 
     <div id="main">
         <div class="text-end" id="charge">
-            <button type="button" class="btn btn-danger" name="rechargebtn" id="rechargebtn">충전하기</button>
+            <button type="button" class="btn btn-danger" name="rechargebtn" id="rechargebtn">선택 해제</button>
         </div>
         {% if request.session.userid %}
             <div class="d-flex row" id="chr">
@@ -292,10 +292,12 @@
             test();
             cname.value = '';
             cid.value = '';
+            cimg.value='';
             innertrait.value = '';
             fighttrait.value = '';
             skill.value = '';
             selectchr.textContent = '';
+            frm.submit();
         });
 
         for (let i = 0; i <= 25; i++) {

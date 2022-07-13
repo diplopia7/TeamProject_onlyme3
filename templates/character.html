@@ -223,7 +223,7 @@
             <div id="내정특기">
                 {% if not request.session.innertrait %}
                     <div id="trait1">{{ innertrait }}</div>
-                    <input type="text" id="innertrait" name="innertrait">
+                    <input type="hidden" id="innertrait" name="innertrait">
                     <div>
                         <button id="btn2" type="button">내정특기</button>
                     </div>
@@ -257,12 +257,13 @@
                     <div>
                         <button id="btn4" type="button">전술</button>
                     </div>
-                {% endif %}
+                {% else %}
                 <div id="trait3">{{ request.session.skill }}</div>
                 <input type="hidden" id="skill" name="skill" value="{{ request.session.skill }}">
                 <div>
                     <button id="btn4" type="button" disabled>전술</button>
                 </div>
+                {% endif %}
             </div>
             {% if not request.session.cimg %}
             <div id="장수" class="img1">
