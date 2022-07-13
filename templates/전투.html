@@ -185,7 +185,7 @@
 
         #playerstatus {
             border: 3px solid black;
-            width: 390px;
+            width: 350px;
             height: 200px;
             position: absolute;
             z-index: 1;
@@ -197,7 +197,7 @@
 
         #enemystatus {
             border: 3px solid black;
-            width: 390px;
+            width: 350px;
             height: 200px;
             position: absolute;
             z-index: 1;
@@ -291,12 +291,6 @@
             <div style="margin-left:10px">체력 : <span id="playerhp"></span> 전술 : <span id="player전술"></span></div>
             <div style="margin-left:10px">통솔 : <span id="player통솔"></span> 지력: <span id="player지력"></span></div>
             <div style="margin-left:10px">무력 : <span id="player무력"></span> 정치: <span id="player정치"></span></div>
-            <input type="hidden" id="playerhpvalue" name="playerhpvalue" value="{{ request.session.hp }}">
-            <input type="hidden" id="playerskillvalue" name="playerskillvalue" value="{{ request.session.skill }}">
-            <input type="hidden" id="playercommandvalue" name="playercommandvalue" value="{{ request.session.command }}">
-            <input type="hidden" id="playerintelivalue" name="playerintelivalue" value="{{ request.session.inteli }}">
-            <input type="hidden" id="playerpowervalue" name="playerpowervalue" value="{{ request.session.power }}">
-            <input type="hidden" id="playerpoliticsvalue" name="playerpoliticsvalue" value="{{ request.session.politics }}">
         </div>
         <div id="enemystatus">
             <div style="margin-top:10px; margin-left:10px">적군</div>
@@ -343,19 +337,9 @@
 {% block jscript %}
 
     <script>
-        let hp1 = document.getElementById('playerhpvalue').value;
-        let command1 = document.getElementById('playercommandvalue').value;
-        let power1 = document.getElementById('playerpowervalue').value;
-        let inteli1 = document.getElementById('playerintelivalue').value;
-        let politics1 = document.getElementById('playerpoliticsvalue').value;
-        let skill1 = document.getElementById('playerskillvalue').value;
+        let hp1 = 100;
         let hp2 = 100;
         playerhp.textContent = hp1;
-        player통솔.textContent = command1;
-        player지력.textContent = inteli1;
-        player무력.textContent = power1;
-        player정치.textContent = politics1;
-        player전술.textContent = skill1;
         enemyhp.textContent = hp2;
         let loc_attack_card;
         let loc_attacked_card;
@@ -400,6 +384,30 @@
             'field10': 0,
             'field11': 0
         };
+
+        let active_shape = {
+            'field1': 0,
+            'field2': 0,
+            'field3': 0,
+            'field4': 0,
+            'field8': 0,
+            'field9': 0,
+            'field10': 0,
+            'field11': 0
+        };
+
+        let debuff_shape = {
+            'field1': 0,
+            'field2': 0,
+            'field3': 0,
+            'field4': 0,
+            'field8': 0,
+            'field9': 0,
+            'field10': 0,
+            'field11': 0
+        };
+        let color_available_player = true;
+        let color_available_enemy = true;
 
         // 메인 필드
         let main_field = {};
@@ -461,6 +469,7 @@
             '{% static "/resources/img/card/resize/black_joker.png" %}',
             '{% static "/resources/img/card/resize/red_joker.png" %}'];
 
+
         // 섞섞
         function shuffle(array) {
             array.sort(() => Math.random() - 0.5);
@@ -475,8 +484,8 @@
 
         // 턴종료 누르면 상대턴 시작
         endturn?.addEventListener('click', () => {
-            {#turn = 'enemy';#}
-            {#enemy_turn();#}
+            turn = 'enemy';
+            enemy_turn();
             endturn.disabled = true;
             draw.disabled = false;
             fight.innerText = '전투';
@@ -542,8 +551,7 @@
                     shape = 'spade';
                     break;
             }
-            if (cardid === 53) shape = 'black';
-            else if (cardid === 54) shape = 'red';
+            if (cardid >= 53) shape = 'joker';
             return shape;
         };
         // 기본 색깔 판단 함수
@@ -825,14 +833,12 @@
         //첫 턴 자동 함수
         const first_turn = () => {
             // 처음 4장씩 드로우
-            for (let i = 0; i < 10; ++i) {
+            for (let i = 0; i < 4; ++i) {
                 draw_card(player_hand, player_deck);
                 enemy_draw();
             }
             checkhand(player_hand, playercard);
         };
-
-        first_turn();
 
 
         // 마법카드 판단 함수
@@ -1006,6 +1012,10 @@
             check_buff_number();
             console.log(buff_pair);
             console.log(buff_straight);
+            check_buff_shape();
+            console.log(active_shape);
+            console.log(debuff_shape);
+            check_buff_color();
 
             defencebtn.removeEventListener("click", attackf);
             defencebtn.removeEventListener("click", defencef);
@@ -1115,6 +1125,10 @@
                     for (let i = 0; i < half_attack_player; ++i) {
                         cardstat = cardstat / 2;
                     }
+                if (debuff_shape[place])
+                    for (let i = 0; i < debuff_shape[place]; ++i) {
+                        cardstat = cardstat / 2;
+                    }
                 cardstat -= cardstat % 1;
                 a.innerText = cardstat;
             } else if (isenemy_normal(place)) {
@@ -1132,6 +1146,10 @@
                     }
                 if (half_attack_enemy)
                     for (let i = 0; i < half_attack_enemy; ++i) {
+                        cardstat = cardstat / 2;
+                    }
+                if (debuff_shape[place])
+                    for (let i = 0; i < debuff_shape[place]; ++i) {
                         cardstat = cardstat / 2;
                     }
                 cardstat -= cardstat % 1;
@@ -1237,13 +1255,13 @@
 
             if (main_field[loc_attacked_card] % 1000 < 100) main_field[loc_attacked_card] += 100;
             if (attacked_stat < 0) {
-                delete_card(loc_attacked_card);
+                delete_card_normal(loc_attacked_card);
                 if (attack_card_id <= 53 && attacked_card_id <= 53  // 두 카드 전부 조커가 아니어야 직접 데미지
                     && attacked_card_id >= 4  // 맞는 카드가 에이스가 아니어야 직접 데미지
                     && attack_card)
                     attack_directly(turn, attacked_stat * -1);
             } else if (attacked_stat > 0) {
-                delete_card(loc_attack_card);
+                delete_card_normal(loc_attack_card);
                 if (attack_card_id <= 53 && attacked_card_id <= 53  // 두 카드 전부 조커가 아니어야 직접 데미지
                     && attack_card_id >= 4  // 공격하는 카드가 에이스가 아니어야 직접 데미지
                     && attack_card)
@@ -1254,108 +1272,142 @@
                 let attacked_card_shape = attacked_card_id % 4;
 
                 if (attack_card_shape + 1 === attacked_card_shape ||
-                    (attack_card_shape === 3 && attacked_card_shape === 0)) delete_card(loc_attacked_card);
+                    (attack_card_shape === 3 && attacked_card_shape === 0)) delete_card_normal(loc_attacked_card);
                 else if (attack_card_shape - 1 === attacked_card_shape ||
-                    (attack_card_shape === 0 && attacked_card_shape === 3)) delete_card(loc_attack_card);
+                    (attack_card_shape === 0 && attacked_card_shape === 3)) delete_card_normal(loc_attack_card);
             }
             turn_finish();
         };
 
-        // 왜 delete는 eval을 먹지 않아 나를 괴롭게 하는가?
-        const delete_card = (card_loc) => {
+        // 일반 카드 제거
+        const delete_card_normal = (card_loc) => {
+            console.log(`${card_loc} is deleted!`);
             buff_pair[card_loc] = 0;
+            debuff_shape[card_loc] = 0;
+            active_shape[card_loc] = 0;
             switch (card_loc) {
                 case 'field1':
                     delete main_field.field1;
+                    color_available_enemy = true;
                     break;
                 case 'field2':
                     delete main_field.field2;
+                    color_available_enemy = true;
                     break;
                 case 'field3':
                     delete main_field.field3;
+                    color_available_enemy = true;
                     break;
                 case 'field4':
                     delete main_field.field4;
+                    color_available_enemy = true;
                     break;
                 case 'field8':
                     delete main_field.field8;
+                    color_available_player = true;
                     break;
                 case 'field9':
                     delete main_field.field9;
+                    color_available_player = true;
                     break;
                 case 'field10':
                     delete main_field.field10;
+                    color_available_player = true;
                     break;
                 case 'field11':
                     delete main_field.field11;
+                    color_available_player = true;
                     break;
             }
         }
+        // 마법 카드 제거
+        const delete_card_magic = (card_loc) => {
+            console.log(`${card_loc} is deleted!`);
+            let card_stat = String(card_stat_basic(main_field[card_loc] % 100));
+            switch (card_loc) {
+                case 'field5':
+                    delete main_field.field5;
+                    break;
+                case 'field6':
+                    delete main_field.field6;
+                    break;
+                case 'field7':
+                    delete main_field.field7;
+                    break;
+                case 'field12':
+                    delete main_field.field12;
+                    break;
+                case 'field13':
+                    delete main_field.field13;
+                    break;
+                case 'field14':
+                    delete main_field.field14;
+                    break;
+            }
+            switch (card_loc) {
+                case 'field5':
+                case 'field6':
+                case 'field7':
+                    switch (card_stat) {
+                        case 'jack':
+                            double_attack_enemy -= 1;
+                            break;
+                        case 'queen':
+                            half_attack_player -= 1;
+                            break;
+                        case 'king':
+                            double_attack_enemy -= 1;
+                            half_attack_player -= 1;
+                            break;
+                    }
+                    break;
+                case 'field12':
+                case 'field13':
+                case 'field14':
+                    switch (card_stat) {
+                        case 'jack':
+                            double_attack_player -= 1;
+                            break;
+                        case 'queen':
+                            half_attack_enemy -= 1;
+                            break;
+                        case 'king':
+                            double_attack_player -= 1;
+                            half_attack_enemy -= 1;
+                            break;
+                    }
+                    break;
+            }
+        };
 
         // 마법카드 효과
         const active_magic_card = (cardid, turn) => {
             console.log(`${turn}'s turn magic card: ${cardid}`)
             switch (turn) {
                 case 'player':
-                    let field5_stat = String(card_stat_basic(main_field['field5'] % 100));
-                    let field6_stat = String(card_stat_basic(main_field['field6'] % 100));
-                    let field7_stat = String(card_stat_basic(main_field['field7'] % 100));
+                    let field5_stat = card_stat_basic(main_field['field5'] % 100);
+                    let field6_stat = card_stat_basic(main_field['field6'] % 100);
+                    let field7_stat = card_stat_basic(main_field['field7'] % 100);
                     switch (card_stat_basic(cardid)) {
+                        case field5_stat:
+                            delete_card_magic('field5');
+                            return false;
+                        case field6_stat:
+                            delete_card_magic('field6');
+                            return false;
+                        case field7_stat:
+                            delete_card_magic('field7');
+                            return false;
                         case 'jack':
-                            if (field5_stat === 'jack') {
-                                double_attack_enemy -= 1;
-                                delete main_field.field5;
-                                return false;
-                            } else if (field6_stat === 'jack') {
-                                double_attack_enemy -= 1;
-                                delete main_field.field6;
-                                return false;
-                            } else if (field7_stat === 'jack') {
-                                double_attack_enemy -= 1;
-                                delete main_field.field7;
-                                return false;
-                            } else {
-                                double_attack_player += 1;
-                                return true;
-                            }
+                            double_attack_player += 1;
+                            return true;
                         case 'queen':
-                            if (field5_stat === 'queen') {
-                                half_attack_player -= 1;
-                                delete main_field.field5;
-                                return false;
-                            } else if (field6_stat === 'queen') {
-                                half_attack_player -= 1;
-                                delete main_field.field6;
-                                return false;
-                            } else if (field7_stat === 'queen') {
-                                half_attack_player -= 1;
-                                delete main_field.field7;
-                                return false;
-                            } else {
-                                half_attack_enemy += 1;
-                                return true;
-                            }
+                            half_attack_enemy += 1;
+                            return true;
                         case 'king':
-                            if (field5_stat === 'king') {
-                                double_attack_enemy -= 1;
-                                half_attack_player -= 1;
-                                delete main_field.field5;
-                                return false;
-                            } else if (field6_stat === 'king') {
-                                double_attack_enemy -= 1;
-                                half_attack_player -= 1;
-                                delete main_field.field6;
-                                return false;
-                            } else if (field7_stat === 'king') {
-                                double_attack_enemy -= 1;
-                                half_attack_player -= 1;
-                                delete main_field.field7;
-                                return false;
-                            } else {
-                                double_attack_player += 1;
-                                half_attack_enemy += 1;
-                                return true;
-                            }
+                            double_attack_player += 1;
+                            half_attack_enemy += 1;
+                            return true;
                     }
                     break;
                 case 'enemy':
@@ -1363,61 +1415,25 @@
                     let field13_stat = String(card_stat_basic(main_field['field13'] % 100));
                     let field14_stat = String(card_stat_basic(main_field['field14'] % 100));
                     switch (card_stat_basic(cardid)) {
+                        case field12_stat:
+                            delete_card_magic('field12');
+                            return false;
+                        case field13_stat:
+                            delete_card_magic('field13');
+                            return false;
+                        case field14_stat:
+                            delete_card_magic('field14');
+                            return false;
                         case 'jack':
-                            if (field12_stat === 'jack') {
-                                double_attack_player -= 1;
-                                delete main_field.field12;
-                                return false;
-                            } else if (field13_stat === 'jack') {
-                                double_attack_player -= 1;
-                                delete main_field.field13;
-                                return false;
-                            } else if (field14_stat === 'jack') {
-                                double_attack_player -= 1;
-                                delete main_field.field14;
-                                return false;
-                            } else {
-                                double_attack_enemy += 1;
-                                return true;
-                            }
+                            double_attack_enemy += 1;
+                            return true;
                         case 'queen':
-                            if (field12_stat === 'queen') {
-                                half_attack_enemy -= 1;
-                                delete main_field.field12;
-                                return false;
-                            } else if (field13_stat === 'queen') {
-                                half_attack_enemy -= 1;
-                                delete main_field.field13;
-                                return false;
-                            } else if (field14_stat === 'queen') {
-                                half_attack_enemy -= 1;
-                                delete main_field.field14;
-                                return false;
-                            } else {
-                                half_attack_player += 1;
-                                return true;
-                            }
+                            half_attack_player += 1;
+                            return true;
                         case 'king':
-                            if (field12_stat === 'king') {
-                                double_attack_player -= 1;
-                                half_attack_enemy -= 1;
-                                delete main_field.field12;
-                                return false;
-                            } else if (field13_stat === 'king') {
-                                double_attack_player -= 1;
-                                half_attack_enemy -= 1;
-                                delete main_field.field13;
-                                return false;
-                            } else if (field14_stat === 'king') {
-                                double_attack_player -= 1;
-                                half_attack_enemy -= 1;
-                                delete main_field.field14;
-                                return false;
-                            } else {
-                                double_attack_enemy += 1;
-                                half_attack_player += 1;
-                                return true;
-                            }
+                            double_attack_enemy += 1;
+                            half_attack_player += 1;
+                            return true;
                     }
                     break;
             }
@@ -1463,7 +1479,7 @@
             }
         };
 
-        // 같은 숫자 버프 부여 (패시브)
+        // 숫자 버프 부여 (패시브)
         const check_buff_number = () => {
             let player_field = [];
             if (is_front_card(main_field['field8'])) player_field.push(card_num(main_field['field8'] % 100));
@@ -1506,35 +1522,26 @@
                         temp = i;
                     }
                 }
-                buff_straight['field8'] = 0;
-                buff_straight['field9'] = 0;
-                buff_straight['field10'] = 0;
-                buff_straight['field11'] = 0;
+                const buff_player = (num) => {
+                    buff_straight['field8'] = num;
+                    buff_straight['field9'] = num;
+                    buff_straight['field10'] = num;
+                    buff_straight['field11'] = num;
+                };
+                buff_player(0);
                 if (is_straight) {
                     if (check_straight.length === 4 && temp === 0) {
-                        buff_straight['field8'] = stat;
-                        buff_straight['field9'] = stat;
-                        buff_straight['field10'] = stat;
-                        buff_straight['field11'] = stat;
+                        buff_player(stat);
                     } else if (check_straight2.length === 3 && temp === 0) {
-                        buff_straight['field8'] = stat;
-                        buff_straight['field9'] = stat;
-                        buff_straight['field10'] = stat;
-                        buff_straight['field11'] = stat;
+                        buff_player(stat);
                         non_straight = `field${player_field.indexOf(0) + 8}`;
                         if (non_straight !== 'field7') buff_straight[non_straight] = 0;
                     } else if (check_straight2.length === 4 && temp === 1) {
-                        buff_straight['field8'] = stat;
-                        buff_straight['field9'] = stat;
-                        buff_straight['field10'] = stat;
-                        buff_straight['field11'] = stat;
+                        buff_player(stat);
                         non_straight = `field${player_field.indexOf(check_straight[0]) + 8}`;
                         if (non_straight !== 'field7') buff_straight[non_straight] = 0;
                     } else if (check_straight2.length === 4 && temp === 3) {
-                        buff_straight['field8'] = stat;
-                        buff_straight['field9'] = stat;
-                        buff_straight['field10'] = stat;
-                        buff_straight['field11'] = stat;
+                        buff_player(stat);
                         non_straight = `field${player_field.indexOf(check_straight[3]) + 8}`;
                         if (non_straight !== 'field7') buff_straight[non_straight] = 0;
                     }
@@ -1593,7 +1600,7 @@
                         buff_enemy(stat);
                     } else if (check_straight2.length === 3 && temp === 0) {
                         buff_enemy(stat);
-                        non_straight = `field${player_field.indexOf(0) + 8}`;
+                        non_straight = `field${player_field.indexOf(0) + 1}`;
                         if (non_straight !== 'field0') buff_straight[non_straight] = 0;
                     } else if (check_straight2.length === 4 && temp === 1) {
                         buff_enemy(stat);
@@ -1610,9 +1617,176 @@
 
         // 같은 모양 버프 부여 (엑티브)
         const check_buff_shape = () => {
+            let player_field = [];
+            if (is_front_card(main_field['field8'])) player_field.push(card_shape_basic(main_field['field8'] % 100));
+            else player_field.push(0);
+            if (is_front_card(main_field['field9'])) player_field.push(card_shape_basic(main_field['field9'] % 100));
+            else player_field.push(0);
+            if (is_front_card(main_field['field10'])) player_field.push(card_shape_basic(main_field['field10'] % 100));
+            else player_field.push(0);
+            if (is_front_card(main_field['field11'])) player_field.push(card_shape_basic(main_field['field11'] % 100));
+            else player_field.push(0);
+
+            const active_skills_player = (skill) => {
+                switch (skill) {
+                    case 2:
+                        if (is_front_card(main_field['field1'])) debuff_shape['field1']++;
+                        if (is_front_card(main_field['field2'])) debuff_shape['field2']++;
+                        if (is_front_card(main_field['field3'])) debuff_shape['field3']++;
+                        if (is_front_card(main_field['field4'])) debuff_shape['field4']++;
+                        break;
+                    case 3:
+                        let field = [];
+                        if (main_field['field1']) field.push('field1');
+                        if (main_field['field2']) field.push('field2');
+                        if (main_field['field3']) field.push('field3');
+                        if (main_field['field4']) field.push('field4');
+                        if (field.length > 0) {
+                            delete_card_normal(field[Math.floor(Math.random() * field.length) - 1]);
+                        }
+                        break;
+                    case 4:
+                        if (main_field['field1']) delete_card_normal('field1');
+                        if (main_field['field2']) delete_card_normal('field2');
+                        if (main_field['field3']) delete_card_normal('field3');
+                        if (main_field['field4']) delete_card_normal('field4');
+                        break;
+                }
+            };
+            let check_skills = [];
+
+            // 동일값 확인
+            for (let i = 0; i < 4; ++i) {
+                if (!(player_field[i] === 0)) {
+                    let buff_type = player_field.filter(e => player_field[i] === e).length;
+                    if (buff_type > 1) {
+                        if (active_shape[`field${i + 8}`] < buff_type) {
+                            active_shape[`field${i + 8}`] = buff_type;
+                            check_skills.push(buff_type);
+                        }
+                    }
+                }
+            }
+            console.log(`player's active skill check`)
+            console.log(check_skills)
+            if (check_skills.includes(2)) active_skills_player(2);
+            else if (check_skills.includes(3)) active_skills_player(3);
+            else if (check_skills.includes(4)) active_skills_player(4);
+
+
+            let enemy_field = [];
+            if (is_front_card(main_field['field1'])) enemy_field.push(card_shape_basic(main_field['field1'] % 100));
+            else enemy_field.push(0);
+            if (is_front_card(main_field['field2'])) enemy_field.push(card_shape_basic(main_field['field2'] % 100));
+            else enemy_field.push(0);
+            if (is_front_card(main_field['field3'])) enemy_field.push(card_shape_basic(main_field['field3'] % 100));
+            else enemy_field.push(0);
+            if (is_front_card(main_field['field4'])) enemy_field.push(card_shape_basic(main_field['field4'] % 100));
+            else enemy_field.push(0);
+
+            const active_skills_enemy = (skill) => {
+                switch (skill) {
+                    case 2:
+                        if (is_front_card(main_field['field8'])) debuff_shape['field8']++;
+                        if (is_front_card(main_field['field9'])) debuff_shape['field9']++;
+                        if (is_front_card(main_field['field10'])) debuff_shape['field10']++;
+                        if (is_front_card(main_field['field11'])) debuff_shape['field11']++;
+                        break;
+                    case 3:
+                        let field = [];
+                        if (main_field['field8']) field.push('field8');
+                        if (main_field['field9']) field.push('field9');
+                        if (main_field['field10']) field.push('field10');
+                        if (main_field['field11']) field.push('field11');
+                        if (field.length > 0) {
+                            delete_card_normal(field[Math.floor(Math.random() * field.length) - 1]);
+                        }
+                        break;
+                    case 4:
+                        if (main_field['field8']) delete_card_normal('field8');
+                        if (main_field['field9']) delete_card_normal('field9');
+                        if (main_field['field10']) delete_card_normal('field10');
+                        if (main_field['field11']) delete_card_normal('field11');
+                        break;
+                }
+            };
+            check_skills = [];
+
+            // 동일값 확인
+            for (let i = 0; i < 4; ++i) {
+                if (!(enemy_field[i] === 0)) {
+                    let buff_type = enemy_field.filter(e => enemy_field[i] === e).length;
+                    if (buff_type > 1) {
+                        if (active_shape[`field${i + 1}`] < buff_type) {
+                            active_shape[`field${i + 1}`] = buff_type;
+                            check_skills.push(buff_type);
+                        }
+                    }
+                }
+            }
+            console.log(`enemy's active skill check`)
+            console.log(check_skills)
+            if (check_skills.includes(2)) active_skills_enemy(2);
+            else if (check_skills.includes(3)) active_skills_enemy(3);
+            else if (check_skills.includes(4)) active_skills_enemy(4);
 
         };
 
+        const check_buff_color = () => {
+            let player_field = [];
+            if (is_front_card(main_field['field8'])) player_field.push(card_color_basic(main_field['field8'] % 100));
+            if (is_front_card(main_field['field9'])) player_field.push(card_color_basic(main_field['field9'] % 100));
+            if (is_front_card(main_field['field10'])) player_field.push(card_color_basic(main_field['field10'] % 100));
+            if (is_front_card(main_field['field11'])) player_field.push(card_color_basic(main_field['field11'] % 100));
+            if (player_field.length === 4 && color_available_player) {
+                console.log(`player's normal field is full----------------`);
+                console.log(player_field);
+                console.log(`black: ${player_field.filter(e => 'black' === e).length}`);
+                console.log(`red: ${player_field.filter(e => 'red' === e).length}`);
+                if (player_field.filter(e => 'black' === e).length === 4) {
+                    let field = [];
+                    if (main_field['field5']) field.push('field5');
+                    if (main_field['field6']) field.push('field6');
+                    if (main_field['field7']) field.push('field7');
+                    if (field.length > 0) {
+                        delete_card_magic(field[Math.floor(Math.random() * field.length) - 1]);
+                    }
+                    color_available_player = false;
+                } else if (player_field.filter(e => 'red' === e).length === 4) {
+                    if (main_field['field5']) delete_card_magic('field5');
+                    if (main_field['field6']) delete_card_magic('field6');
+                    if (main_field['field7']) delete_card_magic('field7');
+                    color_available_player = false;
+                }
+            }
+            let enemy_field = [];
+            if (is_front_card(main_field['field1'])) enemy_field.push(card_color_basic(main_field['field1'] % 100));
+            if (is_front_card(main_field['field2'])) enemy_field.push(card_color_basic(main_field['field2'] % 100));
+            if (is_front_card(main_field['field3'])) enemy_field.push(card_color_basic(main_field['field3'] % 100));
+            if (is_front_card(main_field['field4'])) enemy_field.push(card_color_basic(main_field['field4'] % 100));
+            if (enemy_field.length === 4 && color_available_player) {
+                console.log(`enemy's normal field is full----------------`);
+                console.log(enemy_field);
+                console.log(`black: ${enemy_field.filter(e => 'black' === e).length}`);
+                console.log(`red: ${enemy_field.filter(e => 'red' === e).length}`);
+                if (enemy_field.filter(e => 'black' === e).length === 4) {
+                    let field = [];
+                    if (main_field['field12']) field.push('field12');
+                    if (main_field['field13']) field.push('field13');
+                    if (main_field['field14']) field.push('field14');
+                    if (field.length > 0) {
+                        delete_card_magic(field[Math.floor(Math.random() * field.length) - 1]);
+                    }
+                    color_available_enemy = false;
+                } else if (enemy_field.filter(e => 'red' === e).length === 4) {
+                    if (main_field['field12']) delete_card_magic('field12');
+                    if (main_field['field13']) delete_card_magic('field13');
+                    if (main_field['field14']) delete_card_magic('field14');
+                    color_available_enemy = false;
+                }
+            }
+        }
 
+        first_turn();
     </script>
 {% endblock %}
