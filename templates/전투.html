@@ -185,7 +185,7 @@
 
         #playerstatus {
             border: 3px solid black;
-            width: 350px;
+            width: 390px;
             height: 200px;
             position: absolute;
             z-index: 1;
@@ -197,7 +197,7 @@
 
         #enemystatus {
             border: 3px solid black;
-            width: 350px;
+            width: 390px;
             height: 200px;
             position: absolute;
             z-index: 1;
@@ -291,6 +291,12 @@
             <div style="margin-left:10px">체력 : <span id="playerhp"></span> 전술 : <span id="player전술"></span></div>
             <div style="margin-left:10px">통솔 : <span id="player통솔"></span> 지력: <span id="player지력"></span></div>
             <div style="margin-left:10px">무력 : <span id="player무력"></span> 정치: <span id="player정치"></span></div>
+            <input type="hidden" id="playerhpvalue" name="playerhpvalue" value="{{ request.session.hp }}">
+            <input type="hidden" id="playerskillvalue" name="playerskillvalue" value="{{ request.session.skill }}">
+            <input type="hidden" id="playercommandvalue" name="playercommandvalue" value="{{ request.session.command }}">
+            <input type="hidden" id="playerintelivalue" name="playerintelivalue" value="{{ request.session.inteli }}">
+            <input type="hidden" id="playerpowervalue" name="playerpowervalue" value="{{ request.session.power }}">
+            <input type="hidden" id="playerpoliticsvalue" name="playerpoliticsvalue" value="{{ request.session.politics }}">
         </div>
         <div id="enemystatus">
             <div style="margin-top:10px; margin-left:10px">적군</div>
@@ -337,9 +343,19 @@
 {% block jscript %}
 
     <script>
-        let hp1 = 100;
+        let hp1 = document.getElementById('playerhpvalue').value;
+        let command1 = document.getElementById('playercommandvalue').value;
+        let power1 = document.getElementById('playerpowervalue').value;
+        let inteli1 = document.getElementById('playerintelivalue').value;
+        let politics1 = document.getElementById('playerpoliticsvalue').value;
+        let skill1 = document.getElementById('playerskillvalue').value;
         let hp2 = 100;
         playerhp.textContent = hp1;
+        player통솔.textContent = command1;
+        player지력.textContent = inteli1;
+        player무력.textContent = power1;
+        player정치.textContent = politics1;
+        player전술.textContent = skill1;
         enemyhp.textContent = hp2;
         let loc_attack_card;
         let loc_attacked_card;
