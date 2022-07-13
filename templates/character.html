@@ -303,10 +303,25 @@
             지력 = document.getElementById('지력')
             정치 = document.getElementById('정치')
 
+            {% if request.session.skill == '만인적' %}
+            rand1 = parseInt(Math.random() * 100 + 50)
+            rand2 = parseInt(Math.random() * 100 + 50)
+            rand3 = parseInt(Math.random() * 100 + 1)
+            rand4 = parseInt(Math.random() * 100 + 1)
+
+            {% elif request.session.skill == '운체풍신' %}
+            rand1 = parseInt(Math.random() * 100 + 10)
+            rand2 = parseInt(Math.random() * 100 + 1)
+            rand3 = parseInt(Math.random() * 100 + 10)
+            rand4 = parseInt(Math.random() * 100 + 1)
+
+            {% else %}
             rand1 = parseInt(Math.random() * 100 + 1)
             rand2 = parseInt(Math.random() * 100 + 1)
             rand3 = parseInt(Math.random() * 100 + 1)
             rand4 = parseInt(Math.random() * 100 + 1)
+
+            {% endif %}
 
             통솔.textContent = rand1
             document.getElementById('command').value = rand1
