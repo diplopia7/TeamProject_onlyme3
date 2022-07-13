@@ -129,7 +129,6 @@ def userpos(request, perPage=6):
         request.session['skill'] = form['skill']
         print(form)
 
-
         qry = '/userpos/?cpage=' + form['cpage']
 
         return redirect(qry)

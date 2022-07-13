@@ -196,8 +196,6 @@
         const price = document.querySelector('#price');
         const price1 = document.querySelector('#price1');
 
-        {#idnum1.value=Number({{ request.session.userid_id }});#}
-
         rd1.addEventListener('click', () => {
             recharge.innerHTML = rd1lb.outerHTML;
             payokbtn.disabled = false;
@@ -227,14 +225,6 @@
         {% for p in pa %}
             user_have.push('{{ p.cname_id }}')
         {% endfor %}
-
-
-        rechargebtn.addEventListener('click', () => {
-            {% if not request.session.userid %}
-                alert('로그인 후 이용 바랍니다!');
-                location.href = '/login';
-            {% endif %}
-        });
 
         payokbtn.addEventListener('click', () => {
             const name = document.querySelector('#name')
@@ -276,7 +266,7 @@
                         eval(aaa).textContent = '보유 중';
                         eval(aaa).disabled = true;
                     }
-                {% else %}
+                        {% else %}
                     else {
                         eval(aaa).textContent = {{ b.price }}
                             eval(aaa).disabled = false;
@@ -291,13 +281,13 @@
                     price.value = cprice;
                     payq.innerHTML = '구매 하시겠습니까?';
                 });
-            } else if(i==25){
+            } else if (i == 25) {
                 {% if request.session.userid %}
                     if (user_have.includes(`${i}`)) {
                         eval('paybtn25').textContent = '보유 중';
                         eval('paybtn25').disabled = true;
                     }
-                {% else %}
+                        {% else %}
                     else {
                         eval('paybtn25').textContent = {{ b.price }}
                             eval('paybtn25').disabled = false;

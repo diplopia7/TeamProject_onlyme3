@@ -124,7 +124,7 @@
 
     <div id="main">
         <div class="text-end" id="charge">
-            <button type="button" class="btn btn-danger" name="rechargebtn" id="rechargebtn">선택 해제</button>
+            <button type="button" class="btn btn-danger" name="nocheckbtn" id="nocheckbtn">선택 해제</button>
         </div>
         {% if request.session.userid %}
             <div class="d-flex row" id="chr">
@@ -190,7 +190,7 @@
     <script>
         const payok = document.querySelector('#payok');
         const payq = document.querySelector('#payq');
-        const rechargebtn = document.querySelector('#rechargebtn');
+        const nocheckbtn = document.querySelector('#nocheckbtn');
 
         const payokbtn = document.querySelector('#payokbtn');
         const rd1 = document.querySelector('#inlineRadio1');
@@ -288,7 +288,7 @@
             }
         }
 
-        rechargebtn.addEventListener('click', () => {
+        nocheckbtn.addEventListener('click', () => {
             test();
             cname.value = '';
             cid.value = '';
