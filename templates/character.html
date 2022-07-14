@@ -217,7 +217,7 @@
                     <input type="hidden" id="politics" name="politics">
                 </div>
                 <div>
-                    <button id="statbtn" type="button">장수 스탯 정하기</button>
+                    <button id="statbtn" type="button" onclick="buttonsound()">장수 스탯 정하기</button>
                 </div>
             </div>
             <div id="내정특기">
@@ -246,7 +246,7 @@
                     <div id="trait2">{{ request.session.fighttrait }}</div>
                     <input type="hidden" id="fighttrait" name="fighttrait" value="{{ request.session.fighttrait }}">
                     <div>
-                        <button id="btn3" type="button" disabled>전투특기</button>
+                        <button id="btn3" type="button" disabled onclick="buttonsound()">전투특기</button>
                     </div>
                 {% endif %}
             </div>
@@ -261,7 +261,7 @@
                 <div id="trait3">{{ request.session.skill }}</div>
                 <input type="hidden" id="skill" name="skill" value="{{ request.session.skill }}">
                 <div>
-                    <button id="btn4" type="button" disabled>전술</button>
+                    <button id="btn4" type="button" disabled onclick="buttonsound()">전술</button>
                 </div>
                 {% endif %}
             </div>
@@ -279,8 +279,14 @@
                 <button type="submit" id="complete">완료</button>
             </div>
         </form>
-
+        <audio id="buttonaudio" src="/static/resources/sfx/button.wav"></audio>
     </div>
+    <script>
+        function buttonsound(){
+            var audio = document.querySelector('#buttonaudio');
+            audio.play()
+        }
+    </script>
     <script>
         function noEvent(event) {
             if (event.keyCode == 116) {
@@ -361,6 +367,7 @@
         trait1 = document.getElementById('trait1')
         btn2 = document.getElementById('btn2')
         btn2.addEventListener('click', 내정)
+        btn2.addEventListener('click',buttonsound)
     </script>
     <script>
         function 전투() {
@@ -378,6 +385,7 @@
         trait2 = document.getElementById('trait2')
         btn3 = document.getElementById('btn3')
         btn3.addEventListener('click', 전투)
+        btn3.addEventListener('click',buttonsound)
     </script>
     <script>
         function 전술() {
@@ -397,6 +405,7 @@
         trait3 = document.getElementById('trait3')
         btn4 = document.getElementById('btn4')
         btn4.addEventListener('click', 전술)
+        btn4.addEventListener('click',buttonsound)
     </script>
     <script>
         function shuffle(array) {
@@ -420,4 +429,5 @@
             history.go(1)
         }
     </script>
+
 {% endblock %}

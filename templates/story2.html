@@ -188,7 +188,8 @@
             플레이어 내정특기 : {{ request.session.innertrait }}
         </div>
         <div id="rtd">            
-            <button id="rollbtn" type="button">Roll the dice!(100d/1)</button><br>
+            <button id="rollbtn" type="button" onclick="dicesound()">Roll the dice!(100d/1)</button><br>
+            <audio id="dice" src="/static/resources/sfx/dice.wav"></audio>
             <div id="rtd1" class="rtd"></div>
             <div id="rtd2" class="rtd"></div><br>
             <input type="hidden" id="dicenumber" name="dicenumber">
@@ -211,8 +212,12 @@
         </div>
      </form>
     </div>
-    <script>
-        let result=''
+    <script>function dicesound() {
+        var audio = document.getElementById('dice')
+        audio.play()
+    }
+
+    let result=''
 
         function roll(){
         n=parseInt(Math.random()*100+1)

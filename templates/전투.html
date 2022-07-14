@@ -301,7 +301,8 @@
         <div id="menu">
             <button id="endturn" type="button" class="button">턴 종료</button>
             <br>
-            <button id="draw" type="button" class="button">드로우</button>
+            <button id="draw" type="button" class="button" onclick="drawsound()">드로우</button>
+            <audio class="drawaudio" src='{% static "/resources/sfx/card_draw.wav" %}'></audio>
             <br>
             {#            <button id="grave" type="button" class="button">무덤효과</button>#}
             {#            <br>#}
@@ -313,23 +314,25 @@
         <div id="playercard"></div>
         <div id="enemycard"></div>
         <div id="cardbtn">
-            <button id="attackbtn" type="button" class="button">공격</button>
-            <button id="defencebtn" type="button" class="button">방어</button>
+            <button id="attackbtn" type="button" class="button" onclick="buttonsound()">공격</button>
+            <button id="defencebtn" type="button" class="button" onclick="buttonsound()">방어</button>
+            <audio class="buttonaudio" src='{% static "/resources/sfx/button.wav" %}'></audio>
         </div>
         <div id="cardbtn2">
-            <button id="frontbtn" type="button" class="button">앞면</button>
-            <button id="backbtn" type="button" class="button">뒷면</button>
+            <button id="frontbtn" type="button" class="button" onclick="buttonsound()">앞면</button>
+            <button id="backbtn" type="button" class="button" onclick="buttonsound()">뒷면</button>
         </div>
         <div id="normallocation">
-            <button id="loc1" type="button" class="button">1</button>
-            <button id="loc2" type="button" class="button">2</button>
-            <button id="loc3" type="button" class="button">3</button>
-            <button id="loc4" type="button" class="button">4</button>
+            <button id="loc1" type="button" class="button" onclick="cardpositionsound()">1</button>
+            <button id="loc2" type="button" class="button" onclick="cardpositionsound()">2</button>
+            <button id="loc3" type="button" class="button" onclick="cardpositionsound()">3</button>
+            <button id="loc4" type="button" class="button" onclick="cardpositionsound()">4</button>
+            <audio class="cardpositionaudio" src='{% static "/resources/sfx/card_position.wav" %}'></audio>
         </div>
         <div id="magiclocation">
-            <button id="loc5" type="button" class="button">1</button>
-            <button id="loc6" type="button" class="button">2</button>
-            <button id="loc7" type="button" class="button">3</button>
+            <button id="loc5" type="button" class="button" onclick="cardpositionsound()">1</button>
+            <button id="loc6" type="button" class="button" onclick="cardpositionsound()">2</button>
+            <button id="loc7" type="button" class="button" onclick="cardpositionsound()">3</button>
         </div>
     </div>
 {% endblock %}
@@ -493,6 +496,42 @@
             '{% static "/resources/img/card/resize/king_of_hearts2.png" %}',
             '{% static "/resources/img/card/resize/black_joker.png" %}',
             '{% static "/resources/img/card/resize/red_joker.png" %}'];
+
+        //소리
+        function drawsound(){
+            var audio = document.querySelector('.drawaudio');
+            audio.play()
+        }
+
+        function attacksound(){
+            var audio = document.querySelector('.attackaudio');
+            audio.play()
+        }
+
+        function cardpositionsound(){
+            var audio = document.querySelector('.cardpositionaudio');
+            audio.play()
+        }
+
+        function firesound(){
+            var audio = document.querySelector('.fireaudio');
+            audio.play()
+        }
+
+        function bighitsound(){
+            var audio = document.querySelector('.bighitaudio');
+            audio.play()
+        }
+
+        function buffsound(){
+            var audio = document.querySelector('.buffaudio');
+            audio.play()
+        }
+
+        function buttonsound(){
+            var audio = document.querySelector('.buttonaudio');
+            audio.play()
+        }
 
 
         // 섞섞
@@ -700,6 +739,8 @@
             enemycard.appendChild(a);
             if (player_deck === []) win_game('enemy');
             else if (enemy_deck === []) win_game('player');
+            var audio = new Audio('{% static "resources/sfx/card_draw.wav" %}')
+            audio.play()
         };
         // 노말카드 배치용
         const enemy_choose_card_normal = (cardid) => {
@@ -753,24 +794,38 @@
             switch (field) {
                 case 1:
                     main_field['field1'] = card;
+                    var audio = new Audio('{% static "resources/sfx/card_position.wav" %}');
+                    audio.play();
                     break;
                 case 2:
                     main_field['field2'] = card;
+                    var audio = new Audio('{% static "resources/sfx/card_position.wav" %}');
+                    audio.play();
                     break;
                 case 3:
                     main_field['field3'] = card;
+                    var audio = new Audio('{% static "resources/sfx/card_position.wav" %}');
+                    audio.play();
                     break;
                 case 4:
                     main_field['field4'] = card;
+                    var audio = new Audio('{% static "resources/sfx/card_position.wav" %}');
+                    audio.play();
                     break;
                 case 5:
                     main_field['field5'] = card;
+                    var audio = new Audio('{% static "resources/sfx/card_position.wav" %}');
+                    audio.play();
                     break;
                 case 6:
                     main_field['field6'] = card;
+                    var audio = new Audio('{% static "resources/sfx/card_position.wav" %}');
+                    audio.play();
                     break;
                 case 7:
                     main_field['field7'] = card;
+                    var audio = new Audio('{% static "resources/sfx/card_position.wav" %}');
+                    audio.play();
                     break;
             }
             enemy_hand.shift();
@@ -898,11 +953,15 @@
         const loc1f = () => {
             normallocation.style.display = 'none';
             main_field['field8'] = set_stat(cardid) + isattack + isfront + cardid;
+            {#var audio = new Audio('{% static "resources/sfx/card_position.wav.wav" %}');#}
+            {#audio.play();#}
             finish_turn();
         };
         const loc2f = () => {
             normallocation.style.display = 'none';
             main_field['field9'] = set_stat(cardid) + isattack + isfront + cardid;
+            {#var audio = new Audio('{% static "resources/sfx/card_position.wav" %}');#}
+            {#audio.play();#}
             finish_turn();
         };
         const loc3f = () => {
@@ -1298,6 +1357,7 @@
                     && attacked_card_id >= 4  // 맞는 카드가 에이스가 아니어야 직접 데미지
                     && attack_card)
                     attack_directly(turn, attacked_stat * -1);
+
             } else if (attacked_stat > 0) {
                 delete_card_normal(loc_attack_card);
                 if (attack_card_id <= 53 && attacked_card_id <= 53  // 두 카드 전부 조커가 아니어야 직접 데미지
@@ -1493,6 +1553,8 @@
 
         // 직접 피해 함수
         const attack_directly = (player, damage) => {
+            var audio = new Audio('{% static "resources/sfx/attack.wav" %}');
+            audio.play();
             alert(`${player}: 명치에 ${damage}딜!`);
             switch (player) {
                 case 'player':

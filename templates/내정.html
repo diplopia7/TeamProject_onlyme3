@@ -202,10 +202,12 @@
             </div>
             <div id="menu">
                 <div>
-                    <button id="btn1" type="button" class="button">세금징수</button>
+                    <button id="btn1" type="button" class="button" onclick="moneysound()">세금징수</button>
+                    <audio id="moneyaudio" src="/static/resources/sfx/money.wav"></audio>
                 </div>
                 <div>
-                    <button id="btn2" type="button" class="button">병량징수</button>
+                    <button id="btn2" type="button" class="button" onclick="foodsound()">병량징수</button>
+                    <audio id="foodaudio" src="/static/resources/sfx/food.wav"></audio>
                 </div>
                 <div>
                     <button id="btn3" type="button" class="button">병사모집</button>
@@ -575,6 +577,17 @@
             document.getElementById('foodinput').value = Number(document.getElementById('foodinput').value) - Number(document.getElementById('armyinput').value) * 10
             food.textContent = document.getElementById('foodinput').value
         }
+
+        function moneysound(){
+            var audio = document.getElementById('moneyaudio');
+            audio.play()
+        }
+
+        function foodsound(){
+            var audio = document.getElementById('foodaudio');
+            audio.play()
+        }
+
 
 
         gold = document.getElementById("gold")
