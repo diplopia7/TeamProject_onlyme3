@@ -471,7 +471,6 @@
 
 
         endturn.disabled = true;
-        {#skill.disabled = true;#}
         console.log('at start disable fight button');
         fight.disabled = true;
 
@@ -559,6 +558,7 @@
         let player_deck_empty = false;
         let enemy_deck_empty = false;
         let skill_risk = 0;
+        let enemy_turn_damage = 0;
 
         // 메인 필드
         let main_field = {};
@@ -621,37 +621,37 @@
             '{% static "/resources/img/card/resize/red_joker.png" %}'];
 
         //소리 이병휘
-        function drawsound(){
+        function drawsound() {
             var audio = document.querySelector('.drawaudio');
             audio.play()
         }
 
-        function attacksound(){
+        function attacksound() {
             var audio = document.querySelector('.attackaudio');
             audio.play()
         }
 
-        function cardpositionsound(){
+        function cardpositionsound() {
             var audio = document.querySelector('.cardpositionaudio');
             audio.play()
         }
 
-        function firesound(){
+        function firesound() {
             var audio = document.querySelector('.fireaudio');
             audio.play()
         }
 
-        function bighitsound(){
+        function bighitsound() {
             var audio = document.querySelector('.bighitaudio');
             audio.play()
         }
 
-        function buffsound(){
+        function buffsound() {
             var audio = document.querySelector('.buffaudio');
             audio.play()
         }
 
-        function buttonsound(){
+        function buttonsound() {
             var audio = document.querySelector('.buttonaudio');
             audio.play()
         }
@@ -671,6 +671,7 @@
 
         // 턴종료 누르면 상대턴 시작
         endturn?.addEventListener('click', () => {
+            if (enemy_turn_damage) attack_directly('player', enemy_turn_damage);
             if (user_additional_turn) {
                 user_additional_turn--;
                 if (!user_additional_turn) endturn.innerText = '턴 종료'
@@ -2101,9 +2102,9 @@
                     skill_available = false;
                     multiply_all_stat(2);
                     // 1/10확률로 턴 넘어감
-                {#user_turn_skip = Math.floor(Math.random() * 10) === 0;#}
-                    user_turn_skip = true;
+                    user_turn_skip = Math.floor(Math.random() * 10) === 0;
                     break;
+                case '없음':
                 case '만인적':
                     skill_available = false;
                     break;
@@ -2136,12 +2137,9 @@
                             inx_jack = player_deck.indexOf(jack);
                             inx_queen = player_deck.indexOf(queen);
                             inx_king = player_deck.indexOf(king);
-                            console.log('=======0000000000000000000000')
-                            console.log(player_deck)
                             player_deck.splice(inx_jack, 1);
                             player_deck.splice(inx_queen, 1);
                             player_deck.splice(inx_king, 1);
-                            console.log(player_deck)
                         }
                     }
                     user_skill_passive = false;
@@ -2154,7 +2152,12 @@
                     add_defence_stat(10);
                     break;
                 case '팔진도':
+                    skill_available = false;
                     double_draw = true;
+                    break;
+                case '신화계':
+                    skill_available = false;
+                    enemy_turn_damage = 15;
                     break;
                 default:
                     break;
@@ -2196,9 +2199,8 @@
                     if (user_skill_count === 5) skill_available = false;
                     return true;
                 case '매복지독':
-                    let dice = Math.floor(Math.random() * 99) + 1;
-                    let player_int = document.getElementById('player지력').innerText;
-                    if (player_int > dice) {
+                    dice = Math.floor(Math.random() * 100) + 1;
+                    if (player_inteli > dice) {
                         attack_directly(user, dice);
                         attack_directly('enemy', 10);
                         return true;
@@ -2246,7 +2248,6 @@
                     alert('덱에서 5장 삭제(이득없음)');
                     return true;
                 case '용의 지혜':
-                    attack_directly('enemy',99);
                     if (main_field['field1']) if (card_stat_basic(main_field['field1']) !== 11) delete_card_normal('field1');
                     if (main_field['field2']) if (card_stat_basic(main_field['field2']) !== 11) delete_card_normal('field2');
                     if (main_field['field3']) if (card_stat_basic(main_field['field3']) !== 11) delete_card_normal('field3');
@@ -2254,15 +2255,34 @@
                     if (main_field['field5']) delete_card_magic('field5');
                     if (main_field['field6']) delete_card_magic('field6');
                     if (main_field['field7']) delete_card_magic('field7');
-                    break;
+                    attack_directly('enemy', 99);
+                    return true;
                 case '대타격':
-                    break;
+                    dice = Math.floor(Math.random() * 100) + 1;
+                    if (player_power > dice) {
+                        attack_directly('player', dice);
+                        return true;
+                    } else return false
                 case '화계':
-                    break;
-                case '신화계':
-                    break;
+                    dice = Math.floor(Math.random() * 100) + 1;
+                    if (player_inteli > dice) {
+                        attack_directly('player', dice);
+                        return true;
+                    } else return false
                 case '인중여포':
-                    break;
+                    user_turn_skip = true;
+                    dice = Math.floor(Math.random() * 100) + 1;
+                    if (player_power > dice) {
+                        attack_directly('player', dice);
+                        if (main_field['field1']) delete_card_normal('field1');
+                        if (main_field['field2']) delete_card_normal('field2');
+                        if (main_field['field3']) delete_card_normal('field3');
+                        if (main_field['field4']) delete_card_normal('field4');
+                        if (main_field['field5']) delete_card_magic('field5');
+                        if (main_field['field6']) delete_card_magic('field6');
+                        if (main_field['field7']) delete_card_magic('field7');
+                        return true;
+                    } else return false
                 default:
                     return false
             }
