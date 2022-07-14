@@ -122,3 +122,11 @@ def 전투(request):
 
 def how_to_fight(request):
     return render(request,'how_to_fight.html')
+
+
+def ifwin(request):
+    return render(request,'ifwin.html')
+
+
+def iflose(request):
+    return render(request,'iflose.html')

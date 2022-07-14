@@ -13,4 +13,6 @@ urlpatterns = [
     path('story3/', views.story3, name='story3'),
     path('내정/', views.내정, name='내정'),
     path('전투/', views.전투, name='전투'),
+    path('ifwin/', views.ifwin, name='ifwin'),
+    path('iflose/', views.iflose, name='iflose'),
 ]

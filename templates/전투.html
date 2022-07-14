@@ -1727,10 +1727,12 @@
         const win_game = (winner) => {
             switch (winner) {
                 case 'player':
-                    alert('승리');
+                    location.replace('/ifwin');
+                    {#alert('승리');#}
                     break;
                 case 'enemy':
-                    alert('패배');
+                    location.replace('/iflose');
+                    {#alert('패배');#}
                     break;
             }
         };
