@@ -94,7 +94,7 @@ def 내정(request):
         request.session['food']=form['foodinput']
         request.session['army']=form['armyinput']
         request.session['officer']=form['officerinput']
-        request.session['officer']=form['officerinput']
+        # request.session['officer']=form['officerinput']
         request.session['hp']=form['hpinput']
         request.session['item']=form['iteminput1']
         request.session['itemstat1']=form['iteminput2']

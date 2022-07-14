@@ -391,6 +391,10 @@
             <div style="margin-top:10px; margin-left:10px">플레이어</div>
             <div style="margin-left:10px">체력 : <span id="playerhp"></span> 전술 : <span
                     id="player전술">{{ request.session.skill }}</span></div>
+            <form id="asd" name="asd" method="post">
+            <input type="text" id="hpform" name="hpform" value="">
+                <input type="text" id="officerfrm" name="officerfrm" value="{{ request.session.officer }}">
+                </form>
             <div style="margin-left:10px">통솔 : <span id="player통솔">{{ request.session.command }}</span> 지력: <span
                     id="player지력">{{ request.session.inteli }}</span></div>
             <div style="margin-left:10px">무력 : <span id="player무력">{{ request.session.power }}</span> 정치: <span
@@ -452,6 +456,7 @@
         let hp1 = {{ request.session.hp }};
         let hp2 = 100;
         playerhp.textContent = hp1;
+        hpform.value=hp1
         enemyhp.textContent = hp2;
         let loc_attack_card;
         let loc_attacked_card;
@@ -1669,7 +1674,6 @@
                     clear_field(field15)
                     enemygrave.push(main_field['field1'] % 100)
                     delete main_field.field1;
-                {#field15.appendChild(card_list[enemygrave[enemygrave.length - 1]])#}
                     set_card(field15, enemygrave[enemygrave.length - 1]);
 
                     alert(enemygrave)
@@ -1913,6 +1917,7 @@
         const win_game = (winner) => {
             switch (winner) {
                 case 'player':
+                    document.asd.submit()
                     location.replace('/ifwin')
                     break;
                 case 'enemy':
@@ -2534,9 +2539,9 @@
 
         first_turn();
 
-        //묘지효과과
+        //묘지효과
        grave.addEventListener('click', () => {
-            playergrave = [2, 4, 6, 8]
+            playergrave = [2, 4]
             iscolor = [];
             let a;
             for (let i = 0; i < playergrave.length; ++i) {
@@ -2545,15 +2550,67 @@
             }
             for (let i = 0; i < iscolor.length; ++i) {
                 if (iscolor[i] === iscolor[i + 1] && iscolor[i + 1] === iscolor[i + 2] && iscolor[i + 2] === iscolor[i + 3]) {
+                    clear_field(field15)
+                    if (main_field['field1']){
+                        enemygrave.push(main_field['field1'] % 100)
+                        set_card(field15, enemygrave[enemygrave.length - 1])
+                        delete main_field.field1;
+                    }
+                    if (main_field['field2']){
+                        enemygrave.push(main_field['field2'] % 100)
+                        delete main_field.field2;
+                        set_card(field15, enemygrave[enemygrave.length - 1])
+                    }
+                    if (main_field['field3']){
+                        enemygrave.push(main_field['field3'] % 100)
+                        delete main_field.field3;
+                        set_card(field15, enemygrave[enemygrave.length - 1])
+                    }
+                    if (main_field['field4']){
+                        enemygrave.push(main_field['field4'] % 100)
+                        delete main_field.field4;
+                        set_card(field15, enemygrave[enemygrave.length - 1])
+                    }
+                    if (main_field['field5']){
+                        enemygrave.push(main_field['field5'] % 100)
+                        delete main_field.field5;
+                        set_card(field15, enemygrave[enemygrave.length - 1])
+                    }
+                    if (main_field['field6']){
+                        enemygrave.push(main_field['field6'] % 100)
+                        delete main_field.field6;
+                        set_card(field15, enemygrave[enemygrave.length - 1])
+                    }
+                    if (main_field['field7']){
+                        enemygrave.push(main_field['field7'] % 100)
+                        delete main_field.field7;
+                        set_card(field15, enemygrave[enemygrave.length - 1])
+                    }
+                    enemy_deck.shift()
                     alert('4장');
+                    for (let i=0; i<4; ++i){
+                        playergrave.shift()
+                    }
+                    break;
                 } else if (iscolor[i] === iscolor[i + 1] && iscolor[i] === iscolor[i + 2]) {
-                    alert('3장');
+                    enemy_deck.shift()
+                    for (let i=0; i<3; ++i){
+                        playergrave.shift()
+                    }
+                    break;
                 } else if (iscolor[i] === iscolor[i + 1]) {
-                    alert('2장');
+                    if (is_front_card(main_field['field1'])) debuff_shape['field1']++;
+                    if (is_front_card(main_field['field2'])) debuff_shape['field2']++;
+                    if (is_front_card(main_field['field3'])) debuff_shape['field3']++;
+                    if (is_front_card(main_field['field4'])) debuff_shape['field4']++;
+                    alert('2장')
+                    for (let i=0; i<2; ++i){
+                        playergrave.shift()
+                    }
+                    break;
                 }
             }
-
-            alert('hello')
+            finish_turn();
         });
 
     </script>
