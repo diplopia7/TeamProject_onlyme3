@@ -1069,7 +1069,7 @@
         const skill_type = () => {
             switch (player_skill) {
                 case '화계':
-                case '용의 지혜':
+                case '매복지독':
                     return '지력스킬'
                 case '인중여포':
                 case '대타격':
@@ -1102,17 +1102,22 @@
                 `;
             }
             if (player_inteli < enemy_inteli) {
-                if (skill_type() === '지력스킬') skill_available = false;
-                first_msg += `${enemy_name}보다 지력이 낮습니다!
+                if (skill_type() === '지력스킬') {
+                    skill_available = false;
+                    first_msg += `${enemy_name}보다 지력이 낮습니다!
                 `;
-                first_msg += `지력 스킬을 사용할 수 없습니다
+                    first_msg += `${player_skill}을/를 사용할 수 없습니다
                 `;
+                }
             }
             if (player_power < enemy_power) {
-                if (skill_type() === '무력스킬') skill_available = false;
-                first_msg += `${enemy_name}보다 무력이 낮습니다!
+                if (skill_type() === '무력스킬') {
+                    skill_available = false;
+                    first_msg += `${enemy_name}보다 무력이 낮습니다!
                 `;
-                first_msg += `무력 스킬을 사용할 수 없습니다`;
+                    first_msg += `${player_skill}을/를 사용할 수 없습니다
+                `;
+                }
             }
             if (first_msg) alert(first_msg);
             check_user_skill(player_skill);
