@@ -299,6 +299,7 @@
             <div style="margin-left:10px">무력 : <span id="enemy무력"></span> 정치: <span id="enemy정치"></span></div>
         </div>
         <div id="menu">
+{#            이병휘 효과음#}
             <button id="endturn" type="button" class="button" onclick="buttonsound()">턴 종료</button>
             <br>
             <button id="draw" type="button" class="button" onclick="drawsound()">드로우</button>
@@ -314,6 +315,7 @@
         <div id="playercard"></div>
         <div id="enemycard"></div>
         <div id="cardbtn">
+{#            이병휘 효과음#}
             <button id="attackbtn" type="button" class="button" onclick="buttonsound()">공격</button>
             <button id="defencebtn" type="button" class="button" onclick="buttonsound()">방어</button>
             <audio class="buttonaudio" src='{% static "/resources/sfx/button.wav" %}'></audio>
@@ -497,7 +499,7 @@
             '{% static "/resources/img/card/resize/black_joker.png" %}',
             '{% static "/resources/img/card/resize/red_joker.png" %}'];
 
-        //소리
+        //소리 이병휘
         function drawsound(){
             var audio = document.querySelector('.drawaudio');
             audio.play()
@@ -730,7 +732,7 @@
             return Math.floor(Math.random() * 2) === 1;
         };
 
-        // 상대편 드로우
+        // 상대편 드로우 효과음 추가 - 이병휘
         const enemy_draw = () => {
             console.log("enemy_draw");
             draw_card(enemy_hand, enemy_deck);
@@ -788,7 +790,7 @@
             if (!field[0]) return 'full'
             else return field[Math.floor(Math.random() * field.length)];
         };
-        // 카드정보와 필드정보를 받아 메인필드에 삽입
+        // 카드정보와 필드정보를 받아 메인필드에 삽입 효과음 추가 - 양종현
         const enemy_set_card = (card, field) => {
             console.log(`enemy_set_card, card: ${card}, field: ${field}`);
             switch (field) {
@@ -1551,7 +1553,7 @@
             return card % 1000 > 100;
         };
 
-        // 직접 피해 함수
+        // 직접 피해 함수 효과음 추가 - 이병휘
         const attack_directly = (player, damage) => {
             var audio = new Audio('{% static "resources/sfx/attack.wav" %}');
             audio.play();
