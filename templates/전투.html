@@ -1836,10 +1836,10 @@
         const win_game = (winner) => {
             switch (winner) {
                 case 'player':
-                    alert('승리');
+                    location.replace('/ifwin')
                     break;
                 case 'enemy':
-                    alert('패배');
+                    location.replace('/iflose')
                     break;
             }
         };
