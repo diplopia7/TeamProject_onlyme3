@@ -364,6 +364,7 @@
     </style>
 {% endblock %}
 {% block content %}
+    <audio src="{% static 'resources/music/battle action.ogg' %}" autoplay="autoplay" loop="loop"></audio>
     <div id="main_menu" style="position:absolute; z-index:0">
         <img src="{% static 'resources/img/background/background3.jpg' %}" width="1500" height="840" alt>
         <div id="cardfield1">
@@ -374,7 +375,7 @@
             <div id="field5" class="cardfield"></div>
             <div id="field6" class="cardfield"></div>
             <div id="field7" class="cardfield"></div>
-            {#            <div id="field15" class="cardfield"></div>#}
+                        <div id="field15" class="cardfield"></div>
         </div>
         <div id="cardfield2">
             <div id="field8" class="cardfield"></div>
@@ -384,7 +385,7 @@
             <div id="field12" class="cardfield"></div>
             <div id="field13" class="cardfield"></div>
             <div id="field14" class="cardfield"></div>
-            {#            <div id="field16" class="cardfield"></div>#}
+                        <div id="field16" class="cardfield"></div>
         </div>
         <div id="playerstatus">
             <div style="margin-top:10px; margin-left:10px">플레이어</div>
@@ -411,8 +412,8 @@
             <button id="draw" type="button" class="button" onclick="drawsound()">드로우</button>
             <audio class="drawaudio" src='{% static "/resources/sfx/card_draw.wav" %}'></audio>
             <br>
-            {#            <button id="grave" type="button" class="button">무덤효과</button>#}
-            {#            <br>#}
+            <button id="grave" type="button" class="button">무덤효과</button>
+            <br>
             <button id="fight" type="button" class="button" onclick="buttonsound()">전투</button>
             <br>
             <button id="skill" type="button" class="button">전술스킬</button>
@@ -448,7 +449,7 @@
 {% block jscript %}
 
     <script>
-        let hp1 = 100;
+        let hp1 = {{ request.session.hp }};
         let hp2 = 100;
         playerhp.textContent = hp1;
         enemyhp.textContent = hp2;
@@ -462,6 +463,7 @@
         let endturn = document.getElementById('endturn');
         let skill = document.getElementById('skill');
         let fight = document.getElementById('fight');
+        let grave = document.getElementById('grave');
 
         const player_skill = document.getElementById('player전술').innerText
         const player_commend = document.getElementById('player통솔').innerText
@@ -489,8 +491,8 @@
         let double_attack_enemy = 0;
         let half_attack_enemy = 0;
 
-        let grave = [];
-
+        let playergrave = [];
+        let enemygrave = [];
 
         let buff_pair = {
             'field1': 0,
@@ -892,6 +894,9 @@
                         if (!ismagic(enemy_hand[0])) {
                             enemy_choose_card_normal(enemy_hand[0]);
                             break;
+                        } else {
+                            enemygrave.push(cardid);
+                            set_card(field15, cardid);
                         }
                     }
                     // 손에 마법카드밖에 없음
@@ -1170,16 +1175,28 @@
         const loc5f = () => {
             magiclocation.style.display = 'none';
             if (active_magic_card(cardid, 'player')) main_field['field12'] = magic_card + isattack + isfront + cardid;
+            else {
+                playergrave.push(cardid);
+                set_card(field16, cardid);
+            }
             finish_turn();
         };
         const loc6f = () => {
             magiclocation.style.display = 'none';
             if (active_magic_card(cardid, 'player')) main_field['field13'] = magic_card + isattack + isfront + cardid;
+            else {
+                playergrave.push(cardid);
+                set_card(field16, cardid);
+            }
             finish_turn();
         };
         const loc7f = () => {
             magiclocation.style.display = 'none';
             if (active_magic_card(cardid, 'player')) main_field['field14'] = magic_card + isattack + isfront + cardid;
+            else {
+                playergrave.push(cardid);
+                set_card(field16, cardid);
+            }
             finish_turn();
         };
 
@@ -1649,35 +1666,77 @@
             user_special_multiply_stat[card_loc] = 1;
             switch (card_loc) {
                 case 'field1':
+                    clear_field(field15)
+                    enemygrave.push(main_field['field1'] % 100)
                     delete main_field.field1;
+                {#field15.appendChild(card_list[enemygrave[enemygrave.length - 1]])#}
+                    set_card(field15, enemygrave[enemygrave.length - 1]);
+
+                    alert(enemygrave)
+                    alert(playergrave)
                     color_available_enemy = true;
                     break;
                 case 'field2':
+                    clear_field(field15)
+                    enemygrave.push(main_field['field2'] % 100)
                     delete main_field.field2;
+                    set_card(field15, enemygrave[enemygrave.length - 1]);
+                    alert(enemygrave)
+                    alert(playergrave)
                     color_available_enemy = true;
                     break;
                 case 'field3':
+                    clear_field(field15)
+                    enemygrave.push(main_field['field3'] % 100)
                     delete main_field.field3;
+                    set_card(field15, enemygrave[enemygrave.length - 1]);
+                    alert(enemygrave)
+                    alert(playergrave)
                     color_available_enemy = true;
                     break;
                 case 'field4':
+                    clear_field(field15)
+                    enemygrave.push(main_field['field4'] % 100)
                     delete main_field.field4;
+                    set_card(field15, enemygrave[enemygrave.length - 1]);
+                    alert(enemygrave)
+                    alert(playergrave)
                     color_available_enemy = true;
                     break;
                 case 'field8':
+                    clear_field(field16)
+                    playergrave.push(main_field['field8'] % 100)
                     delete main_field.field8;
+                    set_card(field16, playergrave[playergrave.length - 1]);
+                    alert(playergrave)
+                    alert(enemygrave)
                     color_available_player = true;
                     break;
                 case 'field9':
+                    clear_field(field16)
+                    playergrave.push(main_field['field9'] % 100)
                     delete main_field.field9;
+                    set_card(field16, playergrave[playergrave.length - 1]);
+                    alert(playergrave)
+                    alert(enemygrave)
                     color_available_player = true;
                     break;
                 case 'field10':
+                    clear_field(field16)
+                    playergrave.push(main_field['field10'] % 100)
                     delete main_field.field10;
+                    set_card(field16, playergrave[playergrave.length - 1]);
+                    alert(playergrave)
+                    alert(enemygrave)
                     color_available_player = true;
                     break;
                 case 'field11':
+                    clear_field(field16)
+                    playergrave.push(main_field['field11'] % 100)
                     delete main_field.field11;
+                    set_card(field16, playergrave[playergrave.length - 1]);
+                    alert(playergrave)
+                    alert(enemygrave)
                     color_available_player = true;
                     break;
             }
@@ -1688,22 +1747,40 @@
             let card_stat = String(card_stat_basic(main_field[card_loc] % 100));
             switch (card_loc) {
                 case 'field5':
+                    clear_field(field15)
+                    enemygrave.push(main_field['field5'] % 100)
                     delete main_field.field5;
+                    set_card(field15, enemygrave[enemygrave.length - 1]);
                     break;
                 case 'field6':
+                    clear_field(field15)
+                    enemygrave.push(main_field['field6'] % 100)
                     delete main_field.field6;
+                    set_card(field15, enemygrave[enemygrave.length - 1]);
                     break;
                 case 'field7':
+                    clear_field(field15)
+                    enemygrave.push(main_field['field7'] % 100)
                     delete main_field.field7;
+                    set_card(field15, enemygrave[enemygrave.length - 1]);
                     break;
                 case 'field12':
+                    clear_field(field16)
+                    playergrave.push(main_field['field12'] % 100)
                     delete main_field.field12;
+                    set_card(field16, playergrave[playergrave.length - 1]);
                     break;
                 case 'field13':
+                    clear_field(field16)
+                    playergrave.push(main_field['field13'] % 100)
                     delete main_field.field13;
+                    set_card(field16, playergrave[playergrave.length - 1]);
                     break;
                 case 'field14':
+                    clear_field(field16)
+                    playergrave.push(main_field['field14'] % 100)
                     delete main_field.field14;
+                    set_card(field16, playergrave[playergrave.length - 1]);
                     break;
             }
             switch (card_loc) {
@@ -1836,10 +1913,10 @@
         const win_game = (winner) => {
             switch (winner) {
                 case 'player':
-                    alert('승리');
+                    location.replace('/ifwin')
                     break;
                 case 'enemy':
-                    alert('패배');
+                    location.replace('/iflose')
                     break;
             }
         };
@@ -2456,5 +2533,28 @@
         });
 
         first_turn();
+
+        //묘지효과과
+       grave.addEventListener('click', () => {
+            playergrave = [2, 4, 6, 8]
+            iscolor = [];
+            let a;
+            for (let i = 0; i < playergrave.length; ++i) {
+                a = card_color_basic(playergrave[i]);
+                iscolor.push(a);
+            }
+            for (let i = 0; i < iscolor.length; ++i) {
+                if (iscolor[i] === iscolor[i + 1] && iscolor[i + 1] === iscolor[i + 2] && iscolor[i + 2] === iscolor[i + 3]) {
+                    alert('4장');
+                } else if (iscolor[i] === iscolor[i + 1] && iscolor[i] === iscolor[i + 2]) {
+                    alert('3장');
+                } else if (iscolor[i] === iscolor[i + 1]) {
+                    alert('2장');
+                }
+            }
+
+            alert('hello')
+        });
+
     </script>
 {% endblock %}
