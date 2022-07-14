@@ -5,56 +5,56 @@
 {% block style %}
     <style>
         header {
-            background-image:url('/static/img/background.jpg');
-            height:140px;
+            background-image: url('/static/img/background.jpg');
+            height: 140px;
             width: 100%
         }
 
         .hover figure img {
             -webkit-transition: .3s ease-in-out;
             transition: .3s ease-in-out
-         }
+        }
 
         .hover figure:hover img {
             opacity: .6
-         }
+        }
 
         #logo {
             width: 515px;
-            height:115px;
-            float:left;
-            margin-top:15px
+            height: 115px;
+            float: left;
+            margin-top: 15px
         }
 
         .gamestart {
-            list-style:none;
-            position:absolute;
-            left:44%;
+            list-style: none;
+            position: absolute;
+            left: 44%;
             margin-top: 10px
 
         }
 
         .gamestart img {
-            width:250px;
+            width: 250px;
             height: 120px;
             border-radius: 50px
         }
 
         #qm1, #qm2 {
             position: absolute;
-            display:flex;
+            display: flex;
             left: 84%;
             margin-top: 15px;
-            height:47px
+            height: 47px
         }
 
         #qm img {
-            height:45px;
-            position:absolute
+            height: 45px;
+            position: absolute
         }
 
         #qmenu1 img {
-            margin-top:-1px
+            margin-top: -1px
         }
 
         #qmenu2 {
@@ -62,7 +62,7 @@
         }
 
         #qmenu3 img {
-            margin-top:-0.5px
+            margin-top: -0.5px
         }
 
         #qmenu4 {
@@ -70,32 +70,32 @@
         }
 
         nav {
-            width:100%;
-            position:relative;
+            width: 100%;
+            position: relative;
             background-image: url('/static/img/navbg1.png');
-            height:120px
+            height: 120px
         }
 
         nav div {
-            position:relative;
+            position: relative;
             margin-left: 3.5%;
-            display:flex;
+            display: flex;
             margin-top: 8px;
             margin-bottom: 8px
         }
 
         nav img {
             height: 75px;
-            position:relative
+            position: relative
         }
 
         #mmenu2 {
-            left : 23%
+            left: 23%
         }
 
         #mmenu3 {
-            left : 43%;
-            bottom:2px
+            left: 43%;
+            bottom: 2px
         }
 
         a {
@@ -154,7 +154,7 @@
         }
 
         .cardfield img {
-         object-fit: cover
+            object-fit: cover
         }
 
         .cardfield p {
@@ -388,9 +388,12 @@
         </div>
         <div id="playerstatus">
             <div style="margin-top:10px; margin-left:10px">플레이어</div>
-            <div style="margin-left:10px">체력 : <span id="playerhp"></span> 전술 : <span id="player전술">{{ request.session.skill }}</span></div>
-            <div style="margin-left:10px">통솔 : <span id="player통솔">{{ request.session.command }}</span> 지력: <span id="player지력">{{ request.session.inteli }}</span></div>
-            <div style="margin-left:10px">무력 : <span id="player무력">{{ request.session.power }}</span> 정치: <span id="player정치">{{ request.session.politics }}</span></div>
+            <div style="margin-left:10px">체력 : <span id="playerhp"></span> 전술 : <span
+                    id="player전술">{{ request.session.skill }}</span></div>
+            <div style="margin-left:10px">통솔 : <span id="player통솔">{{ request.session.command }}</span> 지력: <span
+                    id="player지력">{{ request.session.inteli }}</span></div>
+            <div style="margin-left:10px">무력 : <span id="player무력">{{ request.session.power }}</span> 정치: <span
+                    id="player정치">{{ request.session.politics }}</span></div>
         </div>
         <div id="enemystatus">
             <div style="margin-top:10px; margin-left:10px">여몽</div>
@@ -399,7 +402,10 @@
             <div style="margin-left:10px">무력 : <span id="enemy무력">81</span> 정치: <span id="enemy정치">0</span></div>
         </div>
         <div id="menu">
-{#            이병휘 효과음#}
+            {#            이병휘 효과음#}
+            <button id="giveUp" type="button" class="button" onclick="buttonsound()">항복</button>
+            <button id="fullField" type="button" class="button" onclick="buttonsound()">풀필드</button>
+            <br>
             <button id="endturn" type="button" class="button" onclick="buttonsound()">턴 종료</button>
             <br>
             <button id="draw" type="button" class="button" onclick="drawsound()">드로우</button>
@@ -415,7 +421,7 @@
         <div id="playercard"></div>
         <div id="enemycard"></div>
         <div id="cardbtn">
-{#            이병휘 효과음#}
+            {#            이병휘 효과음#}
             <button id="attackbtn" type="button" class="button" onclick="buttonsound()">공격</button>
             <button id="defencebtn" type="button" class="button" onclick="buttonsound()">방어</button>
             <audio class="buttonaudio" src='{% static "/resources/sfx/button.wav" %}'></audio>
@@ -451,6 +457,8 @@
 
         let turn = 'player';
 
+        let giveUp = document.getElementById('giveUp');
+        let fullField = document.getElementById('fullField');
         let endturn = document.getElementById('endturn');
         let skill = document.getElementById('skill');
         let fight = document.getElementById('fight');
@@ -470,6 +478,8 @@
         const enemy_name = document.getElementById('enemystatus').firstElementChild.innerText
 
 
+        giveUp.style.display = 'none';
+        fullField.style.display = 'none';
         endturn.disabled = true;
         console.log('at start disable fight button');
         fight.disabled = true;
@@ -555,10 +565,9 @@
         let user_turn_skip = false;
         let user_skill_passive = true;
         let double_draw = false;
-        let player_deck_empty = false;
-        let enemy_deck_empty = false;
         let skill_risk = 0;
         let enemy_turn_damage = 0;
+        let flip_available = true
 
         // 메인 필드
         let main_field = {};
@@ -685,9 +694,11 @@
                 alert('상대 턴이 한번 더 진행됩니다');
                 enemy_turn();
             }
+            flip_available = true;
             card_location();
+            fullField.disabled = false;
             endturn.disabled = true;
-            draw.disabled = false;
+            if (player_deck[0]) draw.disabled = false;
             fight.innerText = '전투';
             playercard.style.pointerEvents = 'auto';
         });
@@ -700,13 +711,13 @@
                 fight.innerText = '취소';
                 draw.disabled = true;
                 playercard.style.pointerEvents = 'none';
-                card_location();
             } else {
                 fight_mode = false;
                 fight.innerText = '전투';
-                draw.disabled = false;
+                if (player_deck[0]) draw.disabled = false;
                 playercard.style.pointerEvents = 'auto';
             }
+            card_location();
         });
 
         // 기본 스탯 판단 함수
@@ -806,36 +817,11 @@
                 // 손이 텅 비었으면 무조건 드로우
                 console.log('enemy_hand is empty');
                 enemy_draw();
-            } else if (isfieldfull_enemy_normal()) {
-                // 일반 필드가 꽉 차면 배치불가
-                console.log("enemy's normal field is full");
-                switch (Math.floor(Math.random() * 3)) {
-                    case 0:
-                        if (ismagic(enemy_hand[0])) enemy_choose_card_magic(enemy_hand[0]);
-                        else enemy_draw();
-                        break;
-                    case 1:
-                    case 2:
-                    case 3:
-                        enemy_attack_card();
-                        break;
-                }
-            } else if (isfieldfull_enemy_magic()) {
-                // 마법 필드가 꽉 차면 배치불가
-                console.log("enemy's magic field is full");
-                switch (Math.floor(Math.random() * 3)) {
-                    case 0:
-                        if (ismagic(enemy_hand[0])) enemy_draw();
-                        else enemy_choose_card_normal(enemy_hand[0]);
-                        break;
-                    case 1:
-                    case 2:
-                    case 3:
-                        enemy_attack_card();
-                        break;
-                }
             } else {
                 console.log("enemy do something");
+                // 카드 뽑을 확률 1/4
+                // 카드 배치 확률 1/2
+                // 카드 공격 확률 1/4
                 switch (Math.floor(Math.random() * 3)) {
                     case 0:
                         enemy_draw();
@@ -861,42 +847,74 @@
 
         // 상대편 드로우
         const enemy_draw = () => {
-            console.log("enemy_draw");
-            draw_card(enemy_hand, enemy_deck);
-            let a = document.createElement('img');
-            a.src = card_list[0];
-            enemycard.appendChild(a);
-            if (enemy_deck === []) enemy_deck_empty = true;
-            var audio = new Audio('{% static "resources/sfx/card_draw.wav" %}')
-            audio.play()
+            if (!enemy_deck[0]) {
+                enemy_attack_card();  // 덱이 비었으면 공격
+            } else {
+                console.log("enemy_draw");
+                draw_card(enemy_hand, enemy_deck);
+                let a = document.createElement('img');
+                a.src = card_list[0];
+                enemycard.appendChild(a);
+                var audio = new Audio('{% static "resources/sfx/card_draw.wav" %}')
+                audio.play()
+            }
         };
         // 노말카드 배치용
         const enemy_choose_card_normal = (cardid) => {
-            console.log("enemy_choose_card_normal");
-            let field = enemy_choose_field(cardid);
-            let isattack = 1000;
-            let isfront = 100;
-            if (rnd()) isattack = 0;
-            if (rnd()) isfront = 0;
-            // 필드에 공격카드 없으면 무조건 공격배치
-            if (!is_attack_card(main_field['field1']) &&
-                !is_attack_card(main_field['field2']) &&
-                !is_attack_card(main_field['field3']) &&
-                !is_attack_card(main_field['field4'])) isattack = 1000;
-            let card_info = set_stat(cardid) + isattack + isfront + cardid;
-            enemycard.removeChild(enemycard.lastElementChild);
-            enemy_set_card(card_info, field);
+            if (isfieldfull_enemy_normal()) enemy_draw();  // 노말필드 가득차있으면 드로우
+            else {
+                console.log("enemy_choose_card_normal");
+                let field = enemy_choose_field(cardid);
+                let isattack = 1000;
+                let isfront = 100;
+                if (rnd()) isattack = 0;
+                if (rnd()) isfront = 0;
+                // 필드에 공격카드 없으면 무조건 공격배치
+                if (!is_attack_card(main_field['field1']) &&
+                    !is_attack_card(main_field['field2']) &&
+                    !is_attack_card(main_field['field3']) &&
+                    !is_attack_card(main_field['field4'])) isattack = 1000;
+                let card_info = set_stat(cardid) + isattack + isfront + cardid;
+                enemycard.removeChild(enemycard.lastElementChild);
+                enemy_set_card(card_info, field);
+            }
         }
         // 마법카드 배치용
         const enemy_choose_card_magic = (cardid) => {
-            console.log("enemy_choose_card_magic");
-            let field = enemy_choose_field(cardid);
-            let magic_card = 10000;
-            let isattack = 1000;
-            let isfront = 100;
-            let card_info = magic_card + isattack + isfront + cardid;
-            enemycard.removeChild(enemycard.lastElementChild);
-            if (active_magic_card(cardid, 'enemy')) enemy_set_card(card_info, field);
+            if (isfieldfull_enemy_normal()) {
+                if (!enemy_deck[0]) {
+                    // 드로우불가 마법카드 배치불가 맨앞카드는 마법카드
+                    // 공격카드가 맨 앞에 올떄까지 카드 돌리기
+                    for (let i = 0; i < enemy_hand.length; ++i) {
+                        let temp = enemy_hand[0]
+                        enemy_hand.shift()
+                        enemy_hand.push(temp);
+                        if (!ismagic(enemy_hand[0])) {
+                            enemy_choose_card_normal(enemy_hand[0]);
+                            break;
+                        }
+                    }
+                    // 손에 마법카드밖에 없음
+                    // 가능 행동은 공격뿐
+                    if (!is_attack_card(main_field['field1']) &&
+                        !is_attack_card(main_field['field2']) &&
+                        !is_attack_card(main_field['field3']) &&
+                        !is_attack_card(main_field['field4'])) {
+                        //공격도 불가, 패배
+                        alert(`${enemy_name}이 더이상 행동할 수 없습니다!`);
+                        win_game('player');
+                    } else enemy_attack_card();
+                } else enemy_draw();  // 마법필드 가득차있으면 드로우
+            } else {
+                console.log("enemy_choose_card_magic");
+                let field = enemy_choose_field(cardid);
+                let magic_card = 10000;
+                let isattack = 1000;
+                let isfront = 100;
+                let card_info = magic_card + isattack + isfront + cardid;
+                enemycard.removeChild(enemycard.lastElementChild);
+                if (active_magic_card(cardid, 'enemy')) enemy_set_card(card_info, field);
+            }
         }
 
         // 카드 놓을 장소 고르기 (무작위)
@@ -948,41 +966,58 @@
 
         // 적 공격 함수
         const enemy_attack_card = () => {
-            console.log(`enemey try attack`);
-            let attack_available_enemey = []
-            for (let i = 1; i <= 4; ++i) {
-                if (main_field[`field${i}`] % 10000 >= 1000) {
-                    attack_available_enemey.push(i);
+            if (!is_attack_card(main_field['field1']) &&
+                !is_attack_card(main_field['field2']) &&
+                !is_attack_card(main_field['field3']) &&
+                !is_attack_card(main_field['field4'])) {
+                if (!enemy_hand[0]) {
+                    // 손패가 없는 상황에서 드로우를 못 해서 공격으로 넘어왔다.
+                    // 덱에도 손에도 카드가 없다. 근데 공격가능한 카드도 없다. 행동불가
+                    alert(`${enemy_name}이 더이상 행동할 수 없습니다!`);
+                    win_game('player');
+                } else if (ismagic(enemy_hand[0])) {
+                    enemy_choose_card_magic(enemy_hand[0]);  // 공격가능 카드가 없으면 카드배치
+                } else {
+                    enemy_choose_card_normal(enemy_hand[0]);  // 공격가능 카드가 없으면 카드배치
                 }
-            }
-            console.log(attack_available_enemey);
-            if (attack_available_enemey === []) {
-                // 공격 가능한 카드가 없으면 그냥 드로우
-                console.log(`attack not available`);
-                enemy_draw();
             } else {
-                console.log(`attack field1: field${attack_available_enemey[0]}`);
-                console.log(`attack field2: field${attack_available_enemey[1]}`);
-                console.log(`attack field3: field${attack_available_enemey[2]}`);
-                console.log(`attack field4: field${attack_available_enemey[3]}`);
-                let rnd_attacker = Math.floor(Math.random() * attack_available_enemey.length)
-                let field_id = attack_available_enemey[rnd_attacker];
-                let attack_card = main_field[`field${field_id}`];
-                alert(`field${field_id}의 ${attack_card}에게 공격받고 있다!`);
-                if (attack_card % 1000 < 100) {
-                    main_field[`field${field_id}`] += 100;
+                console.log(`enemey try attack`);
+                let attack_available_enemey = []
+                for (let i = 1; i <= 4; ++i) {
+                    if (main_field[`field${i}`] % 10000 >= 1000) {
+                        attack_available_enemey.push(i);
+                    }
                 }
-                loc_attack_card = `field${field_id}`;
-                loc_attacked_card = `field${field_id + 7}`;
-                if (main_field[loc_attacked_card]) card_attack('enemy');
-                else if (stat_now(loc_attack_card) === 'joker') {
-                    console.log(`joker can't attack directly`);
+                console.log(attack_available_enemey);
+                if (attack_available_enemey === []) {
+                    // 공격 가능한 카드가 없으면 그냥 드로우
+                    console.log(`attack not available`);
                     enemy_draw();
                 } else {
-                    let damage = Number(stat_now(loc_attack_card))
-                    attack_directly('enemy', damage);
+                    console.log(`attack field1: field${attack_available_enemey[0]}`);
+                    console.log(`attack field2: field${attack_available_enemey[1]}`);
+                    console.log(`attack field3: field${attack_available_enemey[2]}`);
+                    console.log(`attack field4: field${attack_available_enemey[3]}`);
+                    let rnd_attacker = Math.floor(Math.random() * attack_available_enemey.length)
+                    let field_id = attack_available_enemey[rnd_attacker];
+                    let attack_card = main_field[`field${field_id}`];
+                    alert(`field${field_id}의 ${attack_card}에게 공격받고 있다!`);
+                    if (attack_card % 1000 < 100) {
+                        main_field[`field${field_id}`] += 100;
+                    }
+                    loc_attack_card = `field${field_id}`;
+                    loc_attacked_card = `field${field_id + 7}`;
+                    if (main_field[loc_attacked_card]) card_attack('enemy');
+                    else if (stat_now(loc_attack_card) === 'joker') {
+                        console.log(`joker can't attack directly`);
+                        enemy_draw();
+                    } else {
+                        let damage = Number(stat_now(loc_attack_card))
+                        attack_directly('enemy', damage);
+                    }
                 }
             }
+
 
         };
 
@@ -1030,6 +1065,20 @@
             }
         };
 
+        // 스킬 타입 지정 함수
+        const skill_type = () => {
+            switch (player_skill) {
+                case '화계':
+                case '용의 지혜':
+                    return '지력스킬'
+                case '인중여포':
+                case '대타격':
+                    return '무력스킬'
+                default :
+                    return '일반스킬'
+            }
+        }
+
 
         //첫 턴 자동 함수
         const first_turn = () => {
@@ -1053,14 +1102,14 @@
                 `;
             }
             if (player_inteli < enemy_inteli) {
-                if (player_skill === '지력스킬') skill_available = false;
+                if (skill_type() === '지력스킬') skill_available = false;
                 first_msg += `${enemy_name}보다 지력이 낮습니다!
                 `;
                 first_msg += `지력 스킬을 사용할 수 없습니다
                 `;
             }
             if (player_power < enemy_power) {
-                if (player_skill === '무력스킬') skill_available = false;
+                if (skill_type() === '무력스킬') skill_available = false;
                 first_msg += `${enemy_name}보다 무력이 낮습니다!
                 `;
                 first_msg += `무력 스킬을 사용할 수 없습니다`;
@@ -1145,10 +1194,7 @@
                 attack_directly('enemy', skill_risk);
                 skill_risk = 0;
             }
-            if (player_deck === []) {
-                player_deck_empty = true;
-                finish_turn();
-            } else if (double_draw) {
+            if (double_draw && player_deck[0]) {
                 draw.innerText = '드로우 (20피해)'
                 double_draw = false;
                 skill_risk = 20;
@@ -1257,6 +1303,8 @@
             console.log(active_shape);
             console.log(debuff_shape);
             check_buff_color();
+            if (!player_deck[0]) giveUp.style.display = 'inline_block';
+            check_full_field();
             if (user_skill_passive) check_user_skill(player_skill);
 
             defencebtn.removeEventListener("click", attackf);
@@ -1311,7 +1359,17 @@
                             temp = () => {
                                 to_front(loc);
                             }
-                            if (fight_mode) eval(loc).firstElementChild.addEventListener('click', temp);
+                            temp_over = () => {
+                                card_mouseover(loc);
+                            }
+                            temp_out = () => {
+                                card_mouseout(loc);
+                            }
+                            if (fight_mode) {
+                                eval(loc).firstElementChild.addEventListener('click', temp);
+                                eval(loc).firstElementChild.addEventListener('mouseover', temp_over);
+                                eval(loc).firstElementChild.addEventListener('mouseout', temp_out);
+                            }
                         }
                         break;
                     case 11:
@@ -1338,6 +1396,20 @@
                         break;
                     default:
                         alert(`${loc}에 ${card_info}의 카드가 들어옴`);
+                }
+                temp_flip = () => {
+                    to_flip(loc);
+                }
+                temp_flip_over = () => {
+                    card_mouseover(loc);
+                }
+                temp_flip_out = () => {
+                    card_mouseout(loc);
+                }
+                if (!fight_mode && isplayer_normal(loc) && flip_available) {
+                    eval(loc).firstElementChild.addEventListener('click', temp_flip);
+                    eval(loc).firstElementChild.addEventListener('mouseover', temp_flip_over);
+                    eval(loc).firstElementChild.addEventListener('mouseout', temp_flip_out);
                 }
 
 
@@ -1416,13 +1488,39 @@
             return loc === 'field1' || loc === 'field2' || loc === 'field3' || loc === 'field4';
         };
 
-        // 뒷면카드 뒤집기
+        // 카드 돌리기
+        const to_flip = (loc) => {
+            if (main_field[loc] % 10000 > 1000) main_field[loc] -= 1000;
+            else main_field[loc] += 1000;
+            eval(loc).firstElementChild.removeEventListener('click', temp_flip);
+            eval(loc).firstElementChild.removeEventListener('mouseover', temp_flip_over);
+            eval(loc).firstElementChild.removeEventListener('mouseout', temp_flip_out);
+            eval(loc).className = 'cardfield';
+            {#endturn.disabled = false;#}
+            {#draw.disabled = true;#}
+            {#fight_mode = false;#}
+            {#playercard.style.pointerEvents = 'none';#}
+            {#card_location();#}
+            {#skill.disabled = true;#}
+            {#fight.disabled = true;#}
+            finish_turn();
+        };
+
+
+        const card_mouseover = (loc) => {
+            eval(loc).className += ' attack_mode';
+        };
+
+        const card_mouseout = (loc) => {
+            eval(loc).className = 'cardfield';
+        };
+
+        // 카드 뒤집기
         const to_front = (loc) => {
             main_field[loc] += 100;
-            if (field8.firstElementChild) field8.firstElementChild.removeEventListener('click', temp);
-            if (field9.firstElementChild) field9.firstElementChild.removeEventListener('click', temp);
-            if (field10.firstElementChild) field10.firstElementChild.removeEventListener('click', temp);
-            if (field11.firstElementChild) field11.firstElementChild.removeEventListener('click', temp);
+            eval(loc).firstElementChild.removeEventListener('click', temp);
+            eval(loc).firstElementChild.removeEventListener('mouseover', temp_over);
+            eval(loc).firstElementChild.removeEventListener('mouseout', temp_out);
             fight.disabled = true;
             endturn.disabled = false;
             card_location();
@@ -1469,14 +1567,17 @@
             draw.disabled = true;
             fight_mode = false;
             playercard.style.pointerEvents = 'none';
+            flip_available = false;
             skill.disabled = true;
             card_location();
+            fullField.disabled = true;
             fight.disabled = true;
             fight.innerText = '전투'
             draw.innerText = '드로우'
             if (user_additional_turn) endturn.innerText = `추가 턴 (${user_additional_turn})`
         };
 
+        // HTML에 적은 값에서 현 스텟 불러오긔
         const stat_now = (field) => {
             return eval(field).lastElementChild.innerText;
         };
@@ -1515,8 +1616,11 @@
                 delete_card_normal(loc_attack_card);
                 if (attack_card_id <= 53 && attacked_card_id <= 53  // 두 카드 전부 조커가 아니어야 직접 데미지
                     && attack_card_id >= 4  // 공격하는 카드가 에이스가 아니어야 직접 데미지
-                    && attack_card)
-                    attack_directly(turn, attacked_stat);
+                    && attack_card) {
+                    if (turn === 'player') attack_directly('enemy', attacked_stat);
+                    else attack_directly('player', attacked_stat);
+
+                }
             } else {
                 // 같을 경우 모양에 따라 판단함 (직접데미지는 없음)
                 let attack_card_shape = attack_card_id % 4;
@@ -1712,14 +1816,14 @@
                 case 'player':
                     hp2 -= damage;
                     enemyhp.textContent = hp2;
-                    if (hp2 <= 0) win_game('player');
                     alert(`${enemy_name}에 ${damage}피해`);
+                    if (hp2 <= 0) win_game('player');
                     break;
                 case 'enemy':
                     hp1 -= damage;
                     playerhp.textContent = hp1;
-                    if (hp1 <= 0) win_game('enemy');
                     alert(`플레이어에 ${damage}피해`);
+                    if (hp1 <= 0) win_game('enemy');
                     break;
             }
         };
@@ -1727,12 +1831,10 @@
         const win_game = (winner) => {
             switch (winner) {
                 case 'player':
-                    location.replace('/ifwin');
-                    {#alert('승리');#}
+                    alert('승리');
                     break;
                 case 'enemy':
-                    location.replace('/iflose');
-                    {#alert('패배');#}
+                    alert('패배');
                     break;
             }
         };
@@ -2044,13 +2146,17 @@
                 }
             }
         }
+        // 배열에서 특정값 찾아서 지우기
+        const delete_card_from_array = (array, value) => {
+            let inx = array.indexOf(value);
+            return array.splice(inx, 1);
+        };
 
         // 전술스킬 발동 버튼
         skill.addEventListener('click', () => {
             let skill_name = player_skill;
             user_skill_count++;
-            if (user_skill(skill_name)) alert(`${skill_name} 발동`);
-            else alert(`${skill_name} 발동실패`);
+            user_skill(skill_name);
             card_location();
             finish_turn();
         });
@@ -2136,12 +2242,9 @@
                             main_field['field12'] = 11100 + Number(jack);
                             main_field['field13'] = 11100 + Number(queen);
                             main_field['field14'] = 11100 + Number(king);
-                            inx_jack = player_deck.indexOf(jack);
-                            inx_queen = player_deck.indexOf(queen);
-                            inx_king = player_deck.indexOf(king);
-                            player_deck.splice(inx_jack, 1);
-                            player_deck.splice(inx_queen, 1);
-                            player_deck.splice(inx_king, 1);
+                            delete_card_from_array(player_deck, jack);
+                            delete_card_from_array(player_deck, queen);
+                            delete_card_from_array(player_deck, king);
                         }
                     }
                     user_skill_passive = false;
@@ -2191,35 +2294,41 @@
 
             switch (skill_name) {
                 case '공격강화':
+                    alert(`${skill_name} 발동`);
                     add_attack_stat(1);
                     skill.innerText = `강화 ${user_skill_count}회`;
                     if (user_skill_count === 5) skill_available = false;
-                    return true;
+                    break;
                 case '방어강화':
+                    alert(`${skill_name} 발동`);
                     add_defence_stat(1);
                     skill.innerText = `강화 ${user_skill_count}회`;
                     if (user_skill_count === 5) skill_available = false;
-                    return true;
+                    break;
                 case '매복지독':
                     dice = Math.floor(Math.random() * 100) + 1;
                     if (player_inteli > dice) {
+                        alert(`${skill_name} 발동`);
                         attack_directly(user, dice);
                         attack_directly('enemy', 10);
-                        return true;
-                    } else return false;
+                    } else alert(`${skill_name} 발동실패`);
+                    break;
                 case '속공':
+                    alert(`${skill_name} 발동`);
                     multiply_all_stat(0.5)
                     user_additional_turn = 2;
-                    return true;
+                    break;
                 case '복병':
+                    alert(`${skill_name} 발동`);
                     magic_card_in_deck = player_deck.filter(ismagic);
                     shuffle(magic_card_in_deck);
                     drowed_magic_card = player_deck.indexOf(magic_card_in_deck[0])
                     draw_card(player_hand, magic_card_in_deck);
                     checkhand(player_hand, playercard);
                     player_deck.splice(magic_card, 1);
-                    return true;
+                    break;
                 case '복병신속':
+                    alert(`${skill_name} 발동`);
                     magic_card_in_deck = player_deck.filter(ismagic);
                     shuffle(magic_card_in_deck);
                     drowed_magic_card = player_deck.indexOf(magic_card_in_deck[0])
@@ -2230,26 +2339,30 @@
                     add_attack_stat(1);
                     skill.innerText = `강화 ${user_skill_count}회`;
                     if (user_skill_count === 5) skill_available = false;
-                    return true;
+                    break;
                 case '공방일체':
+                    alert(`${skill_name} 발동`);
                     add_attack_stat(1);
                     add_defence_stat(1);
                     skill.innerText = `강화 ${user_skill_count}회`;
                     if (user_skill_count === 5) skill_available = false;
-                    return true;
+                    break;
                 case '운체풍신':
+                    alert(`${skill_name} 발동`);
                     add_attack_stat(1);
                     add_defence_stat(1);
                     skill.innerText = `강화 ${user_skill_count}회`;
                     if (user_skill_count === 3) skill_available = false;
-                    return true;
+                    break;
                 case '의용병':
+                    alert(`${skill_name} 발동`);
                     for (let i = 0; i < 5; ++i) {
                         player_deck.shift()
                     }
                     alert('덱에서 5장 삭제(이득없음)');
-                    return true;
+                    break;
                 case '용의 지혜':
+                    alert(`${skill_name} 발동`);
                     if (main_field['field1']) if (card_stat_basic(main_field['field1']) !== 11) delete_card_normal('field1');
                     if (main_field['field2']) if (card_stat_basic(main_field['field2']) !== 11) delete_card_normal('field2');
                     if (main_field['field3']) if (card_stat_basic(main_field['field3']) !== 11) delete_card_normal('field3');
@@ -2258,37 +2371,84 @@
                     if (main_field['field6']) delete_card_magic('field6');
                     if (main_field['field7']) delete_card_magic('field7');
                     attack_directly('enemy', 99);
-                    return true;
+                    break;
                 case '대타격':
                     dice = Math.floor(Math.random() * 100) + 1;
                     if (player_power > dice) {
+                        alert(`${skill_name} 발동`);
                         attack_directly('player', dice);
-                        return true;
-                    } else return false
+                    } else alert(`${skill_name} 발동실패`);
+                    break;
                 case '화계':
                     dice = Math.floor(Math.random() * 100) + 1;
                     if (player_inteli > dice) {
+                        alert(`${skill_name} 발동`);
                         attack_directly('player', dice);
-                        return true;
-                    } else return false
+                    } else alert(`${skill_name} 발동실패`);
+                    break;
                 case '인중여포':
                     user_turn_skip = true;
                     dice = Math.floor(Math.random() * 100) + 1;
                     if (player_power > dice) {
+                        alert(`${skill_name} 발동`);
                         attack_directly('player', dice);
-                        if (main_field['field1']) delete_card_normal('field1');
-                        if (main_field['field2']) delete_card_normal('field2');
-                        if (main_field['field3']) delete_card_normal('field3');
-                        if (main_field['field4']) delete_card_normal('field4');
+                        if (main_field['field1']) if (card_stat_basic(main_field['field1']) !== 11) delete_card_normal('field1');
+                        if (main_field['field2']) if (card_stat_basic(main_field['field2']) !== 11) delete_card_normal('field2');
+                        if (main_field['field3']) if (card_stat_basic(main_field['field3']) !== 11) delete_card_normal('field3');
+                        if (main_field['field4']) if (card_stat_basic(main_field['field4']) !== 11) delete_card_normal('field4');
                         if (main_field['field5']) delete_card_magic('field5');
                         if (main_field['field6']) delete_card_magic('field6');
                         if (main_field['field7']) delete_card_magic('field7');
-                        return true;
-                    } else return false
+                    } else alert(`${skill_name} 발동실패`);
+                    break;
                 default:
                     return false
             }
         }
+        // 플레이어 풀 필드 확인
+        const check_full_field = () => {
+            if (isfieldfull_player_normal() && isfieldfull_player_magic()) {
+                fullField.style.display = 'inline-block'
+                giveUp.style.display = 'none';
+            } else fullField.style.display = 'none'
+        };
+        // 풀 필드 효과 발동
+        fullField.addEventListener('click', () => {
+            fullField.style.display = 'none';
+            delete_card_normal('field8');
+            delete_card_normal('field9');
+            delete_card_normal('field10');
+            delete_card_normal('field11');
+            delete_card_magic('field12');
+            delete_card_magic('field13');
+            delete_card_magic('field14');
+            if (main_field['field1']) delete_card_normal('field1');
+            if (main_field['field2']) delete_card_normal('field2');
+            if (main_field['field3']) delete_card_normal('field3');
+            if (main_field['field4']) delete_card_normal('field4');
+            if (main_field['field5']) delete_card_magic('field5');
+            if (main_field['field6']) delete_card_magic('field6');
+            if (main_field['field7']) delete_card_magic('field7');
+            main_field['field8'] = 101103;
+            if (player_deck.includes(3)) {
+                delete_card_from_array(player_deck, 3);
+            } else if (enemy_deck.includes(3)) {
+                delete_card_from_array(enemy_deck, 3);
+            } else if (player_hand.includes(3)) {
+                delete_card_from_array(player_hand, 3);
+                checkhand(player_hand, playercard);
+            } else if (enemy_hand.includes(3)) {
+                delete_card_from_array(enemy_hand, 3);
+                enemycard.removeChild(enemycard.lastElementChild);
+            }
+            card_location();
+        });
+        giveUp.addEventListener('click', () => {
+            if (confirm(`
+덱을 전부 소모했습니다.
+항복하시겠습니까?
+            `)) win_game('enemy');
+        });
 
         first_turn();
     </script>
