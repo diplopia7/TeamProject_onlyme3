@@ -1096,7 +1096,7 @@
 
             // 플레이어 스텟 비교 효과
             let first_msg = '';
-            if (player_commend < enemy_commend) {
+            if (Number(player_commend) < Number(enemy_commend)) {
                 for (let i = 0; i < 10; ++i) {
                     player_deck.shift();
                 }
@@ -1106,7 +1106,7 @@
                 first_msg += `덱에서 카드 10장을 제외합니다
                 `;
             }
-            if (player_inteli < enemy_inteli) {
+            if (Number(player_inteli) < Number(enemy_inteli)) {
                 if (skill_type() === '지력스킬') {
                     skill_available = false;
                     first_msg += `${enemy_name}보다 지력이 낮습니다!
@@ -1115,7 +1115,7 @@
                 `;
                 }
             }
-            if (player_power < enemy_power) {
+            if (Number(player_power) < Number(enemy_power)) {
                 if (skill_type() === '무력스킬') {
                     skill_available = false;
                     first_msg += `${enemy_name}보다 무력이 낮습니다!
