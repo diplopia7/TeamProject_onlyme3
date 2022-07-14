@@ -1,0 +1,73 @@
+{% block title %}{% endblock %}
+
+{% block style %}
+    <style>
+
+        .hover figure img {
+            -webkit-transition: .3s ease-in-out;
+            transition: .3s ease-in-out
+        }
+
+        figure:hover img {
+            opacity: .9
+        }
+
+        .container {
+        position: relative;
+        transform: translate(0,70%);
+        width: 800px;
+        margin: auto;
+        color: white;
+        padding: 30px;
+        text-align: center;
+    }
+
+    .body {
+        margin-top:-8px;
+        margin-left:-8px;
+        object-fit: cover;
+        position:absolute;
+        width:100%;
+        height: 969px;
+        background-color:black;
+    }
+
+    button {
+        width:200px;
+        font-size:20px;
+    }
+    button a{
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 15px;
+        letter-spacing: 1px;
+        color: white;
+        text-decoration:none
+    }
+    button a:hover, button:hover{
+        color: orangered
+    }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="body"></div>
+    <div id="ifwin" class="container">
+        <form name="ifwinfrm" id="ifwinfrm">
+            <div>
+                <label for="winmsg" style="color:red; font-weight: bold; font-size:200px; font-family: 굴림,sans-serif">
+                敗&nbsp;北</label>
+            </div>
+            <div id="movemain">
+                <a href="/"><button type="button" style="background-color: white" id="movemain" ><b>메인으로 이동</b></button></a>
+                <a href="/내정"><button type="button" style='background-color:#badbcc' id="movemain" ><b>내정으로 이동</b></button></a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block jscript %}
+
+{% endblock %}
+

@@ -1,0 +1,65 @@
+{% block title %}{% endblock %}
+
+{% block style %}
+    <style>
+
+        .container {
+        position: relative;
+        transform: translate(0,70%);
+        width: 800px;
+        margin: auto;
+        color: white;
+        padding: 30px;
+        text-align: center
+    }
+
+    .body img {
+        margin-top:-8px;
+        margin-left:-8px;
+        object-fit: cover;
+        position:absolute;
+        width:100%;
+        height: 969px
+    }
+
+    button {
+        width:200px;
+        font-size:20px;
+        background-color: white;
+    }
+    button a{
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 15px;
+        letter-spacing: 1px;
+        color: white;
+        text-decoration:none
+    }
+    button a:hover, button:hover{
+        color: orangered
+    }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="body">
+<img src="/static/img/ifwin.jpg" alt="ifwinbg">
+</div>
+    <div id="ifwin" class="container">
+        <form name="ifwinfrm" id="ifwinfrm">
+            <div>
+                <label for="winmsg" style="color:blue; font-weight: bold; font-size:200px; font-family: 굴림,sans-serif">
+                勝&nbsp;利</label>
+            </div>
+            <div id="movemain">
+                <a href="/"><button type="button" id="movemain" ><b>메인으로 이동</b></button></a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block jscript %}
+
+{% endblock %}
+
