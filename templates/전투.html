@@ -2596,7 +2596,7 @@
             for (let i = 0; i < iscolor.length; ++i) {
                 let mycolor = iscolor[i];
 
-                if (i > 2 && grave_skill === 0) {
+                if (i >= 1 && grave_skill === 0) {
                     if (iscolor[i - 1] === mycolor) {
                         grave_skill = 2;
                         active_card_for_grave_skills = [];
@@ -2606,7 +2606,7 @@
                     }
                 }
 
-                if (i > 3 && grave_skill < 3) {
+                if (i >= 2 && grave_skill < 3) {
                     if (iscolor[i - 2] === mycolor &&
                         iscolor[i - 1] === mycolor) {
                         grave_skill = 3;
@@ -2618,7 +2618,7 @@
                     }
                 }
 
-                if (i > 4 && grave_skill < 4) {
+                if (i >= 3 && grave_skill < 4) {
                     if (iscolor[i - 3] === mycolor &&
                         iscolor[i - 2] === mycolor &&
                         iscolor[i - 1] === mycolor) {
@@ -2637,7 +2637,7 @@
             for (let i = 0; i < isnumber.length; ++i) {
                 let mynumber = isnumber[i];
 
-                if (i > 2 && grave_skill === 0) {
+                if (i >= 1 && grave_skill === 0) {
                     if (isnumber[i - 1] === mynumber) {
                         grave_skill = 2;
                         active_card_for_grave_skills = [];
@@ -2647,7 +2647,7 @@
                     }
                 }
 
-                if (i > 3 && grave_skill < 3) {
+                if (i >= 2 && grave_skill < 3) {
                     if (isnumber[i - 2] === mynumber &&
                         isnumber[i - 1] === mynumber) {
                         grave_skill = 3;
@@ -2659,7 +2659,7 @@
                     }
                 }
 
-                if (i > 4 && grave_skill < 4) {
+                if (i >= 3 && grave_skill < 4) {
                     if (isnumber[i - 3] === mynumber &&
                         isnumber[i - 2] === mynumber &&
                         isnumber[i - 1] === mynumber) {
