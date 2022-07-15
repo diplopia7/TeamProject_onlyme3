@@ -210,13 +210,16 @@
                     <audio id="foodaudio" src="/static/resources/sfx/food.wav"></audio>
                 </div>
                 <div>
-                    <button id="btn3" type="button" class="button">병사모집</button>
+                    <button id="btn3" type="button" class="button" onclick="battlesound()">병사모집</button>
+                    <audio id="battleaudio" src="/static/resources/sfx/battlecry.wav"></audio>
                 </div>
                 <div>
-                    <button id="btn4" type="button" class="button">인재모집</button>
+                    <button id="btn4" type="button" class="button" onclick="peoplesound()">인재모집</button>
+                    <audio id="peopleaudio" src="/static/resources/sfx/people.wav"></audio>
                 </div>
                 <div>
-                    <button id="btn5" type="button" class="button">수집</button>
+                    <button id="btn5" type="button" class="button" onclick="itemsound()">수집</button>
+                    <audio id="itemaudio" src="/static/resources/sfx/item.wav"></audio>
                 </div>
                 <div>
                     <button id="btn7" type="button" class="button">돈->병량</button>
@@ -585,6 +588,21 @@
 
         function foodsound(){
             var audio = document.getElementById('foodaudio');
+            audio.play()
+        }
+
+        function battlesound(){
+            var audio = document.getElementById('battleaudio');
+            audio.play()
+        }
+
+        function peoplesound(){
+            var audio = document.getElementById('peopleaudio');
+            audio.play()
+        }
+
+        function itemsound(){
+            var audio = document.getElementById('itemaudio');
             audio.play()
         }
 

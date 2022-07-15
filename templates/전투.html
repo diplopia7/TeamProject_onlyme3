@@ -1906,6 +1906,9 @@
         const attack_directly = (player, damage) => {
             var audio = new Audio('{% static "resources/sfx/attack.wav" %}');
             audio.play();
+            {% if request.session.skill == '신화계' %}
+                var audio = new Audio('/static/resources/sfx/fire.wav');
+            {% endif %}
             switch (player) {
                 case 'player':
                     hp2 -= damage;
@@ -2391,12 +2394,16 @@
             switch (skill_name) {
                 case '공격강화':
                     alert(`${skill_name} 발동`);
+                    var audio = new Audio('/static/resources/sfx/buff.wav');
+                    audio.play();
                     add_attack_stat(1);
                     skill.innerText = `강화 ${user_skill_count}회`;
                     if (user_skill_count === 5) skill_available = false;
                     break;
                 case '방어강화':
                     alert(`${skill_name} 발동`);
+                    var audio = new Audio('/static/resources/sfx/buff.wav');
+                    audio.play();
                     add_defence_stat(1);
                     skill.innerText = `강화 ${user_skill_count}회`;
                     if (user_skill_count === 5) skill_available = false;
@@ -2425,6 +2432,8 @@
                     break;
                 case '복병신속':
                     alert(`${skill_name} 발동`);
+                    var audio = new Audio('/static/resources/sfx/buff.wav');
+                    audio.play();
                     magic_card_in_deck = player_deck.filter(ismagic);
                     shuffle(magic_card_in_deck);
                     drowed_magic_card = player_deck.indexOf(magic_card_in_deck[0])
@@ -2438,6 +2447,8 @@
                     break;
                 case '공방일체':
                     alert(`${skill_name} 발동`);
+                    var audio = new Audio('/static/resources/sfx/buff.wav');
+                    audio.play();
                     add_attack_stat(1);
                     add_defence_stat(1);
                     skill.innerText = `강화 ${user_skill_count}회`;
@@ -2475,6 +2486,8 @@
                     if (player_power > dice) {
                         alert(`${skill_name} 발동`);
                         attack_directly('player', dice);
+                        var audio = new Audio('/static/resources/sfx/bighit.wav');
+                        audio.play();
                     } else alert(`${skill_name} 발동실패`);
                     break;
                 case '화계':
@@ -2482,7 +2495,13 @@
                     if (player_inteli > dice) {
                         alert(`${skill_name} 발동`);
                         attack_directly('player', dice);
+                        var audio = new Audio('/static/resources/sfx/fire.wav');
+                        audio.play();
                     } else alert(`${skill_name} 발동실패`);
+                    break;
+                    case '신화계':
+                    alert(`${skill_name} 발동`);
+                    attack_directly('enemey', 15);
                     break;
                 case '인중여포':
                     user_turn_skip = true;
@@ -2490,6 +2509,8 @@
                     if (player_power > dice) {
                         alert(`${skill_name} 발동`);
                         attack_directly('player', dice);
+                        var audio = new Audio('/static/resources/sfx/bighit.wav');
+                        audio.play();
                         if (main_field['field1']) if (card_stat_basic(main_field['field1']) !== 11) delete_card_normal('field1');
                         if (main_field['field2']) if (card_stat_basic(main_field['field2']) !== 11) delete_card_normal('field2');
                         if (main_field['field3']) if (card_stat_basic(main_field['field3']) !== 11) delete_card_normal('field3');
