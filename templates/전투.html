@@ -375,7 +375,7 @@
             <div id="field5" class="cardfield"></div>
             <div id="field6" class="cardfield"></div>
             <div id="field7" class="cardfield"></div>
-                        <div id="field15" class="cardfield"></div>
+            <div id="field15" class="cardfield"></div>
         </div>
         <div id="cardfield2">
             <div id="field8" class="cardfield"></div>
@@ -385,16 +385,16 @@
             <div id="field12" class="cardfield"></div>
             <div id="field13" class="cardfield"></div>
             <div id="field14" class="cardfield"></div>
-                        <div id="field16" class="cardfield"></div>
+            <div id="field16" class="cardfield"></div>
         </div>
         <div id="playerstatus">
             <div style="margin-top:10px; margin-left:10px">플레이어</div>
             <div style="margin-left:10px">체력 : <span id="playerhp"></span> 전술 : <span
                     id="player전술">{{ request.session.skill }}</span></div>
             <form id="asd" name="asd" method="post">
-            <input type="text" id="hpform" name="hpform" value="">
+                <input type="text" id="hpform" name="hpform" value="">
                 <input type="text" id="officerfrm" name="officerfrm" value="{{ request.session.officer }}">
-                </form>
+            </form>
             <div style="margin-left:10px">통솔 : <span id="player통솔">{{ request.session.command }}</span> 지력: <span
                     id="player지력">{{ request.session.inteli }}</span></div>
             <div style="margin-left:10px">무력 : <span id="player무력">{{ request.session.power }}</span> 정치: <span
@@ -456,7 +456,7 @@
         let hp1 = {{ request.session.hp }};
         let hp2 = 100;
         playerhp.textContent = hp1;
-        hpform.value=hp1
+        hpform.value = hp1
         enemyhp.textContent = hp2;
         let loc_attack_card;
         let loc_attacked_card;
@@ -490,6 +490,7 @@
         endturn.disabled = true;
         console.log('at start disable fight button');
         fight.disabled = true;
+        grave.disabled = true;
 
         let double_attack_player = 0;
         let half_attack_player = 0;
@@ -575,6 +576,8 @@
         let skill_risk = 0;
         let enemy_turn_damage = 0;
         let flip_available = true
+        let grave_skill = 0;
+        let active_card_for_grave_skills = [];
 
         // 메인 필드
         let main_field = {};
@@ -706,6 +709,7 @@
             fullField.disabled = false;
             endturn.disabled = true;
             if (player_deck[0]) draw.disabled = false;
+            if (grave_skill) grave.disabled = false;
             fight.innerText = '전투';
             playercard.style.pointerEvents = 'auto';
         });
@@ -1333,6 +1337,9 @@
             if (!player_deck[0]) giveUp.style.display = 'inline_block';
             check_full_field();
             if (user_skill_passive) check_user_skill(player_skill);
+            if (playergrave.length > 1) check_grave();
+            console.log('playergraveplayergraveplayergraveplayergraveplayergrave');
+            console.log(playergrave);
 
             defencebtn.removeEventListener("click", attackf);
             defencebtn.removeEventListener("click", defencef);
@@ -1596,6 +1603,7 @@
             playercard.style.pointerEvents = 'none';
             flip_available = false;
             skill.disabled = true;
+            grave.disabled = true;
             card_location();
             fullField.disabled = true;
             fight.disabled = true;
@@ -2244,6 +2252,7 @@
             let skill_name = player_skill;
             user_skill_count++;
             user_skill(skill_name);
+            console.log(`${skill_name}skill activated`)
             card_location();
             finish_turn();
         });
@@ -2446,7 +2455,9 @@
                     for (let i = 0; i < 5; ++i) {
                         player_deck.shift()
                     }
-                    alert('덱에서 5장 삭제(이득없음)');
+                    if (playergrave.length > 1) {
+                        playergrave.sort((a, b) => a - b);
+                    }
                     break;
                 case '용의 지혜':
                     alert(`${skill_name} 발동`);
@@ -2537,81 +2548,146 @@
             `)) win_game('enemy');
         });
 
-        first_turn();
 
-        //묘지효과
-       grave.addEventListener('click', () => {
-            playergrave = [2, 4]
-            iscolor = [];
+        // 무덤 스킬 가능여부 확인
+        const check_grave = () => {
+            let iscolor = [];
+            let isnumber = [];
             let a;
+
             for (let i = 0; i < playergrave.length; ++i) {
                 a = card_color_basic(playergrave[i]);
                 iscolor.push(a);
             }
+            for (let i = 0; i < playergrave.length; ++i) {
+                a = card_num(playergrave[i]);
+                isnumber.push(a);
+            }
+
             for (let i = 0; i < iscolor.length; ++i) {
-                if (iscolor[i] === iscolor[i + 1] && iscolor[i + 1] === iscolor[i + 2] && iscolor[i + 2] === iscolor[i + 3]) {
-                    clear_field(field15)
-                    if (main_field['field1']){
-                        enemygrave.push(main_field['field1'] % 100)
-                        set_card(field15, enemygrave[enemygrave.length - 1])
-                        delete main_field.field1;
+                let mycolor = iscolor[i];
+
+                if (i > 2 && grave_skill === 0) {
+                    if (iscolor[i - 1] === mycolor) {
+                        grave_skill = 2;
+                        active_card_for_grave_skills = [];
+                        active_card_for_grave_skills.push(playergrave[i - 1]);
+                        active_card_for_grave_skills.push(playergrave[i]);
+                        grave.innerText = '무덤효과 (2장)';
                     }
-                    if (main_field['field2']){
-                        enemygrave.push(main_field['field2'] % 100)
-                        delete main_field.field2;
-                        set_card(field15, enemygrave[enemygrave.length - 1])
+                }
+
+                if (i > 3 && grave_skill < 3) {
+                    if (iscolor[i - 2] === mycolor &&
+                        iscolor[i - 1] === mycolor) {
+                        grave_skill = 3;
+                        active_card_for_grave_skills = [];
+                        active_card_for_grave_skills.push(playergrave[i - 2]);
+                        active_card_for_grave_skills.push(playergrave[i - 1]);
+                        active_card_for_grave_skills.push(playergrave[i]);
+                        grave.innerText = '무덤효과 (3장)';
                     }
-                    if (main_field['field3']){
-                        enemygrave.push(main_field['field3'] % 100)
-                        delete main_field.field3;
-                        set_card(field15, enemygrave[enemygrave.length - 1])
+                }
+
+                if (i > 4 && grave_skill < 4) {
+                    if (iscolor[i - 3] === mycolor &&
+                        iscolor[i - 2] === mycolor &&
+                        iscolor[i - 1] === mycolor) {
+                        grave_skill = 4;
+                        active_card_for_grave_skills = [];
+                        active_card_for_grave_skills.push(playergrave[i - 3]);
+                        active_card_for_grave_skills.push(playergrave[i - 2]);
+                        active_card_for_grave_skills.push(playergrave[i - 1]);
+                        active_card_for_grave_skills.push(playergrave[i]);
+                        grave.innerText = '무덤효과 (4장)';
                     }
-                    if (main_field['field4']){
-                        enemygrave.push(main_field['field4'] % 100)
-                        delete main_field.field4;
-                        set_card(field15, enemygrave[enemygrave.length - 1])
+                }
+
+            }
+
+            for (let i = 0; i < isnumber.length; ++i) {
+                let mynumber = isnumber[i];
+
+                if (i > 2 && grave_skill === 0) {
+                    if (isnumber[i - 1] === mynumber) {
+                        grave_skill = 2;
+                        active_card_for_grave_skills = [];
+                        active_card_for_grave_skills.push(playergrave[i - 1]);
+                        active_card_for_grave_skills.push(playergrave[i]);
+                        grave.innerText = '무덤효과 (2장)';
                     }
-                    if (main_field['field5']){
-                        enemygrave.push(main_field['field5'] % 100)
-                        delete main_field.field5;
-                        set_card(field15, enemygrave[enemygrave.length - 1])
+                }
+
+                if (i > 3 && grave_skill < 3) {
+                    if (isnumber[i - 2] === mynumber &&
+                        isnumber[i - 1] === mynumber) {
+                        grave_skill = 3;
+                        active_card_for_grave_skills = [];
+                        active_card_for_grave_skills.push(playergrave[i - 2]);
+                        active_card_for_grave_skills.push(playergrave[i - 1]);
+                        active_card_for_grave_skills.push(playergrave[i]);
+                        grave.innerText = '무덤효과 (3장)';
                     }
-                    if (main_field['field6']){
-                        enemygrave.push(main_field['field6'] % 100)
-                        delete main_field.field6;
-                        set_card(field15, enemygrave[enemygrave.length - 1])
+                }
+
+                if (i > 4 && grave_skill < 4) {
+                    if (isnumber[i - 3] === mynumber &&
+                        isnumber[i - 2] === mynumber &&
+                        isnumber[i - 1] === mynumber) {
+                        grave_skill = 4;
+                        active_card_for_grave_skills = [];
+                        active_card_for_grave_skills.push(playergrave[i - 3]);
+                        active_card_for_grave_skills.push(playergrave[i - 2]);
+                        active_card_for_grave_skills.push(playergrave[i - 1]);
+                        active_card_for_grave_skills.push(playergrave[i]);
+                        grave.innerText = '무덤효과 (4장)';
                     }
-                    if (main_field['field7']){
-                        enemygrave.push(main_field['field7'] % 100)
-                        delete main_field.field7;
-                        set_card(field15, enemygrave[enemygrave.length - 1])
-                    }
-                    enemy_deck.shift()
-                    alert('4장');
-                    for (let i=0; i<4; ++i){
-                        playergrave.shift()
-                    }
-                    break;
-                } else if (iscolor[i] === iscolor[i + 1] && iscolor[i] === iscolor[i + 2]) {
-                    enemy_deck.shift()
-                    for (let i=0; i<3; ++i){
-                        playergrave.shift()
-                    }
-                    break;
-                } else if (iscolor[i] === iscolor[i + 1]) {
-                    if (is_front_card(main_field['field1'])) debuff_shape['field1']++;
-                    if (is_front_card(main_field['field2'])) debuff_shape['field2']++;
-                    if (is_front_card(main_field['field3'])) debuff_shape['field3']++;
-                    if (is_front_card(main_field['field4'])) debuff_shape['field4']++;
-                    alert('2장')
-                    for (let i=0; i<2; ++i){
-                        playergrave.shift()
-                    }
-                    break;
                 }
             }
+            console.log('active_card_for_grave_skills');
+            console.log(active_card_for_grave_skills);
+        }
+
+        // 무덤 스킬 발동
+        grave.addEventListener('click', () => {
+            grave.innerText = '무덤효과';
+            for (let i = 0; i < active_card_for_grave_skills.length; ++i) {
+                delete_card_from_array(playergrave, active_card_for_grave_skills[i]);
+            }
+            let field = [];
+            switch (grave_skill) {
+                case 2:
+                    field = []
+                    if (is_front_card(main_field['field1'])) field.push('field1');
+                    if (is_front_card(main_field['field2'])) field.push('field2');
+                    if (is_front_card(main_field['field3'])) field.push('field3');
+                    if (is_front_card(main_field['field4'])) field.push('field4');
+                    if (field.length > 0) {
+                        let a = field[Math.floor(Math.random() * field.length) - 1];
+                        debuff_shape[a]++;
+                    }
+                    break;
+                case 3:
+                    enemy_deck.shift();
+                    break;
+                case 4:
+                    field = []
+                    if (is_front_card(main_field['field1'])) field.push('field1');
+                    if (is_front_card(main_field['field2'])) field.push('field2');
+                    if (is_front_card(main_field['field3'])) field.push('field3');
+                    if (is_front_card(main_field['field4'])) field.push('field4');
+                    if (field.length > 0) {
+                        let a = field[Math.floor(Math.random() * field.length) - 1];
+                        debuff_shape[a]++;
+                    }
+                    enemy_deck.shift();
+                    break;
+            }
+
             finish_turn();
         });
 
+
+        first_turn();
     </script>
 {% endblock %}
