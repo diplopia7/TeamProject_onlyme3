@@ -840,7 +840,7 @@
                 // 카드 뽑을 확률 1/4
                 // 카드 배치 확률 1/2
                 // 카드 공격 확률 1/4
-                switch (Math.floor(Math.random() * 3)) {
+                switch (Math.floor(Math.random() * 4)) {
                     case 0:
                         enemy_draw();
                         break;
@@ -2093,7 +2093,7 @@
                         if (main_field['field3']) field.push('field3');
                         if (main_field['field4']) field.push('field4');
                         if (field.length > 0) {
-                            delete_card_normal(field[Math.floor(Math.random() * field.length) - 1]);
+                            delete_card_normal(field[Math.floor(Math.random() * field.length)]);
                         }
                         break;
                     case 4:
@@ -2150,7 +2150,7 @@
                         if (main_field['field10']) field.push('field10');
                         if (main_field['field11']) field.push('field11');
                         if (field.length > 0) {
-                            delete_card_normal(field[Math.floor(Math.random() * field.length) - 1]);
+                            delete_card_normal(field[Math.floor(Math.random() * field.length)]);
                         }
                         break;
                     case 4:
@@ -2200,7 +2200,7 @@
                     if (main_field['field6']) field.push('field6');
                     if (main_field['field7']) field.push('field7');
                     if (field.length > 0) {
-                        delete_card_magic(field[Math.floor(Math.random() * field.length) - 1]);
+                        delete_card_magic(field[Math.floor(Math.random() * field.length)]);
                     }
                     color_available_player = false;
                 } else if (player_field.filter(e => 'red' === e).length === 4) {
@@ -2226,7 +2226,7 @@
                     if (main_field['field13']) field.push('field13');
                     if (main_field['field14']) field.push('field14');
                     if (field.length > 0) {
-                        delete_card_magic(field[Math.floor(Math.random() * field.length) - 1]);
+                        delete_card_magic(field[Math.floor(Math.random() * field.length)]);
                     }
                     color_available_enemy = false;
                 } else if (enemy_field.filter(e => 'red' === e).length === 4) {
@@ -2678,7 +2678,7 @@
                     if (is_front_card(main_field['field3'])) field.push('field3');
                     if (is_front_card(main_field['field4'])) field.push('field4');
                     if (field.length > 0) {
-                        let a = field[Math.floor(Math.random() * field.length) - 1];
+                        let a = field[Math.floor(Math.random() * field.length)];
                         debuff_shape[a]++;
                     }
                     break;
@@ -2692,7 +2692,7 @@
                     if (is_front_card(main_field['field3'])) field.push('field3');
                     if (is_front_card(main_field['field4'])) field.push('field4');
                     if (field.length > 0) {
-                        let a = field[Math.floor(Math.random() * field.length) - 1];
+                        let a = field[Math.floor(Math.random() * field.length)];
                         debuff_shape[a]++;
                     }
                     enemy_deck.shift();
