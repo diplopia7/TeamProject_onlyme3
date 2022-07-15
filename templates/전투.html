@@ -2209,7 +2209,7 @@
             if (is_front_card(main_field['field2'])) enemy_field.push(card_color_basic(main_field['field2'] % 100));
             if (is_front_card(main_field['field3'])) enemy_field.push(card_color_basic(main_field['field3'] % 100));
             if (is_front_card(main_field['field4'])) enemy_field.push(card_color_basic(main_field['field4'] % 100));
-            if (enemy_field.length === 4 && color_available_player) {
+            if (enemy_field.length === 4 && color_available_enemy) {
                 console.log(`enemy's normal field is full----------------`);
                 console.log(enemy_field);
                 console.log(`black: ${enemy_field.filter(e => 'black' === e).length}`);
@@ -2658,6 +2658,7 @@
 
         // 무덤 스킬 발동
         grave.addEventListener('click', () => {
+            grave_skill = 0;
             grave.innerText = '무덤효과';
             for (let i = 0; i < active_card_for_grave_skills.length; ++i) {
                 delete_card_from_array(playergrave, active_card_for_grave_skills[i]);
