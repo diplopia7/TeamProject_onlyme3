@@ -1641,17 +1641,17 @@
             }
 
             if (main_field[loc_attacked_card] % 1000 < 100) main_field[loc_attacked_card] += 100;
-            if (attacked_stat < 0) {
+            if (attacked_stat < 0) { // 공격한 카드의 스텟이 더 높은 경우
                 delete_card_normal(loc_attacked_card);
                 if (attack_card_id <= 53 && attacked_card_id <= 53  // 두 카드 전부 조커가 아니어야 직접 데미지
                     && attacked_card_id >= 4  // 맞는 카드가 에이스가 아니어야 직접 데미지
                     && attack_card)
                     attack_directly(turn, attacked_stat * -1);
-            } else if (attacked_stat > 0) {
+            } else if (attacked_stat > 0) { // 공격한 카드의 스텟이 더 낮은 경우
                 delete_card_normal(loc_attack_card);
                 if (attack_card_id <= 53 && attacked_card_id <= 53  // 두 카드 전부 조커가 아니어야 직접 데미지
-                    && attack_card_id >= 4  // 공격하는 카드가 에이스가 아니어야 직접 데미지
-                    && attack_card) {
+                    && attack_card_id >= 4)  // 공격하는 카드가 에이스가 아니어야 직접 데미지
+                    {
                     if (turn === 'player') attack_directly('enemy', attacked_stat);
                     else attack_directly('player', attacked_stat);
 
@@ -2686,8 +2686,6 @@
 
             finish_turn();
         });
-
-
         first_turn();
     </script>
 {% endblock %}
