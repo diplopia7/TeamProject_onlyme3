@@ -1651,7 +1651,7 @@
                 delete_card_normal(loc_attack_card);
                 if (attack_card_id <= 53 && attacked_card_id <= 53  // 두 카드 전부 조커가 아니어야 직접 데미지
                     && attack_card_id >= 4)  // 공격하는 카드가 에이스가 아니어야 직접 데미지
-                    {
+                {
                     if (turn === 'player') attack_directly('enemy', attacked_stat);
                     else attack_directly('player', attacked_stat);
 
@@ -2499,7 +2499,7 @@
                         audio.play();
                     } else alert(`${skill_name} 발동실패`);
                     break;
-                    case '신화계':
+                case '신화계':
                     alert(`${skill_name} 발동`);
                     attack_directly('enemey', 15);
                     break;
