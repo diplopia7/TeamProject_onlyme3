@@ -38,10 +38,10 @@ def character(request):
         request.session['itemstat2'] = ''
         request.session['itemfullname'] = '없음'
         request.session['command'] = form['command']
-        # request.session['power'] = form['power']
-        request.session['power'] = 99
-        # request.session['inteli'] = form['inteli']
-        request.session['inteli'] = 99
+        request.session['power'] = form['power']
+        # request.session['power'] = 99
+        request.session['inteli'] = form['inteli']
+        # request.session['inteli'] = 99
         request.session['politics'] = form['politics']
         request.session['innertrait'] = form['innertrait']
         request.session['fighttrait'] = form['fighttrait']
@@ -135,8 +135,24 @@ def 전투(request):
         if form['win'] == 'player':
             if form['statusinput'] == '부장':
                 request.session['status'] = '비장군'
+            elif form['statusinput'] == '비장군':
+                request.session['status']= '편장군'
+            elif form['statusinput'] == '편장군':
+                request.session['status']= '도독'
             elif form['statusinput'] == '도독':
                 request.session['status'] = '잡호장군'
+            elif form['statusinput'] == '잡호장군':
+                request.session['status'] = '사진장군'
+            elif form['statusinput'] == '사진장군':
+                request.session['status'] = '사정장군'
+            elif form['statusinput'] == '사정장군':
+                request.session['status'] = '사방장군'
+            elif form['statusinput'] == '사방장군':
+                request.session['status'] = '거기장군'
+            elif form['statusinput'] == '거기장군':
+                request.session['status'] = '표기장군'
+            elif form['statusinput'] == '표기장군':
+                request.session['status'] = '대장군'
             return render(request, 'ifwin.html')
         else:
             request.session['gold'] = int(form['goldinput']) - 200
