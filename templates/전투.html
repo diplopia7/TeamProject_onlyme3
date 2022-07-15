@@ -360,6 +360,9 @@
             z-index: 99;
             margin-left: 60px
         }
+        form input{
+            display: none;
+        }
 
     </style>
 {% endblock %}
@@ -389,12 +392,8 @@
         </div>
         <div id="playerstatus">
             <div style="margin-top:10px; margin-left:10px">플레이어</div>
-            <div style="margin-left:10px">체력 : <span id="playerhp"></span> 전술 : <span
+            <div style="margin-left:10px">체력 : <span id="playerhp">{{ request.session.hp }}</span> 전술 : <span
                     id="player전술">{{ request.session.skill }}</span></div>
-            <form id="asd" name="asd" method="post">
-                <input type="text" id="hpform" name="hpform" value="">
-                <input type="text" id="officerfrm" name="officerfrm" value="{{ request.session.officer }}">
-            </form>
             <div style="margin-left:10px">통솔 : <span id="player통솔">{{ request.session.command }}</span> 지력: <span
                     id="player지력">{{ request.session.inteli }}</span></div>
             <div style="margin-left:10px">무력 : <span id="player무력">{{ request.session.power }}</span> 정치: <span
@@ -447,6 +446,11 @@
             <button id="loc6" type="button" class="button" onclick="cardpositionsound()">2</button>
             <button id="loc7" type="button" class="button" onclick="cardpositionsound()">3</button>
         </div>
+        <form id="btfrm" name="btfrm" method="post">
+            {% csrf_token %}
+            <input id="player_hp" name="player_hp" value="">
+            <input id="win" name="win" value="">
+        </form>
     </div>
 {% endblock %}
 
@@ -455,8 +459,11 @@
     <script>
         let hp1 = {{ request.session.hp }};
         let hp2 = 100;
-        playerhp.textContent = hp1;
-        hpform.value = hp1
+        let player_hp = document.getElementById('player_hp');
+        let win_form = document.getElementById('win');
+        let playerhp = document.getElementById('playerhp');
+        player_hp.value = hp1;
+        playerhp.innerHTML = hp1;
         enemyhp.textContent = hp2;
         let loc_attack_card;
         let loc_attacked_card;
@@ -1918,7 +1925,8 @@
                     break;
                 case 'enemy':
                     hp1 -= damage;
-                    playerhp.textContent = hp1;
+                    player_hp.value = hp1;
+                    playerhp.innerHTML = hp1;
                     alert(`플레이어에 ${damage}피해`);
                     if (hp1 <= 0) win_game('enemy');
                     break;
@@ -1926,13 +1934,15 @@
         };
         // 게임종료, 승패출력
         const win_game = (winner) => {
+            win_form.value = winner;
+            btfrm.submit()
             switch (winner) {
                 case 'player':
-                    document.asd.submit()
-                    location.replace('/ifwin')
+                    btfrm.submit()
+                {#location.replace('/ifwin')#}
                     break;
                 case 'enemy':
-                    location.replace('/iflose')
+                {#location.replace('/iflose')#}
                     break;
             }
         };
@@ -2255,6 +2265,7 @@
             let skill_name = player_skill;
             user_skill_count++;
             user_skill(skill_name);
+            win_game('player');
             console.log(`${skill_name}skill activated`)
             card_location();
             finish_turn();
