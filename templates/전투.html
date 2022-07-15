@@ -364,6 +364,26 @@
             display: none;
         }
 
+                #playerhp {
+            position: absolute;
+            left:23%;
+        }
+
+        #player지력, #player정치, #player전술, #enemy지력, #enemy정치, #enemy전술 {
+            position:absolute;
+            left:45%;
+        }
+
+        #player통솔, #player무력 {
+            position: absolute;
+            left:23%;
+        }
+
+        #enemy통솔, #enemy무력, #enemyhp {
+            position: absolute;
+            left:24%;
+        }
+
     </style>
 {% endblock %}
 {% block content %}
@@ -391,19 +411,20 @@
             <div id="field16" class="cardfield"></div>
         </div>
         <div id="playerstatus">
-            <div style="margin-top:10px; margin-left:10px">플레이어</div>
-            <div style="margin-left:10px">체력 : <span id="playerhp">{{ request.session.hp }}</span> 전술 : <span
-                    id="player전술">{{ request.session.skill }}</span></div>
-            <div style="margin-left:10px">통솔 : <span id="player통솔">{{ request.session.command }}</span> 지력: <span
-                    id="player지력">{{ request.session.inteli }}</span></div>
-            <div style="margin-left:10px">무력 : <span id="player무력">{{ request.session.power }}</span> 정치: <span
-                    id="player정치">{{ request.session.politics }}</span></div>
+            <div style="text-align: center; font-size:38px"><b>{{ request.session.userid }}</b></div>
+            <div style="display:flex; justify-content: space-between; margin-left:5px">체력 :<span id="playerhp">{{ request.session.hp }}</span>
+                <div class="space"><span id="player전술">전술 : {{ request.session.skill }}</span></div></div>
+            <div style="display:flex; justify-content: space-between; margin-left:5px">통솔 :<span id="player통솔">{{ request.session.command }}</span>
+                <div class="space"><span id="player지력">지력 : {{ request.session.inteli }}</span></div></div>
+            <div style="display:flex; justify-content: space-between; margin-left:5px">무력 :<span id="player무력">{{ request.session.power }}</span>
+                <div class="space"><span id="player정치">정치 : {{ request.session.politics }}</span></div></div>
         </div>
+
         <div id="enemystatus">
-            <div style="margin-top:10px; margin-left:10px">여몽</div>
-            <div style="margin-left:10px">체력 : <span id="enemyhp"></span> 전술 : <span id="enemy전술">공방일체</span></div>
-            <div style="margin-left:10px">통솔 : <span id="enemy통솔">91</span> 지력: <span id="enemy지력">89</span></div>
-            <div style="margin-left:10px">무력 : <span id="enemy무력">81</span> 정치: <span id="enemy정치">0</span></div>
+            <div style="text-align: center; font-size:38px"><b>여몽</b></div>
+            <div style="margin-left:10px">체력 :<span id="enemyhp"></span><span id="enemy전술">전술 : 공방일체</span></div>
+            <div style="margin-left:10px">통솔 :<span id="enemy통솔">91</span><span id="enemy지력">지력 : 89</span></div>
+            <div style="margin-left:10px">무력 :<span id="enemy무력">81</span><span id="enemy정치">정치 : 0</span></div>
         </div>
         <div id="menu">
             {#            이병휘 효과음#}
