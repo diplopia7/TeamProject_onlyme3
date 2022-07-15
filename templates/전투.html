@@ -449,7 +449,10 @@
         <form id="btfrm" name="btfrm" method="post">
             {% csrf_token %}
             <input id="player_hp" name="player_hp" value="">
+            <input id="foodinput" name="foodinput" value="{{ request.session.food }}">
             <input id="win" name="win" value="">
+            <input id="goldinput" name="goldinput" value="{{ request.session.gold }}">
+            <input id="statusinput" name="statusinput" value="{{ request.session.status }}">
         </form>
     </div>
 {% endblock %}

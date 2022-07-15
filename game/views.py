@@ -30,9 +30,18 @@ def character(request):
 
     elif request.method == 'POST':
         form = request.POST.dict()
+        request.session['gold'] = 1000
+        request.session['food'] = 100000
+        request.session['army'] = 10000
+        request.session['officer'] = 0
+        request.session['itemstat1'] = ''
+        request.session['itemstat2'] = ''
+        request.session['itemfullname'] = '없음'
         request.session['command'] = form['command']
-        request.session['power'] = form['power']
-        request.session['inteli'] = form['inteli']
+        # request.session['power'] = form['power']
+        request.session['power'] = 99
+        # request.session['inteli'] = form['inteli']
+        request.session['inteli'] = 99
         request.session['politics'] = form['politics']
         request.session['innertrait'] = form['innertrait']
         request.session['fighttrait'] = form['fighttrait']
@@ -120,10 +129,17 @@ def 내정(request):
 def 전투(request):
     if request.method == 'POST':
         form = request.POST.dict()
-        request.session['hp'] = form['player_hp']
+        request.session['hp'] = int(form['player_hp'])
+        request.session['army']=int(form['player_hp'])*100
+        request.session['food']=int(form['foodinput'])+int(form['player_hp'])*1000
         if form['win'] == 'player':
+            if form['statusinput'] == '부장':
+                request.session['status'] = '비장군'
+            elif form['statusinput'] == '도독':
+                request.session['status'] = '잡호장군'
             return render(request, 'ifwin.html')
         else:
+            request.session['gold'] = int(form['goldinput']) - 200
             return render(request, 'iflose.html')
 
 

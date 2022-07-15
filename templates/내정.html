@@ -260,16 +260,16 @@
     </div>
 
     <script>
-        let init_gold = 1000
+        let init_gold = Number({{ request.session.gold }});
         document.getElementById('goldinput').value = init_gold
-        let init_food = 100000
+        let init_food = Number({{ request.session.food }});
         document.getElementById('foodinput').value = init_food
-        let init_army = 10000
+        let init_army = Number({{ request.session.army }});
         document.getElementById('armyinput').value = init_army
         let init_turn = 1
-        let init_officer = 0
+        let init_officer = Number({{ request.session.officer }});
         document.getElementById('officerinput').value = init_officer
-        let init_item = '없음'
+        let init_item = '{{ request.session.itemfullname }}';
         {#document.getElementById('iteminput1').value=init_item#}
         let turn = 1
 
