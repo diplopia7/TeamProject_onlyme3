@@ -1922,10 +1922,8 @@
             switch (winner) {
                 case 'player':
                     btfrm.submit()
-                {#location.replace('/ifwin')#}
                     break;
                 case 'enemy':
-                {#location.replace('/iflose')#}
                     break;
             }
         };
@@ -2248,7 +2246,6 @@
             let skill_name = player_skill;
             user_skill_count++;
             user_skill(skill_name);
-            win_game('player');
             console.log(`${skill_name}skill activated`)
             card_location();
             finish_turn();
