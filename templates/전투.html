@@ -501,17 +501,17 @@
         let fight = document.getElementById('fight');
         let grave = document.getElementById('grave');
 
-        const player_skill = document.getElementById('player전술').innerText
-        const player_commend = document.getElementById('player통솔').innerText
-        const player_inteli = document.getElementById('player지력').innerText
-        const player_power = document.getElementById('player무력').innerText
-        const player_politics = document.getElementById('player정치').innerText
+        const player_skill = `{{ request.session.skill }}`;
+        const player_commend = `{{ request.session.command }}`;
+        const player_inteli = `{{ request.session.inteli }}`;
+        const player_power = `{{ request.session.power }}`;
+        const player_politics = `{{ request.session.politics }}`;
 
-        const enemy_skill = document.getElementById('enemy전술').innerText
-        const enemy_commend = document.getElementById('enemy통솔').innerText
-        const enemy_inteli = document.getElementById('enemy지력').innerText
-        const enemy_power = document.getElementById('enemy무력').innerText
-        const enemy_politics = document.getElementById('enemy정치').innerText
+        const enemy_skill = '공방일체';
+        const enemy_commend = 91;
+        const enemy_inteli = 89;
+        const enemy_power = 81;
+        const enemy_politics = 0;
 
         const enemy_name = document.getElementById('enemystatus').firstElementChild.innerText
 
