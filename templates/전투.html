@@ -2701,13 +2701,13 @@
                     break;
                 case 4:
                     field = []
-                    if (is_front_card(main_field['field1'])) field.push('field1');
-                    if (is_front_card(main_field['field2'])) field.push('field2');
-                    if (is_front_card(main_field['field3'])) field.push('field3');
-                    if (is_front_card(main_field['field4'])) field.push('field4');
+                    if (main_field['field1']) field.push('field1');
+                    if (main_field['field2']) field.push('field2');
+                    if (main_field['field3']) field.push('field3');
+                    if (main_field['field4']) field.push('field4');
                     if (field.length > 0) {
                         let a = field[Math.floor(Math.random() * field.length)];
-                        debuff_shape[a]++;
+                        delete_card_normal(a);
                     }
                     enemy_deck.shift();
                     break;
