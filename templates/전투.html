@@ -1348,7 +1348,7 @@
             check_full_field();
             if (user_skill_passive) check_user_skill(player_skill);
             if (playergrave.length > 1) check_grave();
-            console.log('playergraveplayergraveplayergraveplayergraveplayergrave');
+            console.log('playergrave');
             console.log(playergrave);
 
             defencebtn.removeEventListener("click", attackf);
@@ -2658,7 +2658,6 @@
 
         // 무덤 스킬 발동
         grave.addEventListener('click', () => {
-            grave_skill = 0;
             grave.innerText = '무덤효과';
             for (let i = 0; i < active_card_for_grave_skills.length; ++i) {
                 delete_card_from_array(playergrave, active_card_for_grave_skills[i]);
@@ -2692,7 +2691,7 @@
                     enemy_deck.shift();
                     break;
             }
-
+            grave_skill = 0;
             finish_turn();
         });
         first_turn();
